@@ -20,6 +20,15 @@
                     <button type="button" data-bs-target="#caruselArticulo" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
                 <div class="carousel-inner">
+
+     <%--               <asp:Repeater ID="repeterImagenes" runat="server">
+                        <ItemTemplate>
+                            <div class="carousel-item<%# Container.ItemIndex == 0 ? " active" : "" %>">
+                                <asp:Image ImageUrl='<%# Eval("imagenUrl") %>' class="d-block w-100" runat="server" Style="width: 400px; height: 400px; object-fit: contain;" />
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>--%>
+
                     <div class="carousel-item active">
                         <img src="Recursos/usuario.png" class="d-block w-100" alt="...">
                     </div>
@@ -39,9 +48,19 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+
         </div>
     </div>
+    <div class="row">
+        <div class="col-6">
+            <h1><strong>
+                 Acá va el nombre del articulo
+                </strong>
+            </h1>
+        </div>
+    </div>
+<div class="row">
 
-
+</div>
 
 </asp:Content>
