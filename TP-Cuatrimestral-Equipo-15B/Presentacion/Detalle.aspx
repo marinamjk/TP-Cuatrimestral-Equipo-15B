@@ -4,7 +4,7 @@
     <script>
         const myCarouselElement = document.querySelector('#caruselArticulo')
         const carousel = new bootstrap.Carousel(myCarouselElement, {
-            keyboard: true;
+            keyboard: false;
             touch: false
         })
     </script>
