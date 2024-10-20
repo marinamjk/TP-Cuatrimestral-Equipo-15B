@@ -103,7 +103,7 @@
                 <asp:Label ID="lblConfirmacion" runat="server" Text="Confirmacion de item agregado"></asp:Label>
                 <asp:Button ID="btnIrAlCarrito" class="ms-auto" runat="server" Text="Ir al carrito" />
             </div>
-            <hr />
+           <hr />
             <div class="mb-3">
                 <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClientClick="toggleIcon(this); return false" />
                 <i id="icon" class="bi bi-heart"></i>
