@@ -96,7 +96,7 @@
             </div>
             <div class="mb-3">
                 <asp:Label ID="lblCantidad" runat="server" Text="Cantidad: "></asp:Label>
-                <asp:DropDownList ID="ddlStock" runat="server"></asp:DropDownList>
+                <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number" Min="1" Max="100"></asp:TextBox>
                 <asp:Button ID="btnAgregarAlCarrito" runat="server" Text="Agregar al carrito" />
             </div>
             <div class="mb-3">

@@ -83,6 +83,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Default.aspx" />
     <Content Include="Detalle.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Recursos\usuario.png.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -107,6 +108,13 @@
     </Compile>
     <Compile Include="Detalle.aspx.designer.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -155,6 +163,16 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\domino\dominio.csproj">
+      <Project>{df21cbfe-a3c0-4110-870d-570c76dbac31}</Project>
+      <Name>dominio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Negocio\Negocio.csproj">
+      <Project>{0f9e6593-0e87-40e3-b434-07f40012e07b}</Project>
+      <Name>Negocio</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
