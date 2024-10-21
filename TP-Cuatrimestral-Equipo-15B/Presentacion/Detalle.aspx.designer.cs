@@ -24,6 +24,24 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.Label lblCategoria;
 
         /// <summary>
+        /// Control repeterImagenesInd.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeterImagenesInd;
+
+        /// <summary>
+        /// Control repeterImagenes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeterImagenes;
+
+        /// <summary>
         /// Control lblPrecio.
         /// </summary>
         /// <remarks>

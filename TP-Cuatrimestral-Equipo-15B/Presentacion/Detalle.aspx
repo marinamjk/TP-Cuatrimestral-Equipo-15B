@@ -33,43 +33,40 @@
             <div class="mb-3">
                 <asp:Label ID="lblCategoria" CssClass="font-monospace fw-light" runat="server" Text="Categoria > Subcategoría"></asp:Label>
             </div>
-            <div class="mb-3">
-                <div id="caruselArticulo" class="carousel slide">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#caruselArticulo" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#caruselArticulo" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#caruselArticulo" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
+            <div id="caruselArticulo" class="carousel slide">
+                <div class="carousel-indicators">
+                <asp:Repeater ID="repeterImagenesInd" runat="server">
+                    <ItemTemplate>
+                        
+                           
+                           <button type="button" data-bs-target="#caruselArticulo" data-bs-slide-to="<%# Container.ItemIndex %>" 
+                        class="<%# Container.ItemIndex == 0 ? " active" : "" %>" 
+                        aria-current="<%# Container.ItemIndex == 0 ? "true" : "" %>" 
+                        aria-label="Slide <%# Container.ItemIndex + 1 %>"></button>
+                             
+                    </ItemTemplate>
+                </asp:Repeater>
+                     </div>
+                <div class="carousel-inner">
 
-                        <%--               <asp:Repeater ID="repeterImagenes" runat="server">
-              <ItemTemplate>
-                  <div class="carousel-item<%# Container.ItemIndex == 0 ? " active" : "" %>">
-                      <asp:Image ImageUrl='<%# Eval("imagenUrl") %>' class="d-block w-100" runat="server" Style="width: 400px; height: 400px; object-fit: contain;" />
-                  </div>
-              </ItemTemplate>
-          </asp:Repeater>--%>
-
-                        <div class="carousel-item active">
-                            <img src="Recursos/usuario.png" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="Recursos/usuario.png" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="Recursos/usuario.png" class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#caruselArticulo" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#caruselArticulo" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                    <asp:Repeater ID="repeterImagenes" runat="server">
+                        <ItemTemplate>
+                            <div class="carousel-item<%# Container.ItemIndex == 0 ? " active" : "" %>">
+                                <asp:Image ImageUrl='<%# Eval("UrlImagen") %>' class="d-block w-100" runat="server" Style="width: 400px; height: 400px; object-fit: contain;" />
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#caruselArticulo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#caruselArticulo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
+
 
             <div class="mb-3">
                 <h1><strong>Acá va el nombre del articulo
@@ -87,6 +84,8 @@
             </div>
         </div>
 
+
+
         <div class="col-6">
             <div class="mb-3">
                 <asp:Label ID="lblPrecio" CssClass="fs-1" runat="server" Text="$5000.00"></asp:Label>
@@ -103,12 +102,12 @@
                 <asp:Label ID="lblConfirmacion" runat="server" Text="Confirmacion de item agregado"></asp:Label>
                 <asp:Button ID="btnIrAlCarrito" class="ms-auto" runat="server" Text="Ir al carrito" />
             </div>
-           <hr />
+            <hr />
             <div class="mb-3">
                 <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClientClick="toggleIcon(this); return false" />
                 <i id="icon" class="bi bi-heart"></i>
             </div>
         </div>
- </div>
+    </div>
 
 </asp:Content>

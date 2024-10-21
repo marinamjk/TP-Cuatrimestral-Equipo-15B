@@ -24,6 +24,7 @@ namespace Presentacion
                 {
                     repArticulos.DataSource = catalogo;
                     repArticulos.DataBind();
+                    
                 }
             }
             catch (Exception ex)
