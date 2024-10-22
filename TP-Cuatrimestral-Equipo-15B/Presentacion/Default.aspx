@@ -14,6 +14,10 @@
             padding-left: 30px; /* Espacio para el ícono */
             text-align: left; /* Alinea el texto */
         }
+
+        body {
+            overflow-x: hidden;
+        }
     </style>
 </asp:Content>
 
@@ -26,9 +30,9 @@
         </div>
         <div class="col-12">
             <div class="m-3">
-                <asp:Label ID="lblCategorias" runat="server" Text="Caategorías: "></asp:Label>
-                <asp:DropDownList ID="ddlCategorias" CssClass="btn btn-secondary dropdown-toggle" runat="server"></asp:DropDownList>
-                <asp:DropDownList ID="ddlSubcategorias" CssClass="btn btn-secondary dropdown-toggle" runat="server"></asp:DropDownList>
+                <asp:Label ID="lblCategorias" runat="server" Text="Categorias: "></asp:Label>
+                <asp:DropDownList ID="ddlCategoria" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlSubCategoria" runat="server"></asp:DropDownList>
                 <%--  <asp:Button ID="btnQuitarFiltroCategorias" runat="server" CssClass="icon-button" Text="Quitar filtro" OnClick="btnQuitarFiltroCategorias_Click" />--%>
             </div>
             <div class="col-12">

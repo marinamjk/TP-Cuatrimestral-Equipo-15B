@@ -14,50 +14,70 @@ namespace Presentacion
         protected Articulo articulo;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                string idQuery = Request.QueryString["id"];
-
-                if (!string.IsNullOrEmpty(idQuery))
+                if (!IsPostBack)
                 {
-                    int idArticulo = int.Parse(idQuery);
-                    cargarArticulo(idArticulo);
 
-                    if (articulo.Imagenes != null && articulo.Imagenes.Count > 0)
+                    string idQuery = Request.QueryString["id"];
+
+                    if (!string.IsNullOrEmpty(idQuery))
                     {
-                        repeterImagenes.DataSource = articulo.Imagenes;
-                        repeterImagenes.DataBind();
-                        repeterImagenesInd.DataSource = articulo.Imagenes;
-                        repeterImagenesInd.DataBind();  
-                    }
-                    else
-                    {
-                        List<Imagen> imagenesDefault = new List<Imagen>
+                        int idArticulo = int.Parse(idQuery);
+                        cargarArticulo(idArticulo);
+
+                        if (articulo.Imagenes != null && articulo.Imagenes.Count > 0)
+                        {
+                            repeterImagenes.DataSource = articulo.Imagenes;
+                            repeterImagenes.DataBind();
+                            repeterImagenesInd.DataSource = articulo.Imagenes;
+                            repeterImagenesInd.DataBind();
+                        }
+                        else
+                        {
+                            List<Imagen> imagenesDefault = new List<Imagen>
                             {
                                 new Imagen {  UrlImagen = "https://grupoact.com.ar/wp-content/uploads/2020/04/placeholder.png" }
                             };
-                        repeterImagenes.DataSource = imagenesDefault;
-                        repeterImagenes.DataBind();
-                        repeterImagenesInd.DataSource= imagenesDefault;
-                        repeterImagenesInd.DataBind() ;
-                         }
+                            repeterImagenes.DataSource = imagenesDefault;
+                            repeterImagenes.DataBind();
+                            repeterImagenesInd.DataSource = imagenesDefault;
+                            repeterImagenesInd.DataBind();
+                        }
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+
+       
         }
 
 
         private void cargarArticulo(int idArticulo)
         {
 
-            ArticuloNegocio artNegocio = new ArticuloNegocio();
-            articulo = artNegocio.listar().FirstOrDefault(a => a.IdArticulo == idArticulo);
-
-            // Si el artículo existe
-            if (articulo != null)
+            try
             {
-                // Se asignan los valores a los controles del formulario
-               
+                ArticuloNegocio artNegocio = new ArticuloNegocio();
+                articulo = artNegocio.listar().FirstOrDefault(a => a.IdArticulo == idArticulo);
+
+                // Si el artículo existe
+                if (articulo != null)
+                {
+                    // Se asignan los valores a los controles del formulario
+
+                }
             }
+            catch(Exception ex) 
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+           
         }
     }
 }

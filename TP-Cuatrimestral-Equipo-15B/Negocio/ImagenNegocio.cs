@@ -24,9 +24,12 @@ namespace Negocio
                 while (datos.Lector.Read())
                 {
                     Imagen aux = new Imagen();
-                    aux.IdImagen = (int)datos.Lector["IdImagen"];
-                    aux.IdArticulo = (int)datos.Lector["IdArticulo"];
-                    aux.UrlImagen = (string)datos.Lector["UrlImagen"];
+                    if (!(datos.Lector["IdImagen"] is DBNull))
+                        aux.IdImagen = (int)datos.Lector["IdImagen"];
+                    if (!(datos.Lector["IdArticulo"] is DBNull))
+                        aux.IdArticulo = (int)datos.Lector["IdArticulo"];
+                    if (!(datos.Lector["UrlImagen"] is DBNull))
+                        aux.UrlImagen = (string)datos.Lector["UrlImagen"];
                     imagenes.Add(aux);
                 }
             }

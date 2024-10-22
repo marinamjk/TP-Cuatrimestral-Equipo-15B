@@ -16,8 +16,9 @@
     <form id="form1" runat="server">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid d-flex">
-                <span class="navbar-brand mb-0 h1">E-commerce</span>
+                <a class="navbar-brand" href="Default.aspx">E-Commerce</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                         <li class="nav-item dropdown">

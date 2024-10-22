@@ -1,7 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Detalle.aspx.cs" Inherits="Presentacion.Detalle" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+    </style>
     <script>
         const myCarouselElement = document.querySelector('#caruselArticulo')
         const carousel = new bootstrap.Carousel(myCarouselElement, {
@@ -31,22 +35,28 @@
     <div class="row">
         <div class="col-6">
             <div class="mb-3">
-                <asp:Label ID="lblCategoria" CssClass="font-monospace fw-light" runat="server" Text="Categoria > Subcategoría"></asp:Label>
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Categoria</li>
+                        <li class="breadcrumb-item">Subcategoria</li>
+                    </ol>
+                </nav>
             </div>
             <div id="caruselArticulo" class="carousel slide">
                 <div class="carousel-indicators">
-                <asp:Repeater ID="repeterImagenesInd" runat="server">
-                    <ItemTemplate>
-                        
-                           
-                           <button type="button" data-bs-target="#caruselArticulo" data-bs-slide-to="<%# Container.ItemIndex %>" 
-                        class="<%# Container.ItemIndex == 0 ? " active" : "" %>" 
-                        aria-current="<%# Container.ItemIndex == 0 ? "true" : "" %>" 
-                        aria-label="Slide <%# Container.ItemIndex + 1 %>"></button>
-                             
-                    </ItemTemplate>
-                </asp:Repeater>
-                     </div>
+                    <asp:Repeater ID="repeterImagenesInd" runat="server">
+                        <ItemTemplate>
+
+
+                            <button type="button" data-bs-target="#caruselArticulo" data-bs-slide-to="<%# Container.ItemIndex %>"
+                                class="<%# Container.ItemIndex == 0 ? " active" : "" %>"
+                                aria-current="<%# Container.ItemIndex == 0 ? "true" : "" %>"
+                                aria-label="Slide <%# Container.ItemIndex + 1 %>">
+                            </button>
+
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
                 <div class="carousel-inner">
 
                     <asp:Repeater ID="repeterImagenes" runat="server">
@@ -66,8 +76,6 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-
-
             <div class="mb-3">
                 <h1><strong>Acá va el nombre del articulo
                 </strong>
@@ -83,7 +91,6 @@
                 </p>
             </div>
         </div>
-
 
 
         <div class="col-6">
