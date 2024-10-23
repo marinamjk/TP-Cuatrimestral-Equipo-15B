@@ -27,7 +27,15 @@
                                 <img src="Recursos/usuario.png" alt="Iniciar Sesión" width="30" height="30" class="d-inline-block" style="margin-right: 10px;">
                                 <%=Inicio%></a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/login.aspx">Mi Perfil</a></li>
+                                <%if (Session["usuario"] != null) {
+
+%>
+                                    <li><a class="dropdown-item" href="/login.aspx">Mi Perfil</a></li>
+                                <%}
+                                  else
+                                  {%>
+                                    <li><a class="dropdown-item" href="/Registrarse.aspx">Iniciar sesion</a></li>
+                                  <%}%>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
