@@ -186,13 +186,13 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvStock;
 
         /// <summary>
-        /// Control RangeValidator1.
+        /// Control rvStock.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RangeValidator1;
+        protected global::System.Web.UI.WebControls.RangeValidator rvStock;
 
         /// <summary>
         /// Control lblUrlImagen.

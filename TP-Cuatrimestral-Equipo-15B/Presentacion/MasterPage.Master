@@ -5,7 +5,7 @@
 <html data-bs-theme="dark">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<%--    <meta name="viewport" content="width=device-width, initial-scale=1">--%>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -14,6 +14,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" />
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid d-flex">
                 <a class="navbar-brand" href="Default.aspx">E-Commerce</a>

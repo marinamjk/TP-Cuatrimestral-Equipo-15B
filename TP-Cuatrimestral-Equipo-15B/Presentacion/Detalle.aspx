@@ -94,6 +94,8 @@
 
 
         <div class="col-6">
+             <br/>
+             <br/>
             <div class="mb-3">
                 <asp:Label ID="lblPrecio" CssClass="fs-1" runat="server" Text="$5000.00"></asp:Label>
             </div>
