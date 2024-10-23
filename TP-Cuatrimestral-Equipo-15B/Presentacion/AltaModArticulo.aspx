@@ -35,6 +35,9 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <h1 class="fs-4 m-3">
+        Agregar o modificar Artículo
+    </h1>
     <div class="row">
         <div class="col-6">
             <div class="m-3">

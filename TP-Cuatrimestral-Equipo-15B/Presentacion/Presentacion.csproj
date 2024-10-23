@@ -71,6 +71,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdministrarPedido.aspx" />
     <Content Include="AltaModArticulo.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -99,10 +100,18 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="VerCompra.aspx" />
     <Content Include="Web.config" />
     <Content Include="login.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministrarPedido.aspx.cs">
+      <DependentUpon>AdministrarPedido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdministrarPedido.aspx.designer.cs">
+      <DependentUpon>AdministrarPedido.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AltaModArticulo.aspx.cs">
       <DependentUpon>AltaModArticulo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -148,6 +157,13 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VerCompra.aspx.cs">
+      <DependentUpon>VerCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VerCompra.aspx.designer.cs">
+      <DependentUpon>VerCompra.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
