@@ -86,11 +86,11 @@
                         <asp:Label ID="lblUrlImagen" runat="server" CssClass="form-label" Text="Url Imagen: "></asp:Label>
                         <div class="row">
                             <div class="col-10">
-<<<<<<< HEAD
+
                                 <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtUrlImagen_TextChanged" CausesValidation="false" ></asp:TextBox>
-=======
-                                <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control"></asp:TextBox>
->>>>>>> 050be676d77b0fd6725bb7c87c30403399f68e8c
+
+                                <%--<asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control"></asp:TextBox>--%>
+
                                 <asp:RegularExpressionValidator ID="revUrlImagen" runat="server" CssClass="validator" ErrorMessage="Ingrese una dirección válida." ControlToValidate="txtUrlImagen" ValidationExpression="^(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.(jpg|jpeg|png|gif|bmp|svg|webp|tiff|ico|[a-zA-Z0-9-]+)(\/[-a-zA-Z0-9@:%_\+.~#?&=]*)?|data:image\/(jpg|jpeg|png|gif|bmp|svg|webp|tiff|ico);base64,[a-zA-Z0-9+/=]+)$"></asp:RegularExpressionValidator>
                             </div>
                             <div class="col-2">
