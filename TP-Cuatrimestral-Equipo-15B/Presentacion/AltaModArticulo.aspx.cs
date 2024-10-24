@@ -38,7 +38,16 @@ namespace Presentacion
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             string urlImagen = txtUrlImagen.Text;
+=======
+            revUrlImagen.Validate();
+            if (!revUrlImagen.IsValid)
+            {
+                txtUrlImagen.Text = string.Empty;
+                return;
+            }
+>>>>>>> 050be676d77b0fd6725bb7c87c30403399f68e8c
 
             List<Imagen> images = (List<Imagen>)Session["ImagesList"] ?? new List<Imagen>();
             images.Add(new Imagen { UrlImagen = urlImagen });
@@ -76,9 +85,5 @@ namespace Presentacion
             RepeaterImages.DataBind();
         }
 
-        protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
-        {
-            imgArticulo.ImageUrl = txtUrlImagen.Text;
-        }
     }
 }
