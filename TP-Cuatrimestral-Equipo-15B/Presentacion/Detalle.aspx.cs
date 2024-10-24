@@ -100,5 +100,10 @@ namespace Presentacion
             }
 
         }
+
+        protected void Modificar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AltaModArticulo.aspx");
+        }
     }
 }

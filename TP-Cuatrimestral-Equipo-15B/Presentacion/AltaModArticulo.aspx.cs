@@ -13,7 +13,6 @@ namespace Presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
             if (!IsPostBack)
             {
                 CargarImagenes();
@@ -28,12 +27,14 @@ namespace Presentacion
                 Page.Validate();
                 if (!Page.IsValid)
                     return;
+                //Agregar artículo
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx");
             }
+            Response.Redirect("Default.aspx");
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
@@ -85,6 +86,11 @@ namespace Presentacion
         protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
         {
             imgArticulo.ImageUrl = txtUrlImagen.Text;
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx",false);
         }
     }
 }
