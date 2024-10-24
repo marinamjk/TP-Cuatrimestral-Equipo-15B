@@ -28,9 +28,7 @@
                                 <img src="Recursos/usuario.png" alt="Iniciar Sesión" width="30" height="30" class="d-inline-block" style="margin-right: 10px;">
                                 <%=Inicio%></a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <%if (Session["usuario"] != null) {
-
-%>
+                                <%if (Session["usuario"] != null) {%>
                                     <li><a class="dropdown-item" href="/login.aspx">Mi Perfil</a></li>
                                 <%}
                                   else
@@ -43,11 +41,11 @@
                                 <li><a class="dropdown-item" href="#">Salir</a></li>
                             </ul>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Registrarme</a>
-                        </li>
-
+                        <%if(Session["usuario"] == null) {%> 
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Registrarme</a>
+                            </li>  
+                        <%}%>                                                 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta
                             </a>
