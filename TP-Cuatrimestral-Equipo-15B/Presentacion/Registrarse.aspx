@@ -16,36 +16,43 @@
       </div>
     </div>
   <div class="container mt-7">
-      <div class="form-group col-md-6">
-        <label for="inputAddress">direccion</label>
-        <asp:TextBox ID="TbDireccion" runat="server" CssClass="form-control" placeholder="Direccion" type="text"></asp:TextBox>
+      <div class="row justify-content-center">
+          <div class="form-group col-md-4">
+            <label for="inputAddress">direccion</label>
+            <asp:TextBox ID="TbDireccion" runat="server" CssClass="form-control" placeholder="Direccion" type="text"></asp:TextBox>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputAddress">Documento</label>
+            <asp:TextBox ID="TbDocumento" runat="server" CssClass="form-control" placeholder="Direccion" type="text"></asp:TextBox>
+          </div>
       </div>
   </div>
-  <div class="col-md-4 mb-3">
-    <div class="form-group col-md-6">
-      <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
+  <div class="container mt-7">
+    <div class="row justify-content-center">
+        <div class="form-group col-md-3">
+      <label for="inputEmail4">Email</label>
+      <asp:TextBox ID="TbMail" runat="server" CssClass="form-control" placeholder="Email" type="email"></asp:TextBox>
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputState">State</label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
+    <div class="form-group col-md-3">
+      <label for="inputPassword4">Contraseña</label>
+      <asp:TextBox ID="TbContraseña" runat="server" CssClass="form-control" placeholder="Contraseña" type="password"></asp:TextBox>
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
+    <div class="form-group col-md-3">
+      <label for="inputPassword4">Contraseña</label>
+      <asp:TextBox ID="TbConfirmaContraseña" runat="server" CssClass="form-control" placeholder="Repita contraseña" type="password"></asp:TextBox>
     </div>
+  <div>
+      <div class="row justify-content-center">
+        <div class="form-group col-md-3">
+            <label for="inputPassword4">Telefono</label>
+            <asp:TextBox ID="TbTelefono" runat="server" CssClass="form-control" placeholder="15151516" type="Text"></asp:TextBox>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputTarjeta">Numero Tarjeta</label>
+            <asp:TextBox ID="TbTarjeta" runat="server" CssClass="form-control" placeholder="45648924182" type="Text"></asp:TextBox>
+        </div>
+      </div>
   </div>
-  <div class="col-md-4 mb-3">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Sign in</button>
+  <asp:Button ID="BtAceptar" runat="server" cssclass="btn btn-primary" Text="Aceptar" />
 </form>
 </asp:Content>
