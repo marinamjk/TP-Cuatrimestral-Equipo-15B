@@ -36,7 +36,6 @@ namespace Presentacion
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            
             revUrlImagen.Validate();
             if (!revUrlImagen.IsValid)
             {
@@ -93,9 +92,5 @@ namespace Presentacion
             RepeaterImages.DataBind();
         }
 
-        protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
-        {
-            imgArticulo.ImageUrl = txtUrlImagen.Text;
-        }
     }
 }
