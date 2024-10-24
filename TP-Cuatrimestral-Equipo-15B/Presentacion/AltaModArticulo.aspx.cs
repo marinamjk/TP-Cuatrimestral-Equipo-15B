@@ -38,16 +38,13 @@ namespace Presentacion
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-
-            string urlImagen = txtUrlImagen.Text;
-
             revUrlImagen.Validate();
             if (!revUrlImagen.IsValid)
             {
                 txtUrlImagen.Text = string.Empty;
                 return;
             }
-
+            string urlImagen = txtUrlImagen.Text;
 
             List<Imagen> images = (List<Imagen>)Session["ImagesList"] ?? new List<Imagen>();
             images.Add(new Imagen { UrlImagen = urlImagen });
@@ -87,7 +84,7 @@ namespace Presentacion
 
         protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
         {
-
+            imgArticulo.ImageUrl = txtUrlImagen.Text;
         }
     }
 }
