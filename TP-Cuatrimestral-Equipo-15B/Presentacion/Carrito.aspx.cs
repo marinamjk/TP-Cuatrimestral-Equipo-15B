@@ -44,7 +44,7 @@ namespace Presentacion
 
         protected void btnIniciarCompra_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("~/DetallesCompra.aspx");
         }
     }
 }
