@@ -95,6 +95,7 @@
     <Content Include="Detalle.aspx" />
     <Content Include="DetallesCompra.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Recursos\usuario.png.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -164,6 +165,13 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Favoritos.aspx.cs">
+      <DependentUpon>Favoritos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Favoritos.aspx.designer.cs">
+      <DependentUpon>Favoritos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

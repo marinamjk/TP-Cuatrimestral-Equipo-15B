@@ -51,7 +51,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item disabled">Compras</a></li>
-                                <li><a class="dropdown-item" href="#">Favoritos</a></li>
+                                <li><a class="dropdown-item" href="Favoritos.aspx">Favoritos</a></li>
                                 <li><a class="dropdown-item" href="#">Historial</a></li>
                             </ul>
                         </li>
