@@ -62,7 +62,7 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item disabled">Ventas</a></li>
                                 <li><a class="dropdown-item" href="#">Pedidos</a></li>
-                                <li><a class="dropdown-item" href="#">Agregar Artículo</a></li>
+                                <li><a class="dropdown-item" href="AltaModArticulo.aspx">Agregar Artículo</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
