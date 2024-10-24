@@ -71,6 +71,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdministrarCategoria.aspx" />
+    <Content Include="AdministrarMarca.aspx" />
     <Content Include="AdministrarPedido.aspx" />
     <Content Include="AltaModArticulo.aspx" />
     <Content Include="Carrito.aspx" />
@@ -111,6 +113,20 @@
     <Content Include="Registrarse.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministrarCategoria.aspx.cs">
+      <DependentUpon>AdministrarCategoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdministrarCategoria.aspx.designer.cs">
+      <DependentUpon>AdministrarCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdministrarMarca.aspx.cs">
+      <DependentUpon>AdministrarMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdministrarMarca.aspx.designer.cs">
+      <DependentUpon>AdministrarMarca.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdministrarPedido.aspx.cs">
       <DependentUpon>AdministrarPedido.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

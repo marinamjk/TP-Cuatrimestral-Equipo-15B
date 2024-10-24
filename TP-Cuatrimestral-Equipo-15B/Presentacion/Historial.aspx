@@ -23,7 +23,7 @@
                                 <p class="card-text">Mismo precio en 9 cuotas de $51.669</p>
                                 <p class="card-text text-success">Envío gratis</p>
                                 <a href="VerCompra.aspx" class="btn btn-primary">Ver Compra</a>
-                                <a href="#" class="btn btn-danger">Eliminar</a>
+                                
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                                 <p class="card-text"><del>2.000.000</del> $193.205.000 <span class="text-success">5% OFF</span></p>
                                 <p class="card-text">En 6 cuotas de $32.300.000 anda a sabr</p>
                                 <a href="VerCompra.aspx" class="btn btn-primary">Ver Compra</a>
-                                <a href="#" class="btn btn-danger">Eliminar</a>
+                                
                             </div>
                         </div>
                     </div>
