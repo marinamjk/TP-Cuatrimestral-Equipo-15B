@@ -94,8 +94,8 @@
 
 
         <div class="col-6">
-             <br/>
-             <br/>
+            <br />
+            <br />
             <div class="mb-3">
                 <asp:Label ID="lblPrecio" CssClass="fs-1" runat="server" Text="$5000.00"></asp:Label>
             </div>
@@ -116,6 +116,21 @@
                 <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClientClick="toggleIcon(this); return false" />
                 <i id="icon" class="bi bi-heart"></i>
             </div>
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <div class>
+                        <asp:Button ID="Modificar" runat="server" Text="Modificar" CssClass="btn btn-primary" />
+                        <asp:Button ID="btnEliminarArticulo" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminarArticulo_Click" />
+                    </div>
+                    <%if (ConfirmarEliminacion)
+                        { %>
+                    <div class="m-3">
+                        <asp:CheckBox ID="chkConfirmarEliminacion" Text="Confirmar eliminación" runat="server" />
+                        <asp:Button ID="btnConfirmarEliminacion" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnConfirmarEliminacion_Click" />
+                    </div>
+                    <%} %>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
     </div>
 

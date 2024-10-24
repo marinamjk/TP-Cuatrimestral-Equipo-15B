@@ -249,13 +249,13 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.Repeater RepeaterImages;
 
         /// <summary>
-        /// Control btnVender.
+        /// Control btnPublicar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVender;
+        protected global::System.Web.UI.WebControls.Button btnPublicar;
 
         /// <summary>
         /// Control btnCancelar.

@@ -11,15 +11,15 @@ namespace Presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
                 ViewState["ImageLinks"] = new List<string>();
                 BindRepeater();
             }
         }
-    
 
-        protected void btnVender_Click(object sender, EventArgs e)
+
+        protected void btnPublicar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -27,12 +27,11 @@ namespace Presentacion
                 if (!Page.IsValid)
                     return;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx");
             }
-
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
@@ -40,10 +39,10 @@ namespace Presentacion
             revUrlImagen.Validate();
             if (!revUrlImagen.IsValid)
             {
-                txtUrlImagen.Text= string.Empty;
+                txtUrlImagen.Text = string.Empty;
                 return;
             }
-                
+
             // Recuperar la lista de links desde el ViewState
             List<string> imageLinks = (List<string>)ViewState["ImageLinks"];
 
@@ -62,7 +61,7 @@ namespace Presentacion
                 txtUrlImagen.Text = string.Empty;
             }
         }
- 
+
         protected void btnQuitar_Click(object sender, EventArgs e)
         {
             // Recuperar la lista de links desde el ViewState
@@ -92,5 +91,6 @@ namespace Presentacion
             RepeaterImages.DataSource = imageLinks.Select(link => new { Url = link }).ToList();
             RepeaterImages.DataBind();
         }
+
     }
 }

@@ -12,13 +12,14 @@ namespace Presentacion
     public partial class Detalle : System.Web.UI.Page
     {
         protected Articulo articulo;
+        public bool ConfirmarEliminacion { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                ConfirmarEliminacion = false;
                 if (!IsPostBack)
                 {
-
                     string idQuery = Request.QueryString["id"];
 
                     if (!string.IsNullOrEmpty(idQuery))
@@ -78,6 +79,26 @@ namespace Presentacion
                 Response.Redirect("Error.aspx");
             }
            
+        }
+        protected void btnEliminarArticulo_Click(object sender, EventArgs e)
+        {
+            ConfirmarEliminacion = true;
+        }
+        protected void btnConfirmarEliminacion_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (chkConfirmarEliminacion.Checked)
+                {
+                    //Eliminar el articulo.
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+
         }
     }
 }
