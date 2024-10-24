@@ -1,5 +1,7 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,10 +13,10 @@ namespace Presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+           
             if (!IsPostBack)
             {
-                ViewState["ImageLinks"] = new List<string>();
-                BindRepeater();
+                CargarImagenes();
             }
         }
 
@@ -36,60 +38,41 @@ namespace Presentacion
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            
-            revUrlImagen.Validate();
-            if (!revUrlImagen.IsValid)
-            {
-                txtUrlImagen.Text = string.Empty;
-                return;
-            }
+            string urlImagen = txtUrlImagen.Text;
 
-            // Recuperar la lista de links desde el ViewState
-            List<string> imageLinks = (List<string>)ViewState["ImageLinks"];
+            List<Imagen> images = (List<Imagen>)Session["ImagesList"] ?? new List<Imagen>();
+            images.Add(new Imagen { UrlImagen = urlImagen });
 
-            // Agregar el nuevo link si el TextBox no está vacío
-            if (!string.IsNullOrWhiteSpace(txtUrlImagen.Text))
-            {
-                imageLinks.Add(txtUrlImagen.Text);
+            Session["ImagesList"] = images;
+            RepeaterImages.DataSource = images;
+            RepeaterImages.DataBind();
 
-                // Guardar la lista actualizada en el ViewState
-                ViewState["ImageLinks"] = imageLinks;
-
-                // Actualizar el Repeater
-                BindRepeater();
-
-                // Limpiar el TextBox
-                txtUrlImagen.Text = string.Empty;
-            }
+            txtUrlImagen.Text = string.Empty;
         }
 
         protected void btnQuitar_Click(object sender, EventArgs e)
         {
-            // Recuperar la lista de links desde el ViewState
-            List<string> imageLinks = (List<string>)ViewState["ImageLinks"];
+            Button btnQuitar = (Button)sender;
+            int index = Convert.ToInt32(btnQuitar.CommandArgument);
 
-            // Obtener el índice del botón que fue clickeado
-            Button btn = (Button)sender;
-            int index = int.Parse(btn.CommandArgument);
+            List<Imagen> images = (List<Imagen>)Session["ImagesList"];
 
-            // Eliminar la imagen de la lista
-            if (index >= 0 && index < imageLinks.Count)
+            if (images != null && index >= 0 && index < images.Count)
             {
-                imageLinks.RemoveAt(index);
+                images.RemoveAt(index);
+                                
+                Session["ImagesList"] = images;
+                RepeaterImages.DataSource = images;
+                RepeaterImages.DataBind();
             }
 
-            // Guardar la lista actualizada en el ViewState
-            ViewState["ImageLinks"] = imageLinks;
-
-            // Actualizar el Repeater
-            BindRepeater();
-
         }
-        private void BindRepeater()
+        private void CargarImagenes()
         {
-            // Recuperar la lista de links desde el ViewState y enlazarla al Repeater
-            List<string> imageLinks = (List<string>)ViewState["ImageLinks"];
-            RepeaterImages.DataSource = imageLinks.Select(link => new { Url = link }).ToList();
+            
+            List<Imagen> images = (List<Imagen>)Session["ImagesList"] ?? new List<Imagen>();
+
+            RepeaterImages.DataSource = images;
             RepeaterImages.DataBind();
         }
 

@@ -86,7 +86,7 @@
                         <asp:Label ID="lblUrlImagen" runat="server" CssClass="form-label" Text="Url Imagen: "></asp:Label>
                         <div class="row">
                             <div class="col-10">
-                                <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtUrlImagen_TextChanged" ></asp:TextBox>
+                                <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtUrlImagen_TextChanged" CausesValidation="false" ></asp:TextBox>
                                 <asp:RegularExpressionValidator ID="revUrlImagen" runat="server" CssClass="validator" ErrorMessage="Ingrese una dirección válida." ControlToValidate="txtUrlImagen" ValidationExpression="^(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.(jpg|jpeg|png|gif|bmp|svg|webp|tiff|ico|[a-zA-Z0-9-]+)(\/[-a-zA-Z0-9@:%_\+.~#?&=]*)?|data:image\/(jpg|jpeg|png|gif|bmp|svg|webp|tiff|ico);base64,[a-zA-Z0-9+/=]+)$"></asp:RegularExpressionValidator>
                             </div>
                             <div class="col-2">
@@ -99,10 +99,11 @@
                     </div>
 
                     <div class="m-3">
+
                         <asp:Repeater ID="RepeaterImages" runat="server">
                             <ItemTemplate>
                                 <div style="margin-bottom: 10px;">
-                                    <img src='<%# Eval("Url") %>' style="width: 100%; height: auto;" />
+                                    <img src='<%# Eval("UrlImagen") %>' style="width: 40%; height: auto;" />
                                     <asp:Button ID="btnQuitar" runat="server" CssClass="icon-buttonQuitar" Text="" CommandArgument='<%# Container.ItemIndex %>' OnClick="btnQuitar_Click" />
                                 </div>
                             </ItemTemplate>
