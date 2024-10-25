@@ -267,6 +267,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AccesoADatos\AccesoADatos.csproj">
+      <Project>{0696a061-cf64-4328-9a1e-7f5b5f33bceb}</Project>
+      <Name>AccesoADatos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\domino\dominio.csproj">
       <Project>{df21cbfe-a3c0-4110-870d-570c76dbac31}</Project>
       <Name>dominio</Name>

@@ -9,12 +9,12 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-3 mb-4">
           <label for="inputTarjeta">Contraseña</label>
           <asp:TextBox ID="TbContraseña" runat="server" CssClass="form-control" placeholder="Contraseña" type="Pasword"></asp:TextBox>
       </div>
     </div>
     <div class="row justify-content-center">
-        <asp:Button ID="BtAceptar" runat="server" cssclass="btn btn-primary" Text="Aceptar" />
+        <asp:Button ID="BtAceptar" runat="server" cssclass="btn btn-primary form-group col-md-2" Text="Aceptar" />
     </div>
 </asp:Content>
