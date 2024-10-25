@@ -8,20 +8,20 @@ namespace domino
 {
     public enum tipoUsuario
     {
-        usuario = 2,
-        admin = 1,
+        Comprador = 2,
+        Vendedor = 1,
     }
     public class Usuario
     {
         public int IdUsuario {  get; set; }
-        public char Nombre {  get; set; }
-        public char Apellido {  get; set; }
-        public char Dni {  get; set; }
-        public char Mail { get; set; }
-        public char Contraseña {  get; set; }
-        public char telefono {  get; set; }
+        public string Nombre {  get; set; }
+        public string Apellido {  get; set; }
+        public string Dni {  get; set; }
+        public string Mail { get; set; }
+        public string Contraseña {  get; set; }
+        public string telefono {  get; set; }
         public int IdDireccion {  get; set; }
         public int IdTarjeta {  get; set; }
-        public char Foto {  get; set; }
+        public string Foto {  get; set; }
     }
 }

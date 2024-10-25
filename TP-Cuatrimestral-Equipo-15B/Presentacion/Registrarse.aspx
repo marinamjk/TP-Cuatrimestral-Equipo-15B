@@ -53,6 +53,6 @@
         </div>
       </div>
   </div>
-  <asp:Button ID="BtAceptar" runat="server" cssclass="btn btn-primary form-group col-md-2" Text="Aceptar" />
+        <asp:Button ID="BtAceptar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Aceptar" OnClick="BtAceptar_Click" />
 </form>
 </asp:Content>
