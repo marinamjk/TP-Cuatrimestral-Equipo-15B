@@ -16,7 +16,7 @@
         function toggleIcon(button) {
             var icon = document.getElementById('icon');
 
-            // Cambia entre los iconos 'heart' y 'heart-fill'
+            
             if (icon.classList.contains('bi-heart')) {
                 icon.classList.remove('bi-heart');
                 icon.classList.add('bi-heart-fill');
@@ -24,7 +24,7 @@
                 icon.classList.remove('bi-heart-fill');
                 icon.classList.add('bi-heart');
             }
-            // Prevenir que el postback del botón ASP.NET ocurra
+            
             return false;
         }
     </script>
@@ -118,9 +118,10 @@
             </div>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
-                    <div class>
-                        <asp:Button ID="Modificar" runat="server" Text="Modificar" CssClass="btn btn-primary" />
+                    <div>
+                        <asp:Button ID="Modificar" runat="server" Text="Modificar" CssClass="btn btn-primary" OnClick="Modificar_Click" />
                         <asp:Button ID="btnEliminarArticulo" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminarArticulo_Click" />
+                    
                     </div>
                     <%if (ConfirmarEliminacion)
                         { %>

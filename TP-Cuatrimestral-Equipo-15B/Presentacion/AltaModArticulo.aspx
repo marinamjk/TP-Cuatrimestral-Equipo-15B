@@ -9,28 +9,28 @@
 
         .icon-buttonAgregar {
             display: inline-flex;
-            background-color: transparent; /* Color de fondo */
-            border: none; /* Sin borde */
-            padding: 5px 10px; /* Relleno */
+            background-color: transparent; 
+            border: none; 
+            padding: 5px 10px; 
             position: relative;
             background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2732%27 height=%2732%27 fill=%27blue%27 class=%27bi bi-plus-circle-fill%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z%27/%3E%3C/svg%3E');
             background-repeat: no-repeat;
-            background-position: center; /* Posiciona el SVG a la izquierda */
-            padding-left: 30px; /* Espacio para el ícono */
-            text-align: left; /* Alinea el texto */
+            background-position: center; 
+            padding-left: 30px; 
+            text-align: left; 
         }
 
         .icon-buttonQuitar {
             display: inline-flex;
-            background-color: transparent; /* Color de fondo */
-            border: none; /* Sin borde */
-            padding: 5px 10px; /* Relleno */
+            background-color: transparent; 
+            border: none; 
+            padding: 5px 10px; 
             position: relative;
             background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2732%27 height=%2732%27 fill=%27blue%27 class=%27bi bi-x-circle-fill%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z%27/%3E%3C/svg%3E');
             background-repeat: no-repeat;
-            background-position: center; /* Posiciona el SVG a la izquierda */
-            padding-left: 30px; /* Espacio para el ícono */
-            text-align: left; /* Alinea el texto */
+            background-position: center; /
+            padding-left: 30px; 
+            text-align: left; 
         }
     </style>
 </asp:Content>
@@ -119,7 +119,7 @@
            
             <div class="m-3">
                 <asp:Button ID="btnPublicar" runat="server" CssClass="btn btn-primary" Text="Publicar" OnClick="btnPublicar_Click" />
-                <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-secondary" Text="Cancelar" />
+                <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-secondary" Text="Cancelar" OnClick="btnCancelar_Click" />
             </div>
     
         </div>
