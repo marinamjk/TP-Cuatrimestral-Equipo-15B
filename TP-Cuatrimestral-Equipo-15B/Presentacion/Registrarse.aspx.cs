@@ -30,10 +30,10 @@ namespace Presentacion
                 usuario.telefono = TbTelefono.Text;
                 agregar.agregarUsuario(usuario);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
     }

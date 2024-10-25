@@ -31,9 +31,8 @@ namespace Negocio
         public void agregarUsuario(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("INSERT INTO Usuarios(Nombre,Apellido,DNI,Email,Contrasenia,Telefono,IDTipoUsuario values ('gianfranco','pantanetti','43193103','gianfranco.pantanett@gmail.com','matador901','1169821424',1)\r\n");
+            try {    
+                datos.setearConsulta("INSERT INTO Usuarios(Nombre,Apellido,DNI,Email,Contrasenia,Telefono,IDTipoUsuario) values (@Nombre,@apellido,@DNI,@Email,'@Contrasenia','1169821424',1)");
                 datos.setearParametros("@Nombre",usuario.Nombre);
                 datos.setearParametros("@apellido",usuario.Apellido);
                 datos.setearParametros("@DNI", usuario.Dni);
