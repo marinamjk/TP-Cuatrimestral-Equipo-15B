@@ -12,6 +12,10 @@ namespace Presentacion
     public partial class Detalle : System.Web.UI.Page
     {
         protected Articulo articulo;
+        protected string nombreArt;
+        protected string marcaArt;
+        protected string descripcionArt;
+
         public bool ConfirmarEliminacion { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -66,11 +70,14 @@ namespace Presentacion
                 ArticuloNegocio artNegocio = new ArticuloNegocio();
                 articulo = artNegocio.listar().FirstOrDefault(a => a.IdArticulo == idArticulo);
 
-                // Si el artículo existe
+               
                 if (articulo != null)
                 {
-                    // Se asignan los valores a los controles del formulario
-
+                    lblPrecio.Text = "$" + (articulo.Precio).ToString("F2");
+                    lblStockDisponible.Text = "Stock: " + articulo.Stock.ToString();
+                    nombreArt= articulo.Nombre.ToString();
+                    marcaArt= articulo.IDMarca.ToString();
+                    descripcionArt= articulo.Descripcion.ToString();
                 }
             }
             catch(Exception ex) 

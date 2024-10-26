@@ -77,17 +77,17 @@
                 </button>
             </div>
             <div class="mb-3">
-                <h1><strong>Acá va el nombre del articulo
+                <h1><strong><%= nombreArt %>
                 </strong>
                 </h1>
             </div>
             <div class="mb-3">
-                <h1 class="fs-4">Acá va la marca
+                <h1 class="fs-4"><%= marcaArt %>
                 </h1>
             </div>
             <div class="mb-3">
                 <p class="fs-4 lh-sm">
-                    Acá va la descripción del producto
+                    <%= descripcionArt %>
                 </p>
             </div>
         </div>
@@ -97,10 +97,10 @@
             <br />
             <br />
             <div class="mb-3">
-                <asp:Label ID="lblPrecio" CssClass="fs-1" runat="server" Text="$5000.00"></asp:Label>
+                <asp:Label ID="lblPrecio" CssClass="fs-1" runat="server"></asp:Label>
             </div>
             <div class="mb-3">
-                <asp:Label ID="lblStockDisponible" CssClass="fs-6 fw-light" runat="server" Text="Stock Disponible: nro"></asp:Label>
+                <asp:Label ID="lblStockDisponible" CssClass="fs-6 fw-light" runat="server"></asp:Label>
             </div>
             <div class="mb-3">
                 <asp:Label ID="lblCantidad" runat="server" Text="Cantidad: "></asp:Label>

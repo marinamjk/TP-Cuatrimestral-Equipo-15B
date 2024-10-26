@@ -34,7 +34,7 @@ namespace Presentacion
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx");
             }
-            Response.Redirect("Default.aspx");
+            Response.Redirect("~/Default.aspx");
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
