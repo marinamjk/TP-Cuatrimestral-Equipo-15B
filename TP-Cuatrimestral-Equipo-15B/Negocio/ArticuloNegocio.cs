@@ -10,50 +10,50 @@ namespace Negocio
 {
     public class ArticuloNegocio
     {
-        public List<Articulo> listar()
+        public List<Articulo> listarConSP()
         {
             List<Articulo> catalogo = new List<Articulo>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("Select A.IDArticulo, A.Codigo, A.Nombre, A.Descripcion, A.IDMarca, A.IDCategoria, A.Precio, A.Stock from Articulos A");
+                datos.setearProcedimiento("sp_listarArticulos");
+
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Articulo aux = new Articulo();
                     aux.IdArticulo = (int)datos.Lector["IDArticulo"];
-
-                    if (!(datos.Lector["Codigo"] is DBNull))
-                        aux.Codigo = (string)datos.Lector["Codigo"];
-
-                    if (!(datos.Lector["Nombre"] is DBNull))
-                        aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
 
                     if (!(datos.Lector["Descripcion"] is DBNull))
                         aux.Descripcion = (string)datos.Lector["Descripcion"];
 
+                   
+                    aux.Marca= new Marca();
                     if (!(datos.Lector["IDMarca"] is DBNull))
-                        aux.IDMarca = (int)datos.Lector["IDMarca"];
+                        aux.Marca.IdMarca = (int)datos.Lector["IDMarca"];
+                    aux.Marca.Nombre = (string)datos.Lector["NombreMarca"];
 
-                    //aux.Categoria = new Categoria();
-                    //if (!(datos.Lector["Categoria"] is DBNull))
-                    //    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.IdCategoria = (int)datos.Lector["IDCategoria"];
+                    aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
 
-                    //aux.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    
+                    aux.Stock = (int)datos.Lector["Stock"];
 
-                    if (!(datos.Lector["IDCategoria"] is DBNull))
-                        aux.IDMarca = (int)datos.Lector["IDCategoria"];
+                    if (!(datos.Lector["Puntaje"] is DBNull))
+                        aux.Puntaje = (decimal)datos.Lector["Puntaje"];
 
-                    if (!(datos.Lector["Precio"] is DBNull))
-                        aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
 
-                    if (!(datos.Lector["Stock"] is DBNull))
-                        aux.Stock = (int)datos.Lector["Stock"];
+                    ImagenNegocio im_negocio = new ImagenNegocio();
+                    aux.Imagenes = im_negocio.buscarImagenesXArticulo(aux.IdArticulo);
+                   
 
-                    ImagenNegocio im = new ImagenNegocio();
-                    aux.Imagenes = im.buscarImagenesXArticulo(aux.IdArticulo);
+                  
                     catalogo.Add(aux);
                 }
 

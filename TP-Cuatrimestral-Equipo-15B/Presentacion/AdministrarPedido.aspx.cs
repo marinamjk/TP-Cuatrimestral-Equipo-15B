@@ -15,7 +15,7 @@ namespace Presentacion
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            gvItemsComprados.DataSource = artNegocio.listar();
+            gvItemsComprados.DataSource = artNegocio.listarConSP();
             gvItemsComprados.DataBind();
 
             ConfirmaCancelacion = false;

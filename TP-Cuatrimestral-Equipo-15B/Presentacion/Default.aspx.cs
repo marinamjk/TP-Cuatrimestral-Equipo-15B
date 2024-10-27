@@ -18,7 +18,7 @@ namespace Presentacion
 
             try
             {
-                catalogo = negocio.listar();
+                catalogo = negocio.listarConSP();
 
                 if (!IsPostBack)
                 {

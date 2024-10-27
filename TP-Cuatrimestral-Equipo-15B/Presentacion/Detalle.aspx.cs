@@ -68,7 +68,7 @@ namespace Presentacion
             try
             {
                 ArticuloNegocio artNegocio = new ArticuloNegocio();
-                articulo = artNegocio.listar().FirstOrDefault(a => a.IdArticulo == idArticulo);
+                articulo = artNegocio.listarConSP().FirstOrDefault(a => a.IdArticulo == idArticulo);
 
                
                 if (articulo != null)
@@ -76,8 +76,8 @@ namespace Presentacion
                     lblPrecio.Text = "$" + (articulo.Precio).ToString("F2");
                     lblStockDisponible.Text = "Stock: " + articulo.Stock.ToString();
                     nombreArt= articulo.Nombre.ToString();
-                    marcaArt= articulo.IDMarca.ToString();
-                    descripcionArt= articulo.Descripcion.ToString();
+                    marcaArt = articulo.Marca.Nombre;
+                    descripcionArt= articulo.Descripcion;
                 }
             }
             catch(Exception ex) 
