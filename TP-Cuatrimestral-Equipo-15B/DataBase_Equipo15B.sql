@@ -8,7 +8,7 @@ CREATE table Tarjeta(
 	NumeroTarjeta int not null
 )
 
-CREATE table direccion(
+CREATE table Direccion(
 	IdDireccion int primary key identity(1,1),
 	Direccion varchar(100) not null
 )
@@ -22,8 +22,8 @@ DNI varchar(10) not null,
 Email varchar(250) not null unique,
 Contrasenia varchar(50) not null,
 Telefono varchar(50) null,
-IDDireccion int null,
-IDTarjeta int null,
+IDDireccion int null foreign key references Direccion(IdDireccion),
+IDTarjeta int null foreign key references Tarjeta(IDTarjeta),
 UrlFotoPerfil varchar(500) null
 )
 
