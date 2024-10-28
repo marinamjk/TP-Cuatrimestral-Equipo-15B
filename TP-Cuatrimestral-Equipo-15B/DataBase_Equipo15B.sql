@@ -71,26 +71,76 @@ Begin
 End
 go
 
-Exec sp_listarArticulos
-go
 Create Procedure sp_listarMarcas
 As
 Begin
 	Select IDMarca, Nombre, Estado from Marcas
 End
 go
-go
-Exec sp_listarMarcas
-go
+
 Create Procedure sp_listarCategorias
 As
 Begin
 	Select IDCategoria, Nombre, IDCategoriaPadre, Estado from Categorias
 End
 go
+
+Create Procedure sp_listarSubcategorias(
+@idCatPadre int= NULL
+)
+as
+Begin
+ Select IDCategoria, Nombre, IDCategoriaPadre, Estado 
+ from Categorias 
+ where (IDCategoriaPadre = @idCatPadre OR (@idCatPadre IS NULL AND IDCategoriaPadre IS NULL));
+End
 go
-Exec sp_listarCategorias
+
+Create Procedure sp_AgregarArticulo(
+@Nombre varchar(100),
+@Descripcion varchar(3000),
+@IDMarca int,
+@IDCategoria int,
+@Precio money,
+@Stock int
+)
+as
+begin
+Insert into Articulos (Nombre, Descripcion, IDMarca, IDCategoria, Precio, Stock, Puntaje, Estado) output inserted.IDArticulo values
+(@Nombre, @Descripcion, @IDMarca, @IDCategoria, @Precio, @Stock, 0, 1)
+end
 go
+
+Create Procedure sp_AgregarImagen(
+ @IDArticulo int,
+ @Url varchar(1500)
+)
+as
+begin
+Insert Into Imagenes (IDArticulo, UrlImagen) values
+(@IDArticulo, @Url)
+end
+go
+
+Create Procedure sp_AgregarMarca(
+@Nombre varchar(50)
+) as
+begin
+	Insert into Marcas (Nombre, Estado) values
+	(@Nombre, 1)
+end
+go
+
+Create Procedure sp_AgregarCategoria(
+@Nombre varchar(50),
+@IDCategoriaPadre int= NULL
+) as
+begin
+	Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
+	(@Nombre, @IDCategoriaPadre, 1)
+end
+go
+
 
 Insert into Marcas(Nombre, Estado) values
 ('Samsung', 1),

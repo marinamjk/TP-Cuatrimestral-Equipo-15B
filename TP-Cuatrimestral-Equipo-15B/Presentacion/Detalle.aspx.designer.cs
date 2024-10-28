@@ -15,6 +15,15 @@ namespace Presentacion
     {
 
         /// <summary>
+        /// Control lblCategoria.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCategoria;
+
+        /// <summary>
         /// Control repeterImagenesInd.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace Presentacion
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater repeterImagenes;
+
+        /// <summary>
+        /// Control lblPuntaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPuntaje;
 
         /// <summary>
         /// Control lblPrecio.

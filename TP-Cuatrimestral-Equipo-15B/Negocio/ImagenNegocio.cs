@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Negocio
 {
-    internal class ImagenNegocio
+    public class ImagenNegocio
     {
         public List<Imagen> buscarImagenesXArticulo(int IdArticulo)
         {
@@ -17,19 +17,16 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("Select IdImagen, IdArticulo, UrlImagen from Imagenes where IDArticulo= @IDArticulo");
+                datos.setearConsulta("Select IDImagen, IdArticulo, UrlImagen from Imagenes where IDArticulo= @IDArticulo");
                 datos.setearParametros("@IDArticulo", IdArticulo);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Imagen aux = new Imagen();
-                    if (!(datos.Lector["IdImagen"] is DBNull))
-                        aux.IdImagen = (int)datos.Lector["IdImagen"];
-                    if (!(datos.Lector["IdArticulo"] is DBNull))
-                        aux.IdArticulo = (int)datos.Lector["IdArticulo"];
-                    if (!(datos.Lector["UrlImagen"] is DBNull))
-                        aux.UrlImagen = (string)datos.Lector["UrlImagen"];
+                    aux.IdImagen = (int)datos.Lector["IDImagen"];
+                    aux.IdArticulo = IdArticulo;
+                    aux.UrlImagen = (string)datos.Lector["UrlImagen"];
                     imagenes.Add(aux);
                 }
             }
@@ -42,6 +39,26 @@ namespace Negocio
                 datos.cerrarConexion();
             }
             return imagenes;
+        }
+
+        public void agregarImagen(Imagen imagen)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_AgregarImagen");
+                datos.setearParametros("@IDArticulo", imagen.IdArticulo);
+                datos.setearParametros("@Url", imagen.UrlImagen );    
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

@@ -45,11 +45,6 @@
 
             </div>
             <div class="m-3">
-                <asp:Label ID="lblCodigo" runat="server" CssClass="form-label" Width="100px" Text="Código:"></asp:Label>
-                <asp:TextBox ID="txtCodigo" runat="server" CssClass="form-control"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="rfvCodigo" runat="server" CssClass="validator" maxLength="50" ControlToValidate="txtCodigo" ErrorMessage="Este campo es requerido."></asp:RequiredFieldValidator>
-            </div>
-            <div class="m-3">
                 <asp:Label ID="lblNombre" runat="server" CssClass="form-label" Text="Nombre de Artículo: "></asp:Label>
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvNombre" runat="server" CssClass="validator" maxLength="100" ControlToValidate="txtNombre" ErrorMessage="Este campo es requerido."></asp:RequiredFieldValidator>

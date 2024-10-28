@@ -70,13 +70,13 @@ namespace AccesoADatos
         {
             comando.Parameters.AddWithValue(nombre, valor);
         }
-        public object ejecutarEscalar()
+        public int ejecutarEscalar()
         {
             comando.Connection = conexion;
             try
             {
                 conexion.Open();  
-                return comando.ExecuteScalar();
+                return int.Parse(comando.ExecuteScalar().ToString());
             }
             catch (Exception ex)
             {

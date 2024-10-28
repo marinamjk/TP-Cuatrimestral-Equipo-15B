@@ -11,7 +11,7 @@ namespace Presentacion
 {
     public partial class Default : System.Web.UI.Page
     {
-        List<Articulo> catalogo;
+       public List<Articulo> catalogo;
         protected void Page_Load(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
@@ -30,7 +30,7 @@ namespace Presentacion
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx", false);
             }
 
         }

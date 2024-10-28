@@ -35,18 +35,13 @@
     <div class="row">
         <div class="col-6">
             <div class="mb-3">
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Categoria</li>
-                        <li class="breadcrumb-item">Subcategoria</li>
-                    </ol>
-                </nav>
+                       <asp:Label ID="lblCategoria" runat="server"></asp:Label>
+        
             </div>
             <div id="caruselArticulo" class="carousel slide">
                 <div class="carousel-indicators">
                     <asp:Repeater ID="repeterImagenesInd" runat="server">
                         <ItemTemplate>
-
 
                             <button type="button" data-bs-target="#caruselArticulo" data-bs-slide-to="<%# Container.ItemIndex %>"
                                 class="<%# Container.ItemIndex == 0 ? " active" : "" %>"
@@ -96,6 +91,9 @@
         <div class="col-6">
             <br />
             <br />
+            <div class="mb-3">
+                <asp:Label ID="lblPuntaje"  CssClass="fs-1" runat="server"></asp:Label>
+            </div>
             <div class="mb-3">
                 <asp:Label ID="lblPrecio" CssClass="fs-1" runat="server"></asp:Label>
             </div>

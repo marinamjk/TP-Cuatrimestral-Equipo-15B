@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Negocio;
 
 namespace Presentacion
 {
@@ -13,10 +14,32 @@ namespace Presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                CargarImagenes();
+                if (!IsPostBack)
+                {
+                    //CargarImagenes();
+
+                    CategoriaNegocio catNegocio = new CategoriaNegocio();
+                    ddlCategoria.DataSource = catNegocio.listarSubcategorias(null);
+                    ddlCategoria.DataValueField = "IdCategoria";
+                    ddlCategoria.DataTextField = "Nombre";
+                    ddlCategoria.DataBind();
+
+                    MarcaNegocio marcaNegocio= new MarcaNegocio();
+                    ddlMarca.DataSource = marcaNegocio.listarMarcas();
+                    ddlMarca.DataValueField = "IdMarca";
+                    ddlMarca.DataTextField = "Nombre";
+                    ddlMarca.DataBind();
+
+                }
             }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+
         }
 
 
@@ -27,14 +50,41 @@ namespace Presentacion
                 Page.Validate();
                 if (!Page.IsValid)
                     return;
-                //Agregar artículo
+
+                ArticuloNegocio artNegocio= new ArticuloNegocio();
+               
+                Articulo nuevo = new Articulo();
+                nuevo.Nombre = txtNombre.Text;
+                nuevo.Marca= new Marca();
+                nuevo.Marca.IdMarca = int.Parse(ddlMarca.SelectedValue);
+                nuevo.Descripcion = txtDescripción.Text;
+                nuevo.Categoria = new Categoria();
+                nuevo.Categoria.IdCategoria = int.Parse(ddlCategoria.SelectedValue);
+                nuevo.Precio = decimal.Parse(txtPrecio.Text);
+                nuevo.Stock= int.Parse(txtStock.Text);
+                nuevo.Puntaje = 0;
+                int idNuevo= artNegocio.agregarArticulo(nuevo);
+
+                nuevo.Imagenes = (List<Imagen>)Session["ImagesList"];
+                ImagenNegocio imagenNegocio = new ImagenNegocio();
+
+                if (nuevo.Imagenes != null && nuevo.Imagenes.Count > 0)
+                {
+                    for (int i = 0; i < nuevo.Imagenes.Count; i++)
+                    {
+                        nuevo.Imagenes[i].IdArticulo = idNuevo;
+                        imagenNegocio.agregarImagen(nuevo.Imagenes[i]);
+                    }
+                }
+          
+
+                Response.Redirect("~/Default.aspx", false);
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx");
             }
-            Response.Redirect("~/Default.aspx");
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
