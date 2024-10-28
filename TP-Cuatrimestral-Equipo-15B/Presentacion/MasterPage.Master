@@ -34,18 +34,20 @@
                                   else
                                   {%>
                                     <li><a class="dropdown-item" href="/Registrarse.aspx">Mi Perfil</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Salir</a></li>
                                   <%}%>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Salir</a></li>
                             </ul>
                         </li>
                         <%if(Session["usuario"] == null) {%> 
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="Registrarse.aspx">Registrarme</a>
                             </li>  
-                        <%}%>                                                 
+                        <%}
+
+%>                                                 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta
                             </a>
@@ -55,22 +57,23 @@
                                 <li><a class="dropdown-item" href="Historial.aspx">Historial</a></li>
                             </ul>
                         </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Comercio
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item disabled">Ventas</a></li>
-                                <li><a class="dropdown-item" href="#">Pedidos</a></li>
-                                <li><a class="dropdown-item" href="AltaModArticulo.aspx">Agregar Artículo</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item disabled">Administración</a></li>
-                                <li><a class="dropdown-item" href="AdministrarCategoria.aspx">Administrar Categorias</a></li>
-                                <li><a class="dropdown-item" href="AdministrarMarca.aspx">Administrar Marcas</a></li>
-                            </ul>
-                        </li>
+                        <%if (Session["usuario"] != null) {%>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Comercio
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item disabled">Ventas</a></li>
+                                    <li><a class="dropdown-item" href="#">Pedidos</a></li>
+                                    <li><a class="dropdown-item" href="AltaModArticulo.aspx">Agregar Artículo</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item disabled">Administración</a></li>
+                                    <li><a class="dropdown-item" href="AdministrarCategoria.aspx">Administrar Categorias</a></li>
+                                    <li><a class="dropdown-item" href="AdministrarMarca.aspx">Administrar Marcas</a></li>
+                                </ul>
+                            </li>
+                        <%}%>
 
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="Carrito.aspx" style="line-height: 0">

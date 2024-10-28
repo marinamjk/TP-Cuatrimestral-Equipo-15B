@@ -11,7 +11,10 @@
     <div class="row justify-content-center">
       <div class="form-group col-md-3 mb-4">
           <label for="inputTarjeta">Contraseña</label>
-          <asp:TextBox ID="TbContraseña" runat="server" CssClass="form-control" placeholder="Contraseña" type="Pasword"></asp:TextBox>
+          <asp:TextBox ID="TbContraseña" runat="server" CssClass="form-control" placeholder="Contraseña" type="Password"></asp:TextBox>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="togglePassword">Mostrar</button>
+        </div>
       </div>
     </div>
     <div class="row justify-content-center">

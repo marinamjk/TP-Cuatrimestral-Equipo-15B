@@ -29,10 +29,11 @@ namespace Presentacion
             if(id > 0)
             {
                 Session.Add("usuario", usuario);
+                Response.Redirect("default.aspx", false);
             }
             else
             {
-                Response.Redirect("historial.aspx");
+                Response.Redirect("historial.aspx",false);
             }
         }
     }
