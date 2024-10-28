@@ -15,6 +15,6 @@
       </div>
     </div>
     <div class="row justify-content-center">
-        <asp:Button ID="BtAceptar" runat="server" cssclass="btn btn-primary form-group col-md-2" Text="Aceptar" />
+        <asp:Button ID="BtAceptar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Aceptar" OnClick="BtAceptar_Click" />
     </div>
 </asp:Content>

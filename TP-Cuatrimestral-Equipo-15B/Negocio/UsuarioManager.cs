@@ -50,5 +50,41 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public int iniciar_sesion(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT u.IdUsuario as usuario, u.Email as mail, u.Contrasenia as contra FROM Usuarios u where '@email' = u.Email");
+                datos.setearParametros("@email", usuario.Mail);
+                datos.ejecutarLectura();
+                Usuario aux1 = new Usuario();
+                while (datos.Lector.Read())
+                {   
+                    Usuario aux = new Usuario();
+                    aux.IdUsuario = (int)datos.Lector["usuario"];
+                    aux.Mail = (string)datos.Lector["mail"];
+                    aux.Contraseña = (string)datos.Lector["contra"];
+                    aux1 = aux;
+                    if((aux1.Mail == usuario.Mail) && (aux1.Contraseña == usuario.Contraseña))
+                    {
+                        return usuario.IdUsuario;
+                    }
+                }
+                
+                return -1;
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
