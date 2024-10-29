@@ -29,6 +29,7 @@ namespace Presentacion
                 usuario.Contraseña = TbContraseña.Text;
                 usuario.telefono = TbTelefono.Text;
                 agregar.agregarUsuario(usuario);
+                Response.Redirect("Default.aspx", false);
             }
             catch (Exception ex)
             {

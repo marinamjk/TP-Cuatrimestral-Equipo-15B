@@ -33,7 +33,7 @@
                                 <%}
                                   else
                                   {%>
-                                    <li><a class="dropdown-item" href="/Registrarse.aspx">Mi Perfil</a></li>
+                                    <li><a class="dropdown-item" href="/MiPerfil.aspx">Mi Perfil</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -45,19 +45,18 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="Registrarse.aspx">Registrarme</a>
                             </li>  
-                        <%}
-
-%>                                                 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item disabled">Compras</a></li>
-                                <li><a class="dropdown-item" href="Favoritos.aspx">Favoritos</a></li>
-                                <li><a class="dropdown-item" href="Historial.aspx">Historial</a></li>
-                            </ul>
-                        </li>
+                        <%}%>
+                        
                         <%if (Session["usuario"] != null) {%>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item disabled">Compras</a></li>
+                                    <li><a class="dropdown-item" href="Favoritos.aspx">Favoritos</a></li>
+                                    <li><a class="dropdown-item" href="Historial.aspx">Historial</a></li>
+                                </ul>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Comercio
                                 </a>
@@ -73,14 +72,13 @@
                                     <li><a class="dropdown-item" href="AdministrarMarca.aspx">Administrar Marcas</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="Carrito.aspx" style="line-height: 0">
+                                    <i class="bi bi-cart2" style="font-size: 25px;"></i>
+                                </a>
+                            </li>
+
                         <%}%>
-
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="Carrito.aspx" style="line-height: 0">
-                                <i class="bi bi-cart2" style="font-size: 25px;"></i>
-                            </a>
-                        </li>
-
                     </ul>
                 </div>
             </div>
