@@ -16,15 +16,15 @@
             <!-- GridView aca se cargaran los articulosque se vayan agregando al carrito -->
             <asp:GridView ID="gvCarrito" runat="server" AutoGenerateColumns="False" CssClass="table table-striped mt-4" Visible="False">
                 <Columns>
-                    <asp:BoundField DataField="Id" HeaderText ="Id" />
-                    <asp:BoundField DataField="NombreArticulo" HeaderText="Producto" />
+                    <asp:BoundField DataField="IdArticulo" HeaderText ="Id" />
+                    <asp:BoundField DataField="Nombre" HeaderText="Producto" />
                     <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
                     <asp:BoundField DataField="Precio" HeaderText="Subtotal" />
                     <asp:TemplateField HeaderText="Acciones">
                         <ItemTemplate>
-                            <asp:Button ID="btnVerDetalles" runat="server" Text="Ver Detalles" CommandArgument='<%# Eval("ID") %>' OnClick="btnVerDetalles_Click" />
+                            <asp:Button ID="btnVerDetalles" runat="server" Text="Ver Detalles" CommandArgument='<%# Eval("IdArticulo") %>' OnClick="btnVerDetalles_Click" />
                             <!-- Se va a buscar recuperar el id del articulo en el GridView con Eval, para eliminar si es necesario -->
-                            <asp:Button ID="btnEliminar" runat="server" Text="🗑" CommandArgument='<%# Eval("ID") %>' OnClick="btnEliminar_Click" CssClass="btn btn-sm" />
+                            <asp:Button ID="btnEliminar" runat="server" Text="🗑" CommandArgument='<%# Eval("IdArticulo") %>' OnClick="btnEliminar_Click" CssClass="btn btn-sm" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

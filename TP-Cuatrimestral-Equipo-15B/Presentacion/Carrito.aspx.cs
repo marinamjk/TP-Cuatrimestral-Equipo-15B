@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -10,67 +11,78 @@ namespace Presentacion
 {
     public partial class Carrito : System.Web.UI.Page
     {
+        private CarritoNegocio carritoNegocio;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                carritoNegocio = new CarritoNegocio();
                 CargarCarrito();
+                //// Recuperar la instancia del carrito desde la sesión
+                //carritoNegocio = (CarritoNegocio)Session["Carrito"] ?? new CarritoNegocio();
+                //CargarCarrito();
             }
         }
 
         //funcion para vista preliminar
         private void CargarCarrito()
         {
-            DataTable datosPrueba = new DataTable();
-            datosPrueba.Columns.Add("ID");
-            datosPrueba.Columns.Add("NombreArticulo");
-            datosPrueba.Columns.Add("Cantidad");
-            datosPrueba.Columns.Add("Precio", typeof(decimal));
+            var articulos = carritoNegocio.ObtenerAticulos();
 
-            datosPrueba.Rows.Add(1, "Teclado", 2, 200000.00m);
-            datosPrueba.Rows.Add(2, "Mouse", 1, 30000.00m);
+            if (articulos.Count == 0)
+            {
+                gvCarrito.Visible = false;
+                lblCarritoVacio.Visible = false;
+                envio.Visible = false;
+                total.Visible = false;
+                btn.Visible = false;
+                lblTotal.Text = "$0.00";
+                return;
+            }
 
-            gvCarrito.DataSource = datosPrueba;
+
+            DataTable datosCarrito = new DataTable();
+            datosCarrito.Columns.Add("IdArticulo", typeof(int));
+            datosCarrito.Columns.Add("Nombre", typeof(string));
+            datosCarrito.Columns.Add("Cantidad", typeof(int));
+            datosCarrito.Columns.Add("Precio", typeof(decimal));
+
+            foreach (var articuloEnCarrito in articulos)
+            {
+                datosCarrito.Rows.Add(articuloEnCarrito.Articulo.IdArticulo,
+                          articuloEnCarrito.Articulo.Nombre,
+                          articuloEnCarrito.Cantidad,
+                          articuloEnCarrito.Subtotal
+                          );
+
+            }
+
+            gvCarrito.DataSource = datosCarrito;
             gvCarrito.DataBind();
 
-            bool carritoVacio = datosPrueba.Rows.Count == 0;
-            gvCarrito.Visible = !carritoVacio;
-            lblCarritoVacio.Visible = carritoVacio;
-            envio.Visible = !carritoVacio;
-            total.Visible = !carritoVacio;
-            btn.Visible = !carritoVacio;
+            gvCarrito.Visible = true;
+            lblCarritoVacio.Visible = true;
+            envio.Visible = true;
+            total.Visible = true;
+            btn.Visible = true;
 
-            try
-            {
-                decimal total = 0m;
-                foreach (var row in datosPrueba.AsEnumerable())
-                {
-                    int cantidad = row.Field<int>("Cantidad");
-                    decimal precio = row.Field<decimal>("Precio");
-                    decimal subtotal = cantidad * precio;
-                    total += subtotal;
+            //Fata calcular el total
+            //decimal total = carritoNegocio.ObtenerTotal();
+            //lblTotal.Text = $"${total:N2}";
 
-                    // Imprimir para depuración
-                    Console.WriteLine($"Producto: {row.Field<string>("NombreArticulo")} | Cantidad: {cantidad} | Precio: {precio} | Subtotal: {subtotal}");
-                }
-
-                lblTotal.Text = $"${total:N2}";
-            }
-            catch (Exception ex)
-            {
-                lblTotal.Text = "Error al calcular el total.";
-                Console.WriteLine($"Error: {ex.Message} | StackTrace: {ex.StackTrace}");
-            }
         }
 
 
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-
+            Button btn = (Button)sender;
+            int idArticulo = int.Parse(btn.CommandArgument);
+            carritoNegocio.EliminarDelCarrito(idArticulo);
+            CargarCarrito();
         }
 
-      
+
 
         protected void btnIniciarCompra_Click(object sender, EventArgs e)
         {
@@ -86,7 +98,6 @@ namespace Presentacion
         {
             Button btn = (Button)sender;
             int idArticulo = int.Parse(btn.CommandArgument);
-
             Response.Redirect($"~/Detalle.aspx?id={idArticulo}");
         }
     }

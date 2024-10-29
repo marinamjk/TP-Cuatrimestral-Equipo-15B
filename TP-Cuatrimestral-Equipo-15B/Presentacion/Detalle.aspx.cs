@@ -149,5 +149,10 @@ namespace Presentacion
                         
             return rama;
         }
+
+        protected void btnIrAlCarrito_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Carrito.aspx");
+        }
     }
 }
