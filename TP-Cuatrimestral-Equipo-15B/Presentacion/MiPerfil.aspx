@@ -2,7 +2,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form id="form1" runat="server">
         <div class="container mt-5">
             <h2>Mi Perfil</h2>
             <div class="row">
@@ -34,5 +33,4 @@
                         <button type="submit" class="btn btn-success">Guardar Cambios</button>
                 </div>
         </div>
-    </form>
 </asp:Content>

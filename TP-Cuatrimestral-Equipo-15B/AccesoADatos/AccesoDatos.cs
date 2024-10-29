@@ -87,6 +87,23 @@ namespace AccesoADatos
                 conexion.Close();
             }
         }
+        public void ejecutarInsertar()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                comando.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
         public void cerrarConexion()
         {
             if (Lector != null)
