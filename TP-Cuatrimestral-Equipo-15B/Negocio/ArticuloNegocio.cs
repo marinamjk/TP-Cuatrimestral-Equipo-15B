@@ -31,8 +31,7 @@ namespace Negocio
 
                     if (!(datos.Lector["Descripcion"] is DBNull))
                         aux.Descripcion = (string)datos.Lector["Descripcion"];
-
-                   
+                                       
                     aux.Marca= new Marca();
                     if (!(datos.Lector["IDMarca"] is DBNull))
                         aux.Marca.IdMarca = (int)datos.Lector["IDMarca"];
