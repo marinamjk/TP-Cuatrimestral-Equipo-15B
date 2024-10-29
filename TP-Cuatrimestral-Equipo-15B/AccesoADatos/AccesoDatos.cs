@@ -62,7 +62,6 @@ namespace AccesoADatos
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -75,7 +74,7 @@ namespace AccesoADatos
             comando.Connection = conexion;
             try
             {
-                conexion.Open();  
+                conexion.Open(); 
                 return int.Parse(comando.ExecuteScalar().ToString());
             }
             catch (Exception ex)
