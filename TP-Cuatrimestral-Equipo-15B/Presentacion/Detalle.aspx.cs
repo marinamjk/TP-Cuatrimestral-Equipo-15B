@@ -45,8 +45,6 @@ namespace Presentacion
                             lblConfirmacion.Text = "El artículo no existe.";
                         }
 
-
-
                     }
                     else
                     {
