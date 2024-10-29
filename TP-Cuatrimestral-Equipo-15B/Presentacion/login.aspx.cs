@@ -22,18 +22,19 @@ namespace Presentacion
         {
             int id = 0;
             Usuario usuario = new Usuario();
+            Usuario usuarioCargado = new Usuario();
             UsuarioManager usuarioManager = new UsuarioManager();
             usuario.Mail = TbMail.Text;
             usuario.Contraseña = TbContraseña.Text;
-            id = usuarioManager.iniciar_sesion(usuario);
-            if(id > 0)
+            usuarioCargado = usuarioManager.iniciar_sesion(usuario);
+            if(usuarioCargado != null)
             {
-                Session.Add("usuario", usuario);
+                Session.Add("usuario", usuarioCargado);
                 Response.Redirect("default.aspx", false);
             }
             else
             {
-                Response.Redirect("historial.aspx",false);
+                Response.Redirect("Error.aspx",false);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using domino;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,8 +13,14 @@ namespace Presentacion
         public string Inicio { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-        
-             Inicio = "Iniciar Sesión";
+            if (Session["usuario"] == null ) 
+            {
+                Inicio = "Iniciar Sesión";
+            }
+            else
+            {
+                Inicio = ((Usuario)Session["usuario"]).Nombre;
+            }
             //si hay un usuario ingresado cambiar Inicio a nombre de usuario
           
         }

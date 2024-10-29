@@ -100,6 +100,7 @@
     <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Historial.aspx" />
+    <Content Include="Mi perfil.aspx" />
     <Content Include="Recursos\usuario.png.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -199,6 +200,13 @@
     </Compile>
     <Compile Include="Historial.aspx.designer.cs">
       <DependentUpon>Historial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mi perfil.aspx.cs">
+      <DependentUpon>Mi perfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mi perfil.aspx.designer.cs">
+      <DependentUpon>Mi perfil.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MasterPage.Master.cs">

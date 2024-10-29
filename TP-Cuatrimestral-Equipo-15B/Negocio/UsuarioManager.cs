@@ -52,28 +52,28 @@ namespace Negocio
             }
         }
 
-        public int iniciar_sesion(Usuario usuario)
+        public Usuario iniciar_sesion(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("SELECT IdUsuario, Email, Contrasenia FROM Usuarios where @email = Email");
+                datos.setearConsulta("SELECT IdUsuario, Nombre, Apellido, Email, Contrasenia FROM Usuarios where @email = Email");
                 datos.setearParametros("@email", usuario.Mail);
                 datos.ejecutarLectura();
-                Usuario aux1 = new Usuario();
+                Usuario aux = new Usuario();
                 while (datos.Lector.Read())
                 {   
-                    Usuario aux = new Usuario();
                     aux.IdUsuario = (int)datos.Lector["IdUsuario"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
                     aux.Mail = (string)datos.Lector["Email"];
                     aux.Contraseña = (string)datos.Lector["Contrasenia"];
-                    aux1 = aux;
                 }
-                if((aux1.Mail == usuario.Mail && aux1.Contraseña == usuario.Contraseña))
+                if((aux.Mail == usuario.Mail && aux.Contraseña == usuario.Contraseña))
                 {
-                    return aux1.IdUsuario;
+                    return aux;
                 }
-                return -1;
+                return null;
                 
             }
             catch (Exception)
