@@ -12,27 +12,42 @@ namespace Presentacion
 {
     public partial class AltaModArticulo : System.Web.UI.Page
     {
+        int idCategoriaSeleccionada;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+
                 if (!IsPostBack)
                 {
+                    ViewState["CategoriasSeleccionadas"] = new List<int>();
                     //CargarImagenes();
 
                     CategoriaNegocio catNegocio = new CategoriaNegocio();
+
                     ddlCategoria.DataSource = catNegocio.listarSubcategorias(null);
                     ddlCategoria.DataValueField = "IdCategoria";
                     ddlCategoria.DataTextField = "Nombre";
                     ddlCategoria.DataBind();
 
-                    MarcaNegocio marcaNegocio= new MarcaNegocio();
+                    MarcaNegocio marcaNegocio = new MarcaNegocio();
                     ddlMarca.DataSource = marcaNegocio.listarMarcas();
                     ddlMarca.DataValueField = "IdMarca";
                     ddlMarca.DataTextField = "Nombre";
                     ddlMarca.DataBind();
 
                 }
+                else
+                {
+                    List<int> categoriasSeleccionadas = (List<int>)ViewState["CategoriasSeleccionadas"];
+                    foreach (int idCategoria in categoriasSeleccionadas)
+                    {
+                        CargarSubcategoria(idCategoria);
+                    }
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -51,19 +66,19 @@ namespace Presentacion
                 if (!Page.IsValid)
                     return;
 
-                ArticuloNegocio artNegocio= new ArticuloNegocio();
-               
+                ArticuloNegocio artNegocio = new ArticuloNegocio();
+
                 Articulo nuevo = new Articulo();
                 nuevo.Nombre = txtNombre.Text;
-                nuevo.Marca= new Marca();
+                nuevo.Marca = new Marca();
                 nuevo.Marca.IdMarca = int.Parse(ddlMarca.SelectedValue);
                 nuevo.Descripcion = txtDescripción.Text;
                 nuevo.Categoria = new Categoria();
                 nuevo.Categoria.IdCategoria = int.Parse(ddlCategoria.SelectedValue);
                 nuevo.Precio = decimal.Parse(txtPrecio.Text);
-                nuevo.Stock= int.Parse(txtStock.Text);
+                nuevo.Stock = int.Parse(txtStock.Text);
                 nuevo.Puntaje = 0;
-                int idNuevo= artNegocio.agregarArticulo(nuevo);
+                int idNuevo = artNegocio.agregarArticulo(nuevo);
 
                 nuevo.Imagenes = (List<Imagen>)Session["ImagesList"];
                 ImagenNegocio imagenNegocio = new ImagenNegocio();
@@ -76,7 +91,7 @@ namespace Presentacion
                         imagenNegocio.agregarImagen(nuevo.Imagenes[i]);
                     }
                 }
-          
+
 
                 Response.Redirect("~/Default.aspx", false);
             }
@@ -117,7 +132,7 @@ namespace Presentacion
             if (images != null && index >= 0 && index < images.Count)
             {
                 images.RemoveAt(index);
-                                
+
                 Session["ImagesList"] = images;
                 RepeaterImages.DataSource = images;
                 RepeaterImages.DataBind();
@@ -126,7 +141,7 @@ namespace Presentacion
         }
         private void CargarImagenes()
         {
-            
+
             List<Imagen> images = (List<Imagen>)Session["ImagesList"] ?? new List<Imagen>();
 
             RepeaterImages.DataSource = images;
@@ -140,7 +155,59 @@ namespace Presentacion
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Default.aspx",false);
+            Response.Redirect("~/Default.aspx", false);
+        }
+
+        protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int idCategoriaSeleccionada = int.Parse(((DropDownList)sender).SelectedValue);
+
+                DropDownList ddlSender = (DropDownList)sender;
+               
+                // Guarda la categoría seleccionada en ViewState
+                List<int> categoriasSeleccionadas = (List<int>)ViewState["CategoriasSeleccionadas"];
+                if (!categoriasSeleccionadas.Contains(idCategoriaSeleccionada))
+                {
+                    categoriasSeleccionadas.Add(idCategoriaSeleccionada);
+                    ViewState["CategoriasSeleccionadas"] = categoriasSeleccionadas;
+                }
+
+                // Cargar las subcategorías correspondientes
+                CargarSubcategoria(idCategoriaSeleccionada);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+
+        }
+        private void CargarSubcategoria(int idCategoriaSeleccionada)
+        {
+            CategoriaNegocio catNegocio = new CategoriaNegocio();
+            List<Categoria> subcategorias = catNegocio.listarSubcategorias(idCategoriaSeleccionada);
+
+            if (subcategorias != null && subcategorias.Count > 0)
+            {
+                DropDownList nuevoDdl = new DropDownList
+                {
+                    ID = $"ddlSubcategoria_{idCategoriaSeleccionada}",
+                    AutoPostBack = true
+                };
+
+                nuevoDdl.SelectedIndexChanged += ddlCategoria_SelectedIndexChanged;
+
+                nuevoDdl.DataSource = subcategorias;
+                nuevoDdl.DataTextField = "Nombre";
+                nuevoDdl.DataValueField = "IdCategoria";
+                nuevoDdl.DataBind();
+
+                phSubcategorias.Controls.Add(nuevoDdl);
+            }
+
+
         }
     }
 }

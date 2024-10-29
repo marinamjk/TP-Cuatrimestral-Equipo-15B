@@ -84,7 +84,7 @@ namespace Presentacion
                     lblPrecio.Text = "$" + (articulo.Precio).ToString("F2");
                     lblStockDisponible.Text = "Stock: " + articulo.Stock.ToString();
                     lblCategoria.Text = listarRamaCategorias();                    
-                    }
+                }
             }
             catch(Exception ex) 
             {

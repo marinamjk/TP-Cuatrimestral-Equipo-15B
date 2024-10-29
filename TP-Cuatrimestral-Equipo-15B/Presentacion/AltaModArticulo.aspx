@@ -39,11 +39,15 @@
     </h1>
     <div class="row">
         <div class="col-6">
+         <asp:UpdatePanel runat="server">
+             <ContentTemplate>
             <div class="m-3">
                 <asp:Label ID="lblCategoria" runat="server" CssClass="form-label" Text="Categoria/Subcategoria:"></asp:Label>
-                <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control"></asp:DropDownList>
-
+                <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control"  AutoPostBack="true" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged"></asp:DropDownList>
+                <asp:PlaceHolder ID="phSubcategorias" runat="server"></asp:PlaceHolder>
             </div>
+              </ContentTemplate>
+     </asp:UpdatePanel>
             <div class="m-3">
                 <asp:Label ID="lblNombre" runat="server" CssClass="form-label" Text="Nombre de Artículo: "></asp:Label>
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
