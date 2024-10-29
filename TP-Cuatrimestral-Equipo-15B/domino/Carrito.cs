@@ -9,20 +9,30 @@ namespace dominio
 {
     public class Carrito
     {
-        public List<Articulo> Articulos { get; set; } = new List<Articulo>();
-        public void AgregarAticulo(Articulo articulo)
+        public List<ArticuloEnCarrito> Articulos { get; set; } = new List<ArticuloEnCarrito>();
+        public void AgregarArticulo(Articulo articulo, int cantidad)
         {
-            Articulos.Add(articulo);
+            var articuloEnCarrito = Articulos.FirstOrDefault(a => a.Articulo.IdArticulo == articulo.IdArticulo);
+
+            if (articuloEnCarrito != null)
+            {
+                //si existe el artiuculo aumenta la cantidad
+                articuloEnCarrito.Cantidad += cantidad;
+            }
+            else
+            {
+                Articulos.Add(new ArticuloEnCarrito { Articulo = articulo, Cantidad = cantidad });
+            }
         }
 
         public void EliminarArticulo(int idArticulo)
         {
-            Articulos.RemoveAll(a=>a.IdArticulo == idArticulo);
+            Articulos.RemoveAll(a => a.Articulo.IdArticulo == idArticulo);
         }
 
         public decimal CalcularTotal()
         {
-            return Articulos.Sum(a=> a.Precio);
+            return Articulos.Sum(a => a.Articulo.Precio * a.Cantidad);
         }
 
         public void VaciarCarrito()
