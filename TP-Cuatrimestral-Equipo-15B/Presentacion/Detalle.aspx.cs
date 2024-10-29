@@ -28,32 +28,51 @@ namespace Presentacion
                 {
                     string idQuery = Request.QueryString["id"];
 
-                    if (!string.IsNullOrEmpty(idQuery))
-                    {
-                        idArticulo = int.Parse(idQuery);
-                        cargarArticulo(idArticulo);
-                                                
 
-                        if (articulo.Imagenes != null && articulo.Imagenes.Count > 0)
+
+                    if (!string.IsNullOrEmpty(idQuery) && int.TryParse(idQuery, out int idArticulo))
+                    {
+
+                        cargarArticulo(idArticulo);
+
+                        if (articulo != null)
                         {
-                            repeterImagenes.DataSource = articulo.Imagenes;
-                            repeterImagenes.DataBind();
-                            repeterImagenesInd.DataSource = articulo.Imagenes;
-                            repeterImagenesInd.DataBind();
+                            Session["ArticuloSeleccionado"] = articulo; // se guarda el artículo en sesión
+                            CargarImagenes();
                         }
                         else
                         {
-                            List<Imagen> imagenesDefault = new List<Imagen>
-                            {
-                                new Imagen {  UrlImagen = "https://grupoact.com.ar/wp-content/uploads/2020/04/placeholder.png" }
-                            };
-                            repeterImagenes.DataSource = imagenesDefault;
-                            repeterImagenes.DataBind();
-                            repeterImagenesInd.DataSource = imagenesDefault;
-                            repeterImagenesInd.DataBind();
+                            lblConfirmacion.Text = "El artículo no existe.";
                         }
+
+
+
                     }
+                    else
+                    {
+                        lblConfirmacion.Text = "El ID del artículo no es válido.";
+                    }
+
+
+
                 }
+                else
+                {
+                    articulo = (Articulo)Session["ArticuloSeleccionado"]; // se recuperar el artículo desde la sesión en postbacks
+                }
+
+
+
+
+                //if (!string.IsNullOrEmpty(idQuery))
+                //{
+                //    idArticulo = int.Parse(idQuery);
+                //    cargarArticulo(idArticulo);
+
+
+                //    CargarImagenes();
+                //}
+            
             }
             catch (Exception ex)
             {
@@ -64,6 +83,24 @@ namespace Presentacion
        
         }
 
+        private void CargarImagenes()
+        {
+            if (articulo.Imagenes != null && articulo.Imagenes.Count > 0)
+            {
+                repeterImagenes.DataSource = articulo.Imagenes;
+                repeterImagenes.DataBind();
+                repeterImagenesInd.DataSource = articulo.Imagenes;
+                repeterImagenesInd.DataBind();
+            }
+            else
+            {
+                List<Imagen> imagenesDefault = new List<Imagen>{new Imagen {UrlImagen = "https://grupoact.com.ar/wp-content/uploads/2020/04/placeholder.png"}};
+                repeterImagenes.DataSource = imagenesDefault;
+                repeterImagenes.DataBind();
+                repeterImagenesInd.DataSource = imagenesDefault;
+                repeterImagenesInd.DataBind();
+            }
+        }
 
         private void cargarArticulo(int idArticulo)
         {
@@ -153,6 +190,50 @@ namespace Presentacion
         protected void btnIrAlCarrito_Click(object sender, EventArgs e)
         {
             Response.Redirect("Carrito.aspx");
+        }
+
+        protected void btnAgregarAlCarrito_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (articulo != null)
+                {
+                    int cantidad;
+
+                    //Response.Write($"Cantidad ingresada: {txtCantidad.Text}<br />");
+
+                    //if (int.TryParse(txtCantidad.Text, out cantidad) && cantidad > 0 && cantidad <= articulo.Stock)
+                    //{
+                    //    CarritoNegocio carritoNegocio = new CarritoNegocio();
+                    //    carritoNegocio.AgregarAlCarrito(articulo, cantidad);
+                    //    lblConfirmacion.Text = "Articulo agregado al carrito";
+                    //}
+                    if (int.TryParse(txtCantidad.Text, out cantidad) && cantidad > 0 && cantidad <= articulo.Stock)
+                    {
+                        // uso la misma instancia de carritosnegocio que maneja la sesión
+                        CarritoNegocio carritoNegocio = new CarritoNegocio();
+                        carritoNegocio.AgregarAlCarrito(articulo, cantidad);
+                        lblConfirmacion.Text = "Artículo agregado al carrito.";
+                    }
+                    else
+                    {
+                        // Response.Write($"Cantidad inválida ingresada: {cantidad}. Stock disponible: {articulo.Stock}<br />");
+
+                        lblConfirmacion.Text = "Cantidad Invalida ingrese un numero entre 1 y " + articulo.Stock;
+                    }
+                }
+                else
+                {
+                    //Response.Write("Error: El artículo es nulo.<br />");
+                    lblConfirmacion.Text = "Error al agregar articulo al carrito";
+                }
+            }
+            catch (Exception ex)
+            {
+                //Response.Write($"Error al cargar al carrito: {ex.Message}<br />");
+                Session.Add("error al cargar al carrito", ex.ToString());
+                lblConfirmacion.Text = "Error al cargar al carrito: " + ex.Message;
+            }
         }
     }
 }
