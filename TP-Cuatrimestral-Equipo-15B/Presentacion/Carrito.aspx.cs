@@ -14,16 +14,32 @@ namespace Presentacion
         private CarritoNegocio carritoNegocio;
         protected void Page_Load(object sender, EventArgs e)
         {
+            InicializarCarritoNegocio();
+
             if (!IsPostBack)
             {
                 carritoNegocio = new CarritoNegocio();
-                CargarCarrito();
-                //// Recuperar la instancia del carrito desde la sesión
-                //carritoNegocio = (CarritoNegocio)Session["Carrito"] ?? new CarritoNegocio();
-                //CargarCarrito();
+                var articulos = carritoNegocio.ObtenerAticulos();
+                if(articulos.Count != 0)
+                {
+                    CargarCarrito();
+
+                }
+                else
+                {
+                    lblCarritoVacio.Visible = true;
+                    gvCarrito.Visible = false;
+                    envio.Visible = false;
+                }
             }
         }
-
+        private void InicializarCarritoNegocio()
+        {
+            if (carritoNegocio == null)
+            {
+                carritoNegocio = new CarritoNegocio();
+            }
+        }
         //funcion para vista preliminar
         private void CargarCarrito()
         {
@@ -31,6 +47,7 @@ namespace Presentacion
 
             if (articulos.Count == 0)
             {
+               
                 gvCarrito.Visible = false;
                 lblCarritoVacio.Visible = false;
                 envio.Visible = false;
@@ -61,7 +78,7 @@ namespace Presentacion
             gvCarrito.DataBind();
 
             gvCarrito.Visible = true;
-            lblCarritoVacio.Visible = true;
+            lblCarritoVacio.Visible = false;
             envio.Visible = true;
             total.Visible = true;
             btn.Visible = true;
@@ -76,6 +93,8 @@ namespace Presentacion
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+            InicializarCarritoNegocio();
+
             Button btn = (Button)sender;
             int idArticulo = int.Parse(btn.CommandArgument);
             carritoNegocio.EliminarDelCarrito(idArticulo);
