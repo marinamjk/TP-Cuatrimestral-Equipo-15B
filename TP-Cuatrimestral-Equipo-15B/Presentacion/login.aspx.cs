@@ -6,7 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AccesoADatos;
 using dominio;
-using dominio;
 using Negocio;
 
 namespace Presentacion
