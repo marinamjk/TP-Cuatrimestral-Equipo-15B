@@ -160,8 +160,8 @@ Insert into Categorias(Nombre, IDCategoriaPadre, Estado) values
 ('Core i6', 1, 1),
 ('Con camara 13 mpx', 2, 1),
 ('con Camara 15px', 2, 1),
-('Inalámbricos', 3, 1),
-('No inalámbricos', 3, 1)
+('Inal mbricos', 3, 1),
+('No inal mbricos', 3, 1)
 
 go
 Insert Into Articulos(Nombre, Descripcion, IDMarca, IDCategoria, Precio, Stock, Puntaje, Estado) values
