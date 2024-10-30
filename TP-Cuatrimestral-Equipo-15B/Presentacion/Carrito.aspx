@@ -11,7 +11,7 @@
         <asp:Panel ID="panelCarrito" runat="server">
 
             <!-- Si no hay datos muestra lo siguiente -->
-            <asp:Label ID="lblCarritoVacio" runat="server" Text="Aún no se ha agregado ningún artículo a su carrito." Visible="False" CssClass="alert alert-warning"></asp:Label>
+            <asp:Label ID="lblCarritoVacio" runat="server" Text="Aún no se ha agregado ningún artículo a su carrito."  Visible="False"  CssClass="alert alert-warning"></asp:Label>
 
             <!-- GridView aca se cargaran los articulosque se vayan agregando al carrito -->
             <asp:GridView ID="gvCarrito" runat="server" AutoGenerateColumns="False" CssClass="table table-striped mt-4" Visible="False">

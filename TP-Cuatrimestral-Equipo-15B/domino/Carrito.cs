@@ -27,7 +27,24 @@ namespace dominio
 
         public void EliminarArticulo(int idArticulo)
         {
-            Articulos.RemoveAll(a => a.Articulo.IdArticulo == idArticulo);
+
+
+            //Articulos.RemoveAll(a => a.Articulo.IdArticulo == idArticulo);
+
+
+            var articuloEnCarrito = Articulos.FirstOrDefault(a => a.Articulo.IdArticulo == idArticulo);
+
+            if (articuloEnCarrito != null)
+            {               
+                if (articuloEnCarrito.Cantidad > 1)
+                {
+                    articuloEnCarrito.Cantidad--;
+                }          
+                else
+                {
+                    Articulos.Remove(articuloEnCarrito);
+                }
+            }
         }
 
         public decimal CalcularTotal()
