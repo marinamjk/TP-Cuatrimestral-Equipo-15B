@@ -33,7 +33,7 @@
            
 
             <!-- Le suma un monto de acuerdo a lo que cueste el envio -->
-            <div id="envio" class="mt-3" runat="server">
+           <%-- <div id="envio" class="mt-3" runat="server">
                 <div class="row mt-3">
                     <div class="col-md-6 mt-3">
                         <asp:TextBox ID="txtCodPostal" runat="server" CssClass="form-control" Text="Código Postal" placeholder="Ingrese Código Postal"></asp:TextBox>
@@ -42,7 +42,7 @@
                         <asp:Button ID="btnCalcularEnvio" runat="server" Text="Calcular Envío" CssClass="btn btn-secondary" OnClick="btnCalcularEnvio_Click" />
                     </div>
                 </div>
-            </div>
+            </div>--%>
             
             
             <div id="total" class="mt-4 text-end" runat="server" visible="false">

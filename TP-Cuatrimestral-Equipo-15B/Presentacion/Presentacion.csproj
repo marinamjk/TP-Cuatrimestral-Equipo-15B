@@ -93,6 +93,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="DatosContacto.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Detalle.aspx" />
     <Content Include="DetallesCompra.aspx" />
@@ -155,6 +156,13 @@
     </Compile>
     <Compile Include="CheckOut.aspx.designer.cs">
       <DependentUpon>CheckOut.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DatosContacto.aspx.cs">
+      <DependentUpon>DatosContacto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DatosContacto.aspx.designer.cs">
+      <DependentUpon>DatosContacto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

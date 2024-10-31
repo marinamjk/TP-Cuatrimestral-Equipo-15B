@@ -28,7 +28,7 @@ namespace Presentacion
                 {
                     lblCarritoVacio.Visible = true;
                     gvCarrito.Visible = false;
-                    envio.Visible = false;
+                    
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace Presentacion
             {               
                 gvCarrito.Visible = false;
                 lblCarritoVacio.Visible = false;
-                envio.Visible = false;
+                
                 total.Visible = false;
                 btn.Visible = false;
                 lblTotal.Text = "$0.00";
@@ -78,7 +78,7 @@ namespace Presentacion
 
             gvCarrito.Visible = true;
             lblCarritoVacio.Visible = false;
-            envio.Visible = true;
+            
             total.Visible = true;
             btn.Visible = true;
 
@@ -114,7 +114,7 @@ namespace Presentacion
         }
         protected void btnIniciarCompra_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/DetallesCompra.aspx");
+            Response.Redirect("~/DatosContacto.aspx");
         }
     }
 }

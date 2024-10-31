@@ -102,11 +102,13 @@
             </div>
             <div class="mb-3">
                 <asp:Label ID="lblCantidad" runat="server" Text="Cantidad: "></asp:Label>
-                <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number" Min="1" Max="100"></asp:TextBox>
+                <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number" Text="1" Min="1" Max="100"></asp:TextBox>
                 <asp:Button ID="btnAgregarAlCarrito" runat="server" Text="Agregar al carrito" OnClick="btnAgregarAlCarrito_Click" />
             </div>
             <div class="mb-3">
-                <asp:Label ID="lblConfirmacion" runat="server" Text="Confirmacion de item agregado"></asp:Label>
+                <asp:Label ID="lblConfirmacion" runat="server" Text=""></asp:Label>
+            </div>
+            <div class="mb-3">                
                 <asp:Button ID="btnIrAlCarrito" class="ms-auto" runat="server" Text="Ir al carrito" OnClick="btnIrAlCarrito_Click" />
             </div>
             <hr />

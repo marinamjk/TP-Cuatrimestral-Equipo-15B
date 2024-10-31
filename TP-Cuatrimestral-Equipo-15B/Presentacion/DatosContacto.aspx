@@ -1,7 +1,7 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="DetallesCompra.aspx.cs" Inherits="Presentacion.DetallesCompra" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="DatosContacto.aspx.cs" Inherits="Presentacion.DatosContacto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>Detalles de mis Compras</title>
+    <title>Datos de contacto</title>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -10,7 +10,7 @@
         <div class="row">
             <!-- Columna para detalles de la compra -->
             <div class="col-md-8">
-                <h2 class="mb-4">Detalles de mi Compra</h2>
+                <h2 class="mb-4">Datos de contacto</h2>
 
                 <!-- Se pide el mail de contacto -->
                 <div class="form-group">
@@ -19,14 +19,14 @@
                 </div>
 
                 <!-- Datos para realizar la Facturación -->
-                <h3 class="mt-4">Datos de Facturación</h3>
+                <h3 class="mt-4">Entrega</h3>
                 <div class="form-group">
                     <label for="txtDniCuit">DNI o CUIT:</label>
                     <asp:TextBox ID="txtDniCuit" runat="server" CssClass="form-control" placeholder="Ingrese su DNI o CUIT" />
                 </div>
 
                 <!-- Se piden los datos de la persona que va a pagar el pedido -->
-                <h3 class="mt-4">Persona que pagará el pedido</h3>
+                <h3 class="mt-4">Datos del destinatario</h3>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="txtNombrePagador">Nombre:</label>
@@ -43,7 +43,7 @@
                 </div>
 
                 <!-- Se piden los datos de la persona que va a retirar el pedido -->
-                <h3 class="mt-4">Persona que retira el pedido</h3>
+                <h3 class="mt-4">Domicilio del destinatario</h3>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="txtNombreRetira">Nombre:</label>

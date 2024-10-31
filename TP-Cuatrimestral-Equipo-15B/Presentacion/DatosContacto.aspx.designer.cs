@@ -11,7 +11,7 @@ namespace Presentacion
 {
 
 
-    public partial class DetallesCompra
+    public partial class DatosContacto
     {
 
         /// <summary>
