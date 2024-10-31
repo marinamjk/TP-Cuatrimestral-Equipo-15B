@@ -23,7 +23,6 @@ namespace Presentacion
                 if(articulos.Count != 0)
                 {
                     CargarCarrito();
-
                 }
                 else
                 {
@@ -46,8 +45,7 @@ namespace Presentacion
             var articulos = carritoNegocio.ObtenerAticulos();
 
             if (articulos.Count == 0)
-            {
-               
+            {               
                 gvCarrito.Visible = false;
                 lblCarritoVacio.Visible = false;
                 envio.Visible = false;
@@ -57,7 +55,6 @@ namespace Presentacion
                 return;
             }
 
-
             DataTable datosCarrito = new DataTable();
             datosCarrito.Columns.Add("IdArticulo", typeof(int));
             datosCarrito.Columns.Add("Nombre", typeof(string));
@@ -66,11 +63,13 @@ namespace Presentacion
 
             foreach (var articuloEnCarrito in articulos)
             {
-                datosCarrito.Rows.Add(articuloEnCarrito.Articulo.IdArticulo,
-                          articuloEnCarrito.Articulo.Nombre,
-                          articuloEnCarrito.Cantidad,
-                          articuloEnCarrito.Subtotal
-                          );
+                datosCarrito.Rows.Add
+                (
+                        articuloEnCarrito.Articulo.IdArticulo,
+                        articuloEnCarrito.Articulo.Nombre,
+                        articuloEnCarrito.Cantidad,
+                        articuloEnCarrito.Subtotal.ToString("N2")
+                );
 
             }
 
@@ -84,12 +83,10 @@ namespace Presentacion
             btn.Visible = true;
 
             //Fata calcular el total
-            //decimal total = carritoNegocio.ObtenerTotal();
-            //lblTotal.Text = $"${total:N2}";
+            decimal calculoTotal = carritoNegocio.ObtenerTotal();
+            lblTotal.Text = $"${calculoTotal:N2}";
 
         }
-
-
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
@@ -103,10 +100,6 @@ namespace Presentacion
 
 
 
-        protected void btnIniciarCompra_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/DetallesCompra.aspx");
-        }
 
         protected void btnCalcularEnvio_Click(object sender, EventArgs e)
         {
@@ -118,6 +111,10 @@ namespace Presentacion
             Button btn = (Button)sender;
             int idArticulo = int.Parse(btn.CommandArgument);
             Response.Redirect($"~/Detalle.aspx?id={idArticulo}");
+        }
+        protected void btnIniciarCompra_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/DetallesCompra.aspx");
         }
     }
 }
