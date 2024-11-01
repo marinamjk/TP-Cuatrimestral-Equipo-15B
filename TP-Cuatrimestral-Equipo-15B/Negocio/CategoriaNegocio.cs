@@ -48,8 +48,39 @@ namespace Negocio
 
             try
             {
-                datos.setearProcedimiento("sp_listarSubcategorias");
+                datos.setearProcedimiento("sp_listarSubcategorias");                
                 datos.setearParametros("@idCatPadre", idPadre.HasValue ? (object)idPadre.Value : DBNull.Value);                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Categoria aux = new Categoria();
+                    aux.IdCategoria = (int)datos.Lector["IDCategoria"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.IDCategoriaPadre = datos.Lector["IDCategoriaPadre"] as int?;
+                    aux.Estado = (bool)datos.Lector["Estado"];
+                    listaSubcategorias.Add(aux);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return listaSubcategorias;
+        }
+
+        public List<Categoria> listarUltimasSubcategorias()
+        {
+            List<Categoria> listaSubcategorias = new List<Categoria>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("sp_ListarUltimasSubcategorias");
+                datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
                     Categoria aux = new Categoria();

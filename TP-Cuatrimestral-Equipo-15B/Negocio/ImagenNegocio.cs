@@ -60,5 +60,24 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void eliminarImagenesXIDArticulo(int IdArticulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_EliminarImagenesXArticulo");
+                datos.setearParametros("@IDArticulo", IdArticulo);              
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

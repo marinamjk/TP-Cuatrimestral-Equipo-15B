@@ -56,9 +56,8 @@ Estado bit not null
 Create Table Imagenes(
 IDImagen int not null primary key identity(1,1),
 IDArticulo int not null foreign key references Articulos(IDArticulo),
-UrlImagen varchar(1500) not null
+UrlImagen varchar(5000) not null
 )
-
 go
 
 Create Procedure sp_listarArticulos
@@ -96,6 +95,16 @@ Begin
 End
 go
 
+Create Procedure sp_ListarUltimasSubcategorias
+as
+begin
+	Select IDCategoria, Nombre, IDCategoriaPadre, Estado from Categorias 
+	where IDCategoria not in (select IDCategoriaPadre from Categorias
+	where IDCategoriaPadre is not null and Estado=1)
+end
+go
+
+
 Create Procedure sp_AgregarArticulo(
 @Nombre varchar(100),
 @Descripcion varchar(3000),
@@ -111,6 +120,22 @@ Insert into Articulos (Nombre, Descripcion, IDMarca, IDCategoria, Precio, Stock,
 end
 go
 
+Create Procedure sp_ModificarArticulo (
+@IDArticulo int,
+@Nombre varchar(100),
+@Descripcion varchar(3000),
+@IDMarca int,
+@IDCategoria int,
+@Precio money,
+@Stock int
+)
+as
+begin
+Update Articulos set Nombre= @Nombre, Descripcion=@Descripcion, IDMarca=@IDMarca, IDCategoria=@IDCategoria, Precio=@Precio, Stock=@Stock, Puntaje=0, Estado=1
+where IDArticulo= @IDArticulo
+end
+go
+
 Create Procedure sp_AgregarImagen(
  @IDArticulo int,
  @Url varchar(1500)
@@ -122,12 +147,32 @@ Insert Into Imagenes (IDArticulo, UrlImagen) values
 end
 go
 
+Create Procedure sp_EliminarImagenesXArticulo(
+ @IDArticulo int
+)
+as
+begin
+	delete from Imagenes where IDArticulo= @IDArticulo
+end
+go
+
 Create Procedure sp_AgregarMarca(
 @Nombre varchar(50)
 ) as
 begin
 	Insert into Marcas (Nombre, Estado) values
 	(@Nombre, 1)
+end
+go
+
+Create Procedure sp_ModificarMarca(
+@IDMarca int,
+@Nombre varchar(50)
+) 
+as
+begin
+	Update Marcas set Nombre= @Nombre
+	where IDMarca= @IDMarca
 end
 go
 
@@ -141,39 +186,58 @@ begin
 end
 go
 
-
-Insert into Marcas(Nombre, Estado) values
-('Samsung', 1),
-('Lenovo', 1),
-('Motorola', 1),
-('Logitech', 1)
+Create Procedure sp_ModificarCategoria (
+@IDCategoria int,
+@Nombre varchar(50),
+@IDCategoriaPadre int= NULL
+) as
+begin
+	update Categorias set Nombre= @Nombre, IDCategoriaPadre= @IDCategoriaPadre
+	where IDCategoria= @IDCategoria
+end
 go
 
-Insert into Categorias (Nombre, Estado) values
-('Notebook', 1),
-('Celulares', 1),
-('Accesorios', 1)
+Insert into Marcas(Nombre, Estado) values
+('Dolce Objetos', 1),
+('Ricchezze', 1),
+('AMV', 1),
+('Sin Marca', 1)
+go
+
+Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
+('Muebles de cocina', null, 1),
+('Muebles de comedor', null,  1),
+('Muebles de dormitorio', null, 1)
+Go
+
+Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
+('alacenas', 1, 1),
+('bajo mesadas', 1,  1),
+('Desayunadores', 1, 1),
+('Mesas', 2, 1),
+('Camas', 3, 1),
+('Mesitas de luz', 3, 1)
 Go
 
 Insert into Categorias(Nombre, IDCategoriaPadre, Estado) values
-('Core i5', 1, 1),
-('Core i6', 1, 1),
-('Con camara 13 mpx', 2, 1),
-('con Camara 15px', 2, 1),
-('Inal mbricos', 3, 1),
-('No inal mbricos', 3, 1)
-
+('2 plazas', 8, 1),
+('1 plasa', 8, 1),
+('Ratonas', 7, 1)
 go
+
 Insert Into Articulos(Nombre, Descripcion, IDMarca, IDCategoria, Precio, Stock, Puntaje, Estado) values
-('Notebook IdeaPad Slim 3i 15', '8va Gen - Arctic Grey', 1, 1, 1000000, 5, 0, 1),
-('CELULAR SAMSUNG SM-G990E S21 FE BLANCO BLANCO', 'Celular de 6.4" Ifinity-O display Dynamic Amoled 2X. Procesador Exynos 2100 / Octa Core 2.9 GHz, 2.8 GHz, 2.2GHz. Resolucion 2340 x 1080 (FHD+). Almacenamiento 128 Gb / RAM 6 Gb. Camara posterior 12 + 12 + 8 mp, F1.8 , F2.2 , F2.4 / trasera 32 mp, F2.2. Resolucion de video UHD 8K (7680 x 4320) 60fps. Slow motion 960fps HD,240fps FHD. 5G. USB 3.2 gen 1 Type C. GPS,Glonass,Beidou,Galileo,QZSS. Wi Fi 802.11 a/b/g/n/ac/ax 2.4G+5GHz, HE80, MIMO, 1024-QAM. Bluetooth v5.0. NFC, IP68. Sistema operativo Android. Navegador: Chrome.Sensores: Accelerometer, Barometer, Fingerprint Sensor, Gyro Sensor, Geomagnetic Sensor, Hall Sensor, Light Sensor, Proximity Sensor. Bateria de 4500 mAh. Samsung DeX support. No incluye cargador', 2, 2, 2949999.00,7, 0, 1),
-('Teclado Mecanico', 'ASUS ROG Strix XA05 Scope Switch RX Red RGB', 3, 3, 142990 ,12, 0, 1)
+('Alacena 1,20 cm Ricchezze Arco Negro', 'MDP 15mm imprimado, Medidas: 460 x 1200 x 270 mm', 2, 4, 80000, 5, 8, 1),
+('Bajo Mesada Arco 1,20 cm Negro', 'Material del Producto: Mdp 15mm imprimado. Medidas: Alto: 83 cm Ancho: 120 cm Profundidad: 50 cm Peso: 35 kg', 2, 5, 130000, 4, 9, 1),
+('Box de Cama con 4 Cajones + Zapatero Base Somier Blanco', 'Modelo: T6443 EV', 3, 10, 340000, 3, 0, 1),
+('Mesa de Luz Flotante Negro Desayunador Cajon Moderno', 'Medidas: 42x24x35cm', 4, 9, 70000, 4, 0, 1)
 go
 
 Insert into Imagenes(IDArticulo,UrlImagen) values
-(1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTudecQ4HP8Oe5SATs_mFT6AOXVk9ZQ7nRzsQ&s'),
-(2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSQ45jwDJljVV0w5LqxsZyM2yjapMEe3CeEw&s'),
-(2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpjal5E1iU9xJa3zpqP13AksywbuPs9F3h7g&s'),
-(2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSevvxhr9duXMHE1QjUkDnDqkI7WKKa1RJ06A&s'),
-(3, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXQ3dBHLc3B2DTxl80iHGUS88ac9xexjaaCg&s'),
-(3, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcjTrk1vkDiW3Ro6Uq7ICToB7gReS9JpGUVw&s')
+(1, 'https://images.fravega.com/f300/421b5390362a977e3c9a48e23806e57c.jpg.webp'),
+(1, 'https://images.fravega.com/f300/0a34b31479e4c3065743cb89509f18fd.jpg.webp'),
+(2, 'https://images.fravega.com/f300/4c6b4ce3dd3559ae1e19e7132f6e50a6.jpg.webp'),
+(2, 'https://images.fravega.com/f300/4bfe1434e0f42d241f3433a115121181.jpg.webp'),
+(3, 'https://images.fravega.com/f300/234050136af6ca0890300c223fbed515.jpg.webp'),
+(4, 'https://images.fravega.com/f300/11cbcd1f3c3ad912ad24cee136aa4ac9.png.webp'),
+(4, 'https://images.fravega.com/f300/18d38a5cb5413051fe6efc2f480582a3.png.webp')
+go

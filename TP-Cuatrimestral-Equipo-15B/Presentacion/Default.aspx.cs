@@ -14,17 +14,17 @@ namespace Presentacion
        public List<Articulo> catalogo;
         protected void Page_Load(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-
             try
-            {
-                catalogo = negocio.listarConSP();
-
+            {               
                 if (!IsPostBack)
                 {
-                    repArticulos.DataSource = catalogo;
-                    repArticulos.DataBind();
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+            
+                    catalogo= negocio.listarConSP();  
                     
+                    repArticulos.DataSource = catalogo;
+                    repArticulos.DataBind();                    
+
                 }
             }
             catch (Exception ex)
@@ -38,6 +38,23 @@ namespace Presentacion
         protected void btnQuitarFiltroCategorias_Click(object sender, EventArgs e)
         {
 
+        }
+        protected void repArticulos_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            Articulo articulo = (Articulo)e.Item.DataItem;
+            ImagenNegocio imgNegocio= new ImagenNegocio();
+            List<Imagen> images = imgNegocio.buscarImagenesXArticulo(articulo.IdArticulo);
+            
+            Image imgArticulo = (Image)e.Item.FindControl("imgArticulo");
+            if (images != null && images.Count > 0)
+            {
+                imgArticulo.ImageUrl = images[0].UrlImagen; // Asignar la URL de la primera imagen
+            }
+            else
+            {
+                imgArticulo.ImageUrl = "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ="; // Ruta a una imagen predeterminada
+            }
+            
         }
     }
 }

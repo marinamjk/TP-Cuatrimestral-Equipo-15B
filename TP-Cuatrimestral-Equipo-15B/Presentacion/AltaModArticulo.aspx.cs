@@ -7,13 +7,14 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Negocio;
+using System.Web.UI.WebControls.WebParts;
 
 namespace Presentacion
 {
+    //Declara list de enteros
     public partial class AltaModArticulo : System.Web.UI.Page
     {
-        int idCategoriaSeleccionada;
-
+        List<Imagen> images;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -21,12 +22,13 @@ namespace Presentacion
 
                 if (!IsPostBack)
                 {
-                    ViewState["CategoriasSeleccionadas"] = new List<int>();
-                    //CargarImagenes();
-
+                    images = new List<Imagen>();                     
+                    //inicializar lista de enteros
+                    List<Categoria> subcategorias = new List<Categoria>();
                     CategoriaNegocio catNegocio = new CategoriaNegocio();
+                    subcategorias = catNegocio.listarUltimasSubcategorias();
 
-                    ddlCategoria.DataSource = catNegocio.listarSubcategorias(null);
+                    ddlCategoria.DataSource = subcategorias;
                     ddlCategoria.DataValueField = "IdCategoria";
                     ddlCategoria.DataTextField = "Nombre";
                     ddlCategoria.DataBind();
@@ -37,17 +39,31 @@ namespace Presentacion
                     ddlMarca.DataTextField = "Nombre";
                     ddlMarca.DataBind();
 
-                }
-                else
-                {
-                    List<int> categoriasSeleccionadas = (List<int>)ViewState["CategoriasSeleccionadas"];
-                    foreach (int idCategoria in categoriasSeleccionadas)
+
+
+                    if (Request.QueryString["idArt"] != null)
                     {
-                        CargarSubcategoria(idCategoria);
+                        int idArtMod = int.Parse(Request.QueryString["idArt"]);
+                        ArticuloNegocio artNegocio = new ArticuloNegocio();
+                        ImagenNegocio imNegocio = new ImagenNegocio();
+                        Articulo artMod = artNegocio.buscarArticuloXId(idArtMod);
+
+                        txtNombre.Text = artMod.Nombre;
+                        txtDescripcion.Text = artMod.Descripcion;
+                        txtPrecio.Text = artMod.Precio.ToString("F2");
+                        txtStock.Text = artMod.Stock.ToString();
+                        ddlCategoria.SelectedValue = artMod.Categoria.IdCategoria.ToString();
+                        ddlMarca.SelectedValue = artMod.Marca.IdMarca.ToString();
+                                                
+                        images = imNegocio.buscarImagenesXArticulo(idArtMod);
+                        Session["ImagesList"] = images;
+                        //cargarlistadecategoriasSeleccionada();
+                        //RecontruirDesplegablesCategorias();                                 
                     }
+                    CargarImagenes();
                 }
 
-
+                
             }
             catch (Exception ex)
             {
@@ -56,7 +72,6 @@ namespace Presentacion
             }
 
         }
-
 
         protected void btnPublicar_Click(object sender, EventArgs e)
         {
@@ -67,21 +82,37 @@ namespace Presentacion
                     return;
 
                 ArticuloNegocio artNegocio = new ArticuloNegocio();
-
+                ImagenNegocio imagenNegocio = new ImagenNegocio();
                 Articulo nuevo = new Articulo();
+
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Marca = new Marca();
                 nuevo.Marca.IdMarca = int.Parse(ddlMarca.SelectedValue);
-                nuevo.Descripcion = txtDescripción.Text;
+                nuevo.Descripcion = txtDescripcion.Text;
                 nuevo.Categoria = new Categoria();
                 nuevo.Categoria.IdCategoria = int.Parse(ddlCategoria.SelectedValue);
                 nuevo.Precio = decimal.Parse(txtPrecio.Text);
                 nuevo.Stock = int.Parse(txtStock.Text);
                 nuevo.Puntaje = 0;
-                int idNuevo = artNegocio.agregarArticulo(nuevo);
 
-                nuevo.Imagenes = (List<Imagen>)Session["ImagesList"];
-                ImagenNegocio imagenNegocio = new ImagenNegocio();
+                int idNuevo;
+                if (Request.QueryString["idArt"] != null)
+                {
+                    idNuevo = int.Parse(Request.QueryString["idArt"]);
+                    nuevo.IdArticulo = idNuevo;
+                    artNegocio.modificarArticulo(nuevo);
+                }
+                else
+                {
+                    idNuevo = artNegocio.agregarArticulo(nuevo);
+                }
+
+                if (Request.QueryString["idArt"] != null)
+                {
+                    imagenNegocio.eliminarImagenesXIDArticulo(idNuevo);
+                }
+
+                nuevo.Imagenes = (List<Imagen>)Session["ImagesList"];                
 
                 if (nuevo.Imagenes != null && nuevo.Imagenes.Count > 0)
                 {
@@ -91,6 +122,7 @@ namespace Presentacion
                         imagenNegocio.agregarImagen(nuevo.Imagenes[i]);
                     }
                 }
+
 
 
                 Response.Redirect("~/Default.aspx", false);
@@ -103,23 +135,27 @@ namespace Presentacion
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
-        {
-            revUrlImagen.Validate();
-            if (!revUrlImagen.IsValid)
-            {
-                txtUrlImagen.Text = string.Empty;
-                return;
-            }
-            string urlImagen = txtUrlImagen.Text;
+        {            
+            //if (!(revUrlImagen.IsValid))
+            //{
+            //    return;
+            //}
+            string url = txtUrlImagen.Text;
 
-            List<Imagen> images = (List<Imagen>)Session["ImagesList"] ?? new List<Imagen>();
-            images.Add(new Imagen { UrlImagen = urlImagen });
+            images = (List<Imagen>)Session["ImagesList"];
+            if (images == null)
+            {
+                images = new List<Imagen>();
+            }
+
+            images.Add(new Imagen { UrlImagen = url});
 
             Session["ImagesList"] = images;
             RepeaterImages.DataSource = images;
             RepeaterImages.DataBind();
 
             txtUrlImagen.Text = string.Empty;
+            CargarImagenes();
         }
 
         protected void btnQuitar_Click(object sender, EventArgs e)
@@ -137,21 +173,21 @@ namespace Presentacion
                 RepeaterImages.DataSource = images;
                 RepeaterImages.DataBind();
             }
-
+            CargarImagenes();
         }
         private void CargarImagenes()
         {
-
-            List<Imagen> images = (List<Imagen>)Session["ImagesList"] ?? new List<Imagen>();
-
+            List<Imagen> images = (List<Imagen>)Session["ImagesList"];
+           
             RepeaterImages.DataSource = images;
             RepeaterImages.DataBind();
         }
 
         protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
-        {
-            imgArticulo.ImageUrl = txtUrlImagen.Text;
+        {     
+            imgArticulo.ImageUrl = txtUrlImagen.Text;          
         }
+          
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -160,54 +196,47 @@ namespace Presentacion
 
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                int idCategoriaSeleccionada = int.Parse(((DropDownList)sender).SelectedValue);
+            //guardarIDseleccionado en lista de categoriasSeleccionadas
+            //Chequer si la subcategoria seleccionada tiene como idPadre algunas de las
+            //categoriasSeleccionadas, si es asi eliminar las siguiente subcategorias
+            //y generar un nuevo dropdown
+            //CategoriaNegocio catNegocio= new CategoriaNegocio();
+            //int? catPadre = catNegocio.buscarCategoriaXId(idCategoriaSeleccionada).IDCategoriaPadre;
+            //if(categoriasSeleccionadas.Count>0){
+            //  int i;
+            //  for(i=0; i<categoriasSeleccionadas.Count-1; i++){
 
-                DropDownList ddlSender = (DropDownList)sender;
-               
-                // Guarda la categoría seleccionada en ViewState
-                List<int> categoriasSeleccionadas = (List<int>)ViewState["CategoriasSeleccionadas"];
-                if (!categoriasSeleccionadas.Contains(idCategoriaSeleccionada))
-                {
-                    categoriasSeleccionadas.Add(idCategoriaSeleccionada);
-                    ViewState["CategoriasSeleccionadas"] = categoriasSeleccionadas;
-                }
-
-                // Cargar las subcategorías correspondientes
-                CargarSubcategoria(idCategoriaSeleccionada);
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx");
-            }
-
+            //  if(categoriasSeleccionadas[i]==catPadre)
+            //  break;
+            //  }
+            // for(int j=categoriasSeleccionadas.Count; j=i; j++){
+            //  categoriasSeleccionadas.RemoveAt(j);    
+            //}
+            //este o no este la categoria padre ya en un dropdown la agrego para listar las subcategorias
+            //CategoriasSeleccionada.Add(idCategoriaSeleccionada);
+            //RecontruirDesplegablesCategorias();
         }
-        private void CargarSubcategoria(int idCategoriaSeleccionada)
-        {
-            CategoriaNegocio catNegocio = new CategoriaNegocio();
-            List<Categoria> subcategorias = catNegocio.listarSubcategorias(idCategoriaSeleccionada);
 
-            if (subcategorias != null && subcategorias.Count > 0)
-            {
-                DropDownList nuevoDdl = new DropDownList
-                {
-                    ID = $"ddlSubcategoria_{idCategoriaSeleccionada}",
-                    AutoPostBack = true
-                };
-
-                nuevoDdl.SelectedIndexChanged += ddlCategoria_SelectedIndexChanged;
-
-                nuevoDdl.DataSource = subcategorias;
-                nuevoDdl.DataTextField = "Nombre";
-                nuevoDdl.DataValueField = "IdCategoria";
-                nuevoDdl.DataBind();
-
-                phSubcategorias.Controls.Add(nuevoDdl);
-            }
-
-
+        /*RecontruirDesplegablesCategorias(){
+        CategoriaNegocio catNegocio= new CategoriaNegocio();
+        for(int i=0; i<categoriasSeleccionadas.Count; i++){
+        Crear un dropdown
+        if(catNegocio.listarSubcategorias.Any()){
+        CrearDropdown       
         }
+         ddlCategoria.selectedValue= CategoriasSeleccionas[0].toString();
+        for(int i=1; i<categoriasSeleccionadas.Count-1; i++){
+         categoriasSeleccionadas[i].SelectedValue= categoriasSeleccionadas[i+1]
+        }
+        }
+        */
+        /*cargarlistadecategoriasSeleccionada(){
+         * catnegocio
+         * buscarCategoriaPadre hasta que el idCategoriaPadre==null
+         * guardarlos en una lista aux
+         * y guardarlos en listade categorias seleccionadas en orden contrario
+         * 
+        */
+
     }
 }

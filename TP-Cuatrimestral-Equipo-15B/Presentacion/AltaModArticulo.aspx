@@ -59,7 +59,7 @@
             </div>
             <div class="m-3">
                 <asp:Label ID="lblDescripcion" runat="server" CssClass="form-label" Text="Descripción"></asp:Label>
-                <asp:TextBox ID="txtDescripción" TextMode="MultiLine" CssClass="form-control" MaxLength="3000" height="400px" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtDescripcion" TextMode="MultiLine" CssClass="form-control" MaxLength="3000" height="400px" runat="server"></asp:TextBox>
             </div>
         </div>
 
@@ -86,8 +86,8 @@
                         <div class="row">
                             <div class="col-10">
 
-                                <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtUrlImagen_TextChanged"></asp:TextBox>
-                                <asp:RegularExpressionValidator ID="revUrlImagen" runat="server" CssClass="validator" ErrorMessage="Ingrese una dirección válida." ControlToValidate="txtUrlImagen" ValidationExpression="^(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.(jpg|jpeg|png|gif|bmp|svg|webp|tiff|ico|[a-zA-Z0-9-]+)(\/[-a-zA-Z0-9@:%_\+.~#?&=]*)?|data:image\/(jpg|jpeg|png|gif|bmp|svg|webp|tiff|ico);base64,[a-zA-Z0-9+/=]+)$"></asp:RegularExpressionValidator>
+                                <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtUrlImagen_TextChanged" MaxLength="5000"></asp:TextBox>
+<%--                                <asp:RegularExpressionValidator ID="revUrlImagen" runat="server" CssClass="validator" ErrorMessage="Ingrese una dirección válida." ControlToValidate="txtUrlImagen" ValidationExpression="^(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\/[-a-zA-Z0-9@:%_\+.~#?&=]*\.(?:[a-zA-Z0-9]+)(\/[-a-zA-Z0-9@:%_\+.~#?&=]*)?|data:image\/[a-zA-Z0-9]+;base64,[a-zA-Z0-9+/=]+)$"></asp:RegularExpressionValidator>--%>
                             </div>
                             <div class="col-2">
                                 <asp:Button ID="btnAgregar" runat="server" CssClass="icon-buttonAgregar" Text="" OnClick="btnAgregar_Click" />
@@ -107,7 +107,7 @@
 
                                     <img src='<%# Eval("UrlImagen") %>' style="width: 40%; height: auto;" />       
 
-                                    <asp:Button ID="btnQuitar" runat="server" CssClass="icon-buttonQuitar" Text="" CommandArgument='<%# Container.ItemIndex %>' OnClick="btnQuitar_Click" />
+                                    <asp:Button ID="btnQuitar" runat="server" CssClass="icon-buttonQuitar" Text="" CommandArgument='<%# Container.ItemIndex %>' OnClick="btnQuitar_Click" AutoPostBack="true" />
                                 </div>
                             </ItemTemplate>
                         </asp:Repeater>

@@ -78,7 +78,7 @@ namespace Negocio
             AccesoDatos datos= new AccesoDatos();
             try
             {
-                datos.setearConsulta("Select A.Nombre, A.Descripcion, A.IDMarca, M.Nombre as 'NombreMarca', A.IDCategoria, C.Nombre as 'NombreMarca', A.Precio, A.Stock, A.Puntaje, A.Estado from Articulos A Inner Join Marcas M on M.IDMarca= A.IDMarca inner join Categorias C on C.IDCategoria= A.IDCategoria where IDArticulo =" + id);
+                datos.setearConsulta("Select A.Nombre, A.Descripcion, A.IDMarca, M.Nombre as 'NombreMarca', A.IDCategoria, C.Nombre as 'NombreCategoria', A.Precio, A.Stock, A.Puntaje, A.Estado from Articulos A Inner Join Marcas M on M.IDMarca= A.IDMarca inner join Categorias C on C.IDCategoria= A.IDCategoria where IDArticulo =" + id);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -138,6 +138,31 @@ namespace Negocio
                 return datos.ejecutarEscalar();
             }
             catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void modificarArticulo(Articulo art)
+        {
+            AccesoDatos datos= new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_ModificarArticulo");
+                datos.setearParametros("@IDArticulo", art.IdArticulo);
+                datos.setearParametros("@Nombre", art.Nombre);     
+                datos.setearParametros("@Descripcion", art.Descripcion);
+                datos.setearParametros("@IDMarca", art.Marca.IdMarca);
+                datos.setearParametros("@IDCategoria", art.Categoria.IdCategoria);
+                datos.setearParametros("@Precio", art.Precio);
+                datos.setearParametros("@Stock", art.Stock);
+                datos.ejecutarAccion();  
+            }
+            catch(Exception ex) 
             {
                 throw ex;
             }
