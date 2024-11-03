@@ -10,60 +10,117 @@
         <div class="row">
             <!-- Columna para detalles de la compra -->
             <div class="col-md-8">
-                <h2 class="mb-4">Datos de contacto</h2>
+                <h4 class="mb-4 text-center">Datos de contacto</h4>
 
                 <!-- Se pide el mail de contacto -->
                 <div class="form-group">
-                    <label for="txtEmail">Correo Electrónico:</label>
-                    <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Ingrese su correo" />
+                    <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control  form-control-lg" placeholder="Ingrese su correo" />
                 </div>
 
-                <!-- Datos para realizar la Facturación -->
-                <h3 class="mt-4">Entrega</h3>
-                <div class="form-group">
-                    <label for="txtDniCuit">DNI o CUIT:</label>
-                    <asp:TextBox ID="txtDniCuit" runat="server" CssClass="form-control" placeholder="Ingrese su DNI o CUIT" />
-                </div>
-
-                <!-- Se piden los datos de la persona que va a pagar el pedido -->
-                <h3 class="mt-4">Datos del destinatario</h3>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="txtNombrePagador">Nombre:</label>
-                        <asp:TextBox ID="txtNombrePagador" runat="server" CssClass="form-control" placeholder="Ingrese nombre" />
+                <div class="form-group  ">              
+                    <!-- Datos para realizar la Facturación -->
+                    <h4 class="mt-4 text-center">Entrega</h4>
+                    <div class="form-control mt-3">
+                        <label class="d-flex align-items-center">
+                            <asp:RadioButton ID="rbEnvio" runat="server" GroupName="RadioButton" CssClass="me-2" OnCheckedChanged="RadioButton_CheckedChanged" AutoPostBack="true"/>
+                            <span class="card-text text-primary">Envio (Solo Argentina)</span>
+                        </label>
+                        <div class="card-body">
+                            <p class="card-title">A coordinar con nuestros representantes</p>
+                            <%--<p class="card-text font-weight-bold">$465.025</p>--%>                           
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="txtApellidoPagador">Apellido:</label>
-                        <asp:TextBox ID="txtApellidoPagador" runat="server" CssClass="form-control" placeholder="Ingrese apellido" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="txtTelefonoPagador">Teléfono:</label>
-                        <asp:TextBox ID="txtTelefonoPagador" runat="server" CssClass="form-control" placeholder="Ingrese teléfono" />
-                    </div>
-                </div>
-
-                <!-- Se piden los datos de la persona que va a retirar el pedido -->
-                <h3 class="mt-4">Domicilio del destinatario</h3>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="txtNombreRetira">Nombre:</label>
-                        <asp:TextBox ID="txtNombreRetira" runat="server" CssClass="form-control" placeholder="Ingrese nombre" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="txtApellidoRetira">Apellido:</label>
-                        <asp:TextBox ID="txtApellidoRetira" runat="server" CssClass="form-control" placeholder="Ingrese apellido" />
+                                    
+                    <div class="form-control mt-3">
+                        <label class="d-flex align-items-center">
+                            <asp:RadioButton ID="rbRetiro" runat="server" GroupName="RadioButton" CssClass="me-2" OnCheckedChanged="RadioButton_CheckedChanged" AutoPostBack="true"/>
+                            <span class="card-text text-primary">Retiro</span>
+                        </label>
+                        <div class="card-body">
+                            <p class="card-title">Retirar por nuestras sucursales</p>
+                            <%--<p class="card-text font-weight-bold">$465.025</p>--%>                           
+                        </div>
                     </div>
                 </div>
 
-                <!-- Opción de cupón de descuento -->
-                <div class="form-group">
-                    <label for="txtCupon">Cupón de Descuento (opcional):</label>
-                    <asp:TextBox ID="txtCupon" runat="server" CssClass="form-control" placeholder="Ingrese cupón de descuento si tiene" />
+                <%--Si se elige retiro pide los datos de facturacion--%>
+                <div id="DatosDestinatario" runat="server" visible="false">
+                    <h4 class="mt-4 text-center">Datos Destinatario</h4>
+                     <!-- Se piden los datos de la persona que va a pagar el pedido -->
+                                              
+                    <div class="form-group mt-3">                        
+                        <asp:TextBox ID="TextBox5" runat="server" CssClass="form-control form-control-lg" placeholder="Nombre" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <asp:TextBox ID="TextBox6" runat="server" CssClass="form-control form-control-lg" placeholder="Apellido" />
+                    </div>
+                    <div class="form-group  mt-3">
+                        <asp:TextBox ID="TextBox7" runat="server" CssClass="form-control form-control-lg" placeholder="Teléfono" />
+                    </div>
+                    <div class="form-group  mt-3">
+                        <asp:TextBox ID="TextBox8" runat="server" CssClass="form-control form-control-lg" placeholder="Calle" />
+                    </div>
+                         
+                     <div class="row">
+                        <div class="form-group col-md-6 mt-3">
+                            <asp:TextBox ID="TextBox9" runat="server" CssClass="form-control form-control-lg" placeholder="Número" />
+                        </div>
+                        <div class="form-group col-md-6 mt-3">
+                            <asp:TextBox ID="TextBox10" runat="server" CssClass="form-control form-control-lg" placeholder="Departamento" />
+                        </div>
+                     </div>
+
+                    <div class="form-group mt-3">
+                        <asp:TextBox ID="TextBox11" runat="server" CssClass="form-control  form-control-lg" placeholder="Código Postal" />
+                    </div>
+                    <%--Va a sacar las provincias de la base de datos--%>
+                    <div class="form-group mt-3">
+                        <asp:DropDownList ID="DropDownListProvincia" runat="server" CssClass="form-select form-select-lg" placeholder="Provincia">
+                            <asp:ListItem Text="Provincia" Value="" />
+                            <asp:ListItem Text="Buenos Aires" Value="Buenos Aires" />
+                            <asp:ListItem Text="Córdoba" Value="Córdoba" />
+                            <asp:ListItem Text="Santa Fe" Value="Santa Fe" />
+                            <asp:ListItem Text="Mendoza" Value="Mendoza" />
+                            <asp:ListItem Text="Tucumán" Value="Tucumán" />
+                            <asp:ListItem Text="Entre Ríos" Value="Entre Ríos" />
+                            <asp:ListItem Text="Salta" Value="Salta" />
+                            <asp:ListItem Text="Misiones" Value="Misiones" />                            
+                        </asp:DropDownList>
+                     </div>
+                     
+                    <div class="form-group mt-3">
+                        <asp:TextBox ID="TextBox12" runat="server" CssClass="form-control form-control-lg" placeholder="Ciudad" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <asp:TextBox ID="TextBox13" runat="server" CssClass="form-control form-control-lg" placeholder="Barrio" />
+                    </div>                              
                 </div>
 
+                <div id="DatosFacturacion" runat="server" visible="false">
+                    <!-- Se piden los datos de la persona que va a retirar el pedido -->
+                    <h4 class="mt-4 text-center">Datos de facturación</h4>
+      
+                    <div class="form-group mt-3 ">                              
+                        <asp:TextBox ID="TextBox14" runat="server" CssClass="form-control form-control-lg" placeholder="DNI o CUIT" />
+                    </div>
+
+                    <h5 class="mt-4 fw-bold">Persona que pagara el Pedido</h5>
+
+                     <div class="form-group mt-3">                        
+                         <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control form-control-lg" placeholder="Nombre" />
+                     </div>
+                     <div class="form-group mt-3">
+                         <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control form-control-lg" placeholder="Apellido" />
+                     </div>
+                     <div class="form-group  mt-3">
+                         <asp:TextBox ID="TextBox3" runat="server" CssClass="form-control form-control-lg" placeholder="Teléfono" />
+                     </div>
+
+                </div>
+                
                 <!-- Botón para redirigir a los medios de pago -->
-                <div class="text-center mt-4">
-                    <asp:Button ID="btnMediosDePago" runat="server" Text="Medios de Pago" CssClass="btn btn-primary" OnClick="btnMediosDePago_Click" />
+                <div class="text-end mt-4">
+                    <asp:Button ID="btnMediosDePago" runat="server" Text="Medios de Pago" CssClass="btn btn-primary btn-lg px-4 py-2" OnClick="btnMediosDePago_Click" />
                 </div>
             </div>
 
@@ -72,24 +129,27 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Resumen de la compra</h5>
-                        <div class="d-flex justify-content-between">
-                            <span>Aca se deberia mostrar lo que se tiene en el carro para comprar</span>
-                            <span>$32,500.00</span>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between">
-                            <span>Subtotal</span>
-                            <span>$32,500.00</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <span>Costo de envío</span>
-                            <span>$9,817.18</span>
-                        </div>
-                        <hr>
+                        
+                        <asp:Repeater ID="rptResumenCarrito" runat="server">
+                            <ItemTemplate>
+                                <div class="d-flex justify-content-between">
+                                    <span><%# Eval("Articulo.Nombre") %></span>                                    
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <span>Subtotal</span>
+                                    <span>$<%# Eval("Subtotal","{0:N2}") %></span>
+                                </div>
+                                <hr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                        
                         <div class="d-flex justify-content-between">
                             <strong>Total</strong>
-                            <strong>$42,317.18</strong>
+                            <asp:Label ID="lblTotal" runat="server"></asp:Label> <!-- Cambiar a cálculo dinámico -->
                         </div>
+
+                       
                         <a href="#" class="btn btn-primary mt-3 w-100">Agregar cupón de descuento</a>
                     </div>
                 </div>

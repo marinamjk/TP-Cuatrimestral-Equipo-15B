@@ -82,7 +82,7 @@ namespace Presentacion
             total.Visible = true;
             btn.Visible = true;
 
-            //Fata calcular el total
+            //Calculo del total
             decimal calculoTotal = carritoNegocio.ObtenerTotal();
             lblTotal.Text = $"${calculoTotal:N2}";
 

@@ -96,7 +96,6 @@
     <Content Include="DatosContacto.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Detalle.aspx" />
-    <Content Include="DetallesCompra.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
@@ -177,13 +176,6 @@
     </Compile>
     <Compile Include="Detalle.aspx.designer.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DetallesCompra.aspx.cs">
-      <DependentUpon>DetallesCompra.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DetallesCompra.aspx.designer.cs">
-      <DependentUpon>DetallesCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
