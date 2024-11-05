@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -19,17 +20,18 @@ namespace Presentacion
         }
         private void CargarGridView()
         {
-            DataTable datosPrueba = new DataTable();
-            datosPrueba.Columns.Add("Codigo"); 
-            datosPrueba.Columns.Add("NombreArticulo");
-            datosPrueba.Columns.Add("Cantidad");
-            datosPrueba.Columns.Add("Precio");
-
-            datosPrueba.Rows.Add(1, "Teclado", 2, 200000.00);
-            datosPrueba.Rows.Add(2, "Mouse", 1, 30000.00);
-
-            dgvArticulos.DataSource = datosPrueba;
-            dgvArticulos.DataBind();
+            try
+            {
+                MarcaNegocio marcaNegocio = new MarcaNegocio();
+                dgvMarcas.DataSource = marcaNegocio.listarMarcas();
+                dgvMarcas.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+       
         }
 
         protected void dgvArticulos_PageIndexChanged(object sender, EventArgs e)
@@ -39,7 +41,7 @@ namespace Presentacion
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            var id = dgvMarcas.SelectedDataKey.Value.ToString();
         }
     }
 }

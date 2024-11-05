@@ -71,6 +71,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdministrarArticulos.aspx" />
     <Content Include="AdministrarCategoria.aspx" />
     <Content Include="AdministrarMarca.aspx" />
     <Content Include="AdministrarPedido.aspx" />
@@ -96,7 +97,6 @@
     <Content Include="DatosContacto.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Detalle.aspx" />
-    <Content Include="DetallesCompra.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
@@ -115,6 +115,13 @@
     <Content Include="Registrarse.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministrarArticulos.aspx.cs">
+      <DependentUpon>AdministrarArticulos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdministrarArticulos.aspx.designer.cs">
+      <DependentUpon>AdministrarArticulos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdministrarCategoria.aspx.cs">
       <DependentUpon>AdministrarCategoria.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -177,13 +184,6 @@
     </Compile>
     <Compile Include="Detalle.aspx.designer.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DetallesCompra.aspx.cs">
-      <DependentUpon>DetallesCompra.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DetallesCompra.aspx.designer.cs">
-      <DependentUpon>DetallesCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>

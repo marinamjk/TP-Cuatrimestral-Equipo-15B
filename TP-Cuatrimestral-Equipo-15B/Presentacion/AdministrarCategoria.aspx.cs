@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Negocio;
 
 namespace Presentacion
 {
@@ -20,17 +21,18 @@ namespace Presentacion
 
         private void CargarGridView()
         {
-            DataTable datosPrueba = new DataTable();
-            datosPrueba.Columns.Add("Codigo");
-            datosPrueba.Columns.Add("NombreArticulo");
-            datosPrueba.Columns.Add("Cantidad");
-            datosPrueba.Columns.Add("Precio");
-
-            datosPrueba.Rows.Add(1, "Teclado", 2, 200000.00);
-            datosPrueba.Rows.Add(2, "Mouse", 1, 30000.00);
-
-            dgvArticulos.DataSource = datosPrueba;
-            dgvArticulos.DataBind();
+            try
+            {
+                CategoriaNegocio catNegocio = new CategoriaNegocio();
+                dgvCategorias.DataSource = catNegocio.listarCategorias();
+                dgvCategorias.DataBind();
+            }
+            catch (Exception ex) 
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+      
         }
 
         protected void dgvArticulos_PageIndexChanged(object sender, EventArgs e)
@@ -40,7 +42,7 @@ namespace Presentacion
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            var id = dgvCategorias.SelectedDataKey.Value.ToString();
         }
     }
 

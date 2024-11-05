@@ -26,7 +26,6 @@ namespace Negocio
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     if (!(datos.Lector["IDCategoriaPadre"] is DBNull))
                         aux.IDCategoriaPadre = (int)datos.Lector["IDCategoriaPadre"];
-                    aux.Estado = (bool)datos.Lector["Estado"];
                     listaCategorias.Add(aux);
                 }
             }
@@ -49,14 +48,14 @@ namespace Negocio
             try
             {
                 datos.setearProcedimiento("sp_listarSubcategorias");                
-                datos.setearParametros("@idCatPadre", idPadre.HasValue ? (object)idPadre.Value : DBNull.Value);                datos.ejecutarLectura();
+                datos.setearParametros("@idCatPadre", idPadre.HasValue ? (object)idPadre.Value : DBNull.Value); 
+                datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
                     Categoria aux = new Categoria();
                     aux.IdCategoria = (int)datos.Lector["IDCategoria"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.IDCategoriaPadre = datos.Lector["IDCategoriaPadre"] as int?;
-                    aux.Estado = (bool)datos.Lector["Estado"];
                     listaSubcategorias.Add(aux);
                 }
             }
@@ -87,7 +86,6 @@ namespace Negocio
                     aux.IdCategoria = (int)datos.Lector["IDCategoria"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.IDCategoriaPadre = datos.Lector["IDCategoriaPadre"] as int?;
-                    aux.Estado = (bool)datos.Lector["Estado"];
                     listaSubcategorias.Add(aux);
                 }
             }
@@ -109,7 +107,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("Select Nombre, IDCategoriaPadre, Estado from Categorias where IDCategoria=" + IdCategoria);
+                datos.setearConsulta("Select Nombre, IDCategoriaPadre from Categorias where IDCategoria=" + IdCategoria);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -117,7 +115,6 @@ namespace Negocio
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     if (!(datos.Lector["IDCategoriaPadre"] is DBNull))
                         aux.IDCategoriaPadre = (int)datos.Lector["IDCategoriaPadre"];
-                    aux.Estado = (bool)datos.Lector["Estado"];
                 }
             }
             catch (Exception ex)
@@ -131,6 +128,46 @@ namespace Negocio
             return aux;
         }
 
-       
+        public void modificarCategoria(Categoria categoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {                
+                datos.setearProcedimiento("sp_ModificarCategoria");
+                datos.setearParametros("@IDCategoria", categoria.IdCategoria);
+                datos.setearParametros("@IDCategoriaPadre", categoria.IDCategoriaPadre);
+                datos.setearParametros("@Nombre", categoria.Nombre);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally 
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+        public void eliminarCategoria(int idCat)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("sp_EliminarCategoria");
+                datos.setearParametros("@IDCategoria", idCat);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

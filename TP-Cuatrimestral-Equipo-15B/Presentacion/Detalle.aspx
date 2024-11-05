@@ -120,8 +120,8 @@
                 <ContentTemplate>
                     <div>
                         <asp:Button ID="Modificar" runat="server" Text="Modificar" CssClass="btn btn-primary" OnClick="Modificar_Click" />
+                        <asp:Button ID="btnDeshabilitar" runat="server" Text="Deshabilitar"  cssClass="btn btn-warning" OnClick="btnDeshabilitar_Click"/>
                         <asp:Button ID="btnEliminarArticulo" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminarArticulo_Click" />
-                    
                     </div>
                     <%if (ConfirmarEliminacion)
                         { %>

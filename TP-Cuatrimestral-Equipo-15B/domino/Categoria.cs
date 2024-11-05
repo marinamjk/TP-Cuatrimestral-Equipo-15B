@@ -11,8 +11,7 @@ namespace dominio
         public int? IdCategoria { get; set; }
         public string Nombre { get; set; }
         public int? IDCategoriaPadre { get; set; }
-        public bool Estado {  get; set; }
-        public override string ToString()
+          public override string ToString()
         {
             return Nombre;
         }

@@ -27,18 +27,21 @@ namespace Presentacion
                 if (!IsPostBack)
                 {
                     string idQuery = Request.QueryString["id"];
-
-
-
-                    if (!string.IsNullOrEmpty(idQuery) && int.TryParse(idQuery, out int idArticulo))
+                   
+                    if (!string.IsNullOrEmpty(idQuery) && int.TryParse(idQuery, out idArticulo))
                     {
 
                         cargarArticulo(idArticulo);
 
                         if (articulo != null)
                         {
-                            Session["ArticuloSeleccionado"] = articulo; // se guarda el artículo en sesión
+                            Session["ArticuloSeleccionado"] = articulo; 
                             CargarImagenes();
+                            if (!articulo.Estado)
+                            {
+                                btnDeshabilitar.Text = "Habilitar";
+                            }
+
                         }
                         else
                         {
@@ -50,13 +53,12 @@ namespace Presentacion
                     {
                         lblConfirmacion.Text = "El ID del artículo no es válido.";
                     }
-
-
+                                      
 
                 }
                 else
                 {
-                    articulo = (Articulo)Session["ArticuloSeleccionado"]; // se recuperar el artículo desde la sesión en postbacks
+                    articulo = (Articulo)Session["ArticuloSeleccionado"];
                 }
 
 
@@ -138,7 +140,10 @@ namespace Presentacion
             {
                 if (chkConfirmarEliminacion.Checked)
                 {
-                    //Eliminar el articulo.
+                    ArticuloNegocio artNegocio = new ArticuloNegocio();
+                    artNegocio.eliminarArticuloFisicamente(articulo.IdArticulo);
+                    Response.Redirect("~/Default.aspx", false);
+
                 }
             }
             catch (Exception ex)
@@ -231,6 +236,20 @@ namespace Presentacion
                 //Response.Write($"Error al cargar al carrito: {ex.Message}<br />");
                 Session.Add("error al cargar al carrito", ex.ToString());
                 lblConfirmacion.Text = "Error al cargar al carrito: " + ex.Message;
+            }
+        }
+
+        protected void btnDeshabilitar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ArticuloNegocio artNegocio = new ArticuloNegocio();                
+                artNegocio.eliminarArticuloLogicamente(articulo.IdArticulo, !articulo.Estado);
+                Response.Redirect("~/Default.aspx", false);
+            }catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
     }

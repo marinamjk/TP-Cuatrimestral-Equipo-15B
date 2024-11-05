@@ -78,7 +78,7 @@ namespace Negocio
             AccesoDatos datos= new AccesoDatos();
             try
             {
-                datos.setearConsulta("Select A.Nombre, A.Descripcion, A.IDMarca, M.Nombre as 'NombreMarca', A.IDCategoria, C.Nombre as 'NombreCategoria', A.Precio, A.Stock, A.Puntaje, A.Estado from Articulos A Inner Join Marcas M on M.IDMarca= A.IDMarca inner join Categorias C on C.IDCategoria= A.IDCategoria where IDArticulo =" + id);
+                datos.setearConsulta("Select A.Nombre, A.Descripcion, A.IDMarca, M.Nombre as 'NombreMarca', A.IDCategoria, C.Nombre as 'NombreCategoria', A.Precio, A.Stock, A.Puntaje from Articulos A Inner Join Marcas M on M.IDMarca= A.IDMarca inner join Categorias C on C.IDCategoria= A.IDCategoria where IDArticulo =" + id);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -105,8 +105,6 @@ namespace Negocio
                     if (!(datos.Lector["Puntaje"] is DBNull))
                         aux.Puntaje = (decimal)datos.Lector["Puntaje"];
 
-                    aux.Estado = (bool)datos.Lector["Estado"];
-
                     ImagenNegocio im_negocio = new ImagenNegocio();
                     aux.Imagenes = im_negocio.buscarImagenesXArticulo(aux.IdArticulo);
 
@@ -131,10 +129,10 @@ namespace Negocio
                 datos.setearProcedimiento("sp_AgregarArticulo");
                 datos.setearParametros("@Nombre", nuevo.Nombre);
                 datos.setearParametros("@Descripcion", nuevo.Descripcion);
-                datos.setearParametros("IDMarca", nuevo.Marca.IdMarca);
-                datos.setearParametros("IDCategoria", nuevo.Categoria.IdCategoria);
-                datos.setearParametros("Precio", nuevo.Precio);
-                datos.setearParametros("Stock", nuevo.Stock);
+                datos.setearParametros("@IDMarca", nuevo.Marca.IdMarca);
+                datos.setearParametros("@IDCategoria", nuevo.Categoria.IdCategoria);
+                datos.setearParametros("@Precio", nuevo.Precio);
+                datos.setearParametros("@Stock", nuevo.Stock);
                 return datos.ejecutarEscalar();
             }
             catch (Exception ex)
@@ -171,5 +169,47 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void eliminarArticuloFisicamente(int idArt)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("sp_EliminarArticuloFisicamente");
+                datos.setearParametros("@IDArticulo", idArt);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void eliminarArticuloLogicamente(int idArt, bool activo= false)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("sp_EliminarArticuloLogicamente");
+                datos.setearParametros("@IDArticulo", idArt);
+                datos.setearParametros("@Estado", activo);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }

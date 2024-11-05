@@ -25,8 +25,7 @@ namespace Negocio
                 {
                     Marca aux= new Marca();
                     aux.IdMarca = (int)datos.Lector["IDMarca"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Estado = (bool)datos.Lector["Estado"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];            
                     listaMarcas.Add(aux);
                 }
             }
@@ -40,6 +39,47 @@ namespace Negocio
             }
 
             return listaMarcas;
+        }
+
+        public void modificarMarca(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_ModificarMarca");
+                datos.setearParametros("@IDMarca", marca.IdMarca);          
+                datos.setearParametros("@Nombre", marca.Nombre);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+        public void eliminarMarca(int idMarca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("sp_EliminarMarca");
+                datos.setearParametros("@IDMarca", idMarca);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

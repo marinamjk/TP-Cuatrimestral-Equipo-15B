@@ -31,14 +31,12 @@ Create Table Categorias(
 IDCategoria int not null primary key identity(1,1),
 Nombre varchar(50) not null,
 IDCategoriaPadre int null,
-Estado bit not null,
 FOREIGN KEY (IDCategoriaPadre) REFERENCES Categorias(IDCategoria)
 )
 
 Create Table Marcas(
 IDMarca int not null primary key identity(1,1),
 Nombre varchar(50) not null,
-Estado bit not null
 )
 
 Create Table Articulos(
@@ -49,7 +47,7 @@ IDMarca int null foreign key references Marcas(IDMarca),
 IDCategoria int not null foreign key references Categorias(IDCategoria),
 Precio money not null,
 Stock int not null,
-Puntaje decimal null,
+Puntaje decimal(3,1) null,
 Estado bit not null
 )
 
@@ -57,6 +55,22 @@ Create Table Imagenes(
 IDImagen int not null primary key identity(1,1),
 IDArticulo int not null foreign key references Articulos(IDArticulo),
 UrlImagen varchar(5000) not null
+)
+go
+
+Create Table Puntajes(
+IDArticulo int,
+IDPedido int,
+Puntuacion int not null check (Puntuacion>=1 and Puntuacion <=10)
+)
+go
+
+Create Table Favoritos(
+IDUsuario int,
+IDArticulo int,
+Foreign key(IDUsuario) references Usuarios(IDUsuario),
+Foreign key(IDArticulo) references Articulos(IDArticulo),
+Primary key (IDUsuario, IDArticulo)
 )
 go
 
@@ -69,41 +83,6 @@ Begin
 	INNER JOIN Categorias C on C.IDCategoria= A.IDCategoria
 End
 go
-
-Create Procedure sp_listarMarcas
-As
-Begin
-	Select IDMarca, Nombre, Estado from Marcas
-End
-go
-
-Create Procedure sp_listarCategorias
-As
-Begin
-	Select IDCategoria, Nombre, IDCategoriaPadre, Estado from Categorias
-End
-go
-
-Create Procedure sp_listarSubcategorias(
-@idCatPadre int= NULL
-)
-as
-Begin
- Select IDCategoria, Nombre, IDCategoriaPadre, Estado 
- from Categorias 
- where (IDCategoriaPadre = @idCatPadre OR (@idCatPadre IS NULL AND IDCategoriaPadre IS NULL));
-End
-go
-
-Create Procedure sp_ListarUltimasSubcategorias
-as
-begin
-	Select IDCategoria, Nombre, IDCategoriaPadre, Estado from Categorias 
-	where IDCategoria not in (select IDCategoriaPadre from Categorias
-	where IDCategoriaPadre is not null and Estado=1)
-end
-go
-
 
 Create Procedure sp_AgregarArticulo(
 @Nombre varchar(100),
@@ -136,6 +115,33 @@ where IDArticulo= @IDArticulo
 end
 go
 
+Create Procedure sp_EliminarArticuloFisicamente(
+@IDArticulo int
+)
+as
+begin
+	begin try
+		begin transaction
+			Delete from Imagenes where IDArticulo = @IDArticulo;
+			Delete from Articulos where IDArticulo= @IDArticulo;
+		commit transaction
+	end try
+	begin catch	
+		rollback transaction
+	end catch
+end
+go
+
+Create Procedure sp_EliminarArticuloLogicamente(
+@IDArticulo int,
+@Estado bit
+)
+as
+begin
+	Update Articulos set Estado=@Estado where IDArticulo=@IDArticulo
+end
+go
+
 Create Procedure sp_AgregarImagen(
  @IDArticulo int,
  @Url varchar(1500)
@@ -156,12 +162,19 @@ begin
 end
 go
 
+Create Procedure sp_listarMarcas
+As
+Begin
+	Select IDMarca, Nombre from Marcas
+End
+go
+
 Create Procedure sp_AgregarMarca(
 @Nombre varchar(50)
 ) as
 begin
-	Insert into Marcas (Nombre, Estado) values
-	(@Nombre, 1)
+	Insert into Marcas (Nombre) values
+	(@Nombre)
 end
 go
 
@@ -176,13 +189,49 @@ begin
 end
 go
 
+Create Procedure sp_EliminarMarca(
+@IDMarca int
+)
+as
+begin
+	Delete from Marcas where IDMarca= @IDMarca
+end
+go
+
+Create Procedure sp_listarCategorias
+As
+Begin
+	Select IDCategoria, Nombre, IDCategoriaPadre from Categorias
+End
+go
+
+Create Procedure sp_listarSubcategorias(
+@idCatPadre int= NULL
+)
+as
+Begin
+ Select IDCategoria, Nombre, IDCategoriaPadre 
+ from Categorias 
+ where (IDCategoriaPadre = @idCatPadre OR (@idCatPadre IS NULL AND IDCategoriaPadre IS NULL));
+End
+go
+
+Create Procedure sp_ListarUltimasSubcategorias
+as
+begin
+	Select IDCategoria, Nombre, IDCategoriaPadre from Categorias 
+	where IDCategoria not in (select IDCategoriaPadre from Categorias
+	where IDCategoriaPadre is not null)
+end
+go
+
 Create Procedure sp_AgregarCategoria(
 @Nombre varchar(50),
 @IDCategoriaPadre int= NULL
 ) as
 begin
-	Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
-	(@Nombre, @IDCategoriaPadre, 1)
+	Insert into Categorias (Nombre, IDCategoriaPadre) values
+	(@Nombre, @IDCategoriaPadre)
 end
 go
 
@@ -197,37 +246,99 @@ begin
 end
 go
 
-Insert into Marcas(Nombre, Estado) values
-('Dolce Objetos', 1),
-('Ricchezze', 1),
-('AMV', 1),
-('Sin Marca', 1)
+Create Procedure sp_EliminarCategoria(
+@IDCategoria int
+)
+as
+begin
+	Delete from Categorias where IDCategoria= @IDCategoria
+end
 go
 
-Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
-('Muebles de cocina', null, 1),
-('Muebles de comedor', null,  1),
-('Muebles de dormitorio', null, 1)
+Create Procedure sp_ListarFavoritos(
+@IDUsuario int
+)as
+begin
+	Select IDArticulo from Favoritos where IDUsuario=@IDUsuario
+end
+go
+
+Create Procedure sp_AgregarAFavoritos(
+@IDUsuario int,
+@IDArticulo int
+)as
+begin
+	Insert into Favoritos(IDUsuario, IDArticulo)
+	values(@IDUsuario, @IDArticulo)
+end
+go
+
+Create Procedure sp_EliminarDeFavoritos(
+@IDUsuario int,
+@IDArticulo int
+) as
+begin
+	Delete from Favoritos where IDUsuario=@IDUsuario and IDArticulo=@IDArticulo
+end
+go
+
+Create Procedure sp_AgregarPuntaje(
+@IDArticulo int,
+@IDPedido int,
+@Puntuacion int
+) as
+begin
+	Insert into Puntajes(IDArticulo, IDPedido, Puntuacion)
+	values (@IDArticulo, @IDPedido, @Puntuacion)
+end
+go
+
+Create or alter Trigger TR_CalcularPuntaje on Puntajes
+after insert
+as
+begin
+begin try
+	Declare @Puntaje decimal(3,1)
+	Select @Puntaje= isNull(AVG(Puntuacion*1.0),0) from Puntajes where IDArticulo = (Select IDArticulo from inserted)
+	Update Articulos set Puntaje= @Puntaje where IDArticulo= (Select IDArticulo from inserted)
+end try
+begin catch
+	raiserror('No se pudo calcular el promedio de la puntuación', 16, 2)
+end catch
+end
+go
+
+Insert into Marcas(Nombre) values
+('Dolce Objetos'),
+('Ricchezze'),
+('AMV'),
+('Sin Marca')
+go
+
+Insert into Categorias (Nombre, IDCategoriaPadre) values
+('Muebles de cocina', null),
+('Muebles de comedor', null),
+('Muebles de dormitorio', null)
 Go
 
-Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
-('alacenas', 1, 1),
-('bajo mesadas', 1,  1),
-('Desayunadores', 1, 1),
-('Mesas', 2, 1),
-('Camas', 3, 1),
-('Mesitas de luz', 3, 1)
+Insert into Categorias (Nombre, IDCategoriaPadre) values
+('alacenas', 1),
+('bajo mesadas', 1),
+('Desayunadores', 1),
+('Mesas', 2),
+('Camas', 3),
+('Mesitas de luz', 3)
 Go
 
-Insert into Categorias(Nombre, IDCategoriaPadre, Estado) values
-('2 plazas', 8, 1),
-('1 plasa', 8, 1),
-('Ratonas', 7, 1)
+Insert into Categorias(Nombre, IDCategoriaPadre) values
+('2 plazas', 8),
+('1 plasa', 8),
+('Ratonas', 7)
 go
 
 Insert Into Articulos(Nombre, Descripcion, IDMarca, IDCategoria, Precio, Stock, Puntaje, Estado) values
-('Alacena 1,20 cm Ricchezze Arco Negro', 'MDP 15mm imprimado, Medidas: 460 x 1200 x 270 mm', 2, 4, 80000, 5, 8, 1),
-('Bajo Mesada Arco 1,20 cm Negro', 'Material del Producto: Mdp 15mm imprimado. Medidas: Alto: 83 cm Ancho: 120 cm Profundidad: 50 cm Peso: 35 kg', 2, 5, 130000, 4, 9, 1),
+('Alacena 1,20 cm Ricchezze Arco Negro', 'MDP 15mm imprimado, Medidas: 460 x 1200 x 270 mm', 2, 4, 80000, 5, 0, 1),
+('Bajo Mesada Arco 1,20 cm Negro', 'Material del Producto: Mdp 15mm imprimado. Medidas: Alto: 83 cm Ancho: 120 cm Profundidad: 50 cm Peso: 35 kg', 2, 5, 130000, 4, 0, 1),
 ('Box de Cama con 4 Cajones + Zapatero Base Somier Blanco', 'Modelo: T6443 EV', 3, 10, 340000, 3, 0, 1),
 ('Mesa de Luz Flotante Negro Desayunador Cajon Moderno', 'Medidas: 42x24x35cm', 4, 9, 70000, 4, 0, 1)
 go
@@ -241,3 +352,10 @@ Insert into Imagenes(IDArticulo,UrlImagen) values
 (4, 'https://images.fravega.com/f300/11cbcd1f3c3ad912ad24cee136aa4ac9.png.webp'),
 (4, 'https://images.fravega.com/f300/18d38a5cb5413051fe6efc2f480582a3.png.webp')
 go
+
+Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (3, 1, 10.0)
+Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (3, 2, 9.0)
+Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (3, 3, 9.0)
+Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (4, 1, 9.0)
+Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (4, 2, 8.0)
+Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (4, 3, 5.0)
