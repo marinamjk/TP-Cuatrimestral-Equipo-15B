@@ -68,8 +68,9 @@
                      </div>
 
                     <div class="form-group mt-3">
-                        <asp:TextBox ID="TextBox11" runat="server" CssClass="form-control  form-control-lg" placeholder="Código Postal" />
-                    </div>
+                        <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control  form-control-lg" placeholder="Código Postal" OnTextChanged="txtCodigoPostal_TextChanged" AutoPostBack="true" />
+                        <asp:Label ID="lblCPValidacion" runat="server" CssClass="alert alert-dange mt-3"></asp:Label>
+                     </div>
                     <div class="form-group mt-3">
                         <asp:TextBox ID="TextBox12" runat="server" CssClass="form-control form-control-lg" placeholder="Localidad" />
                     </div>
