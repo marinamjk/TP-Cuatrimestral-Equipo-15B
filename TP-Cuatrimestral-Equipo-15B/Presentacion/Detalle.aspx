@@ -27,6 +27,14 @@
             
             return false;
         }
+
+        window.onload = function () {
+            var icon = document.getElementById('icon');
+            if (typeof esFavorito !== 'undefined' && esFavorito) {
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill');
+            }
+        }
     </script>
 
 </asp:Content>
@@ -113,7 +121,7 @@
             </div>
             <hr />
             <div class="mb-3">
-                <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClientClick="toggleIcon(this); return false" />
+                <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClientClick="toggleIcon(this); return false" OnClick="btnFavorito_Click" />
                 <i id="icon" class="bi bi-heart"></i>
             </div>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">

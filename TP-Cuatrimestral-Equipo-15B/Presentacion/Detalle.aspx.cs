@@ -252,5 +252,31 @@ namespace Presentacion
                 Response.Redirect("Error.aspx", false);
             }
         }
+
+        protected void btnFavorito_Click(object sender, EventArgs e)
+        {
+            try 
+            {
+                Usuario user = (Usuario)Session["usuario"];
+                if (user != null && Request.QueryString["id"] != null) {
+                   
+                    int idUser = user.IdUsuario;
+                    int idArt = int.Parse(Request.QueryString["id"]);
+                    
+                    AgregadosNegocio ag = new AgregadosNegocio();
+                    
+                    bool esFavorito= ag.agregarAFavoritos(idUser, idArt);
+                    if (esFavorito)
+                    {
+                        ScriptManager.RegisterStartupScript(this, GetType(), "setIcon", $"var esFavorito = {esFavorito.ToString().ToLower()};", true);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
+        }
     }
 }

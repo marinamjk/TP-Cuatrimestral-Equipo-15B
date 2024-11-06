@@ -100,6 +100,29 @@ namespace Negocio
 
             return listaSubcategorias;
         }
+
+        public void agregarCategoria(Categoria categoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_AgregarCategoria");
+                datos.setearParametros("@Nombre", categoria.Nombre);
+                datos.setearParametros("@IDCategoriaPadre", categoria.IDCategoriaPadre);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
         public Categoria buscarCategoriaXId(int? IdCategoria)
         {
             Categoria aux = new Categoria(); ;

@@ -20,7 +20,7 @@ namespace Presentacion
                 {
                     ArticuloNegocio negocio = new ArticuloNegocio();
             
-                    catalogo= negocio.listarConSP();  
+                    catalogo= negocio.listarConSP().Where(a=>a.Estado==true).ToList();  
                     
                     repArticulos.DataSource = catalogo;
                     repArticulos.DataBind();                    

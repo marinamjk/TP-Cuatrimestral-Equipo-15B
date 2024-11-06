@@ -5,19 +5,39 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="row">
-        <div class="col-6">
-            <div class="m-3">
-                <asp:GridView ID="dgvMarcas" runat="server" AutoGenerateColumns="false" DataKeyNames="IdMarca"
-                    AllowPaging="True" PageSize="4"
-                    OnPageIndexChanged="dgvArticulos_PageIndexChanged"
-                    OnSelectedIndexChanged="dgvArticulos_SelectedIndexChanged">
-                    <Columns>
-                        <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
-                        <asp:CommandField ShowSelectButton="true" SelectText="&#x270d" HeaderText="Administrar" />
-                    </Columns>
-                </asp:GridView>
+    <asp:UpdatePanel runat="server">
+        <ContentTemplate>
+            <div class="row">
+                <div class="col-6">
+                    <div class="m-3">
+                        <asp:GridView ID="dgvMarcas" runat="server" AutoGenerateColumns="false" DataKeyNames="IdMarca"
+                            AllowPaging="True" PageSize="4"
+                            OnPageIndexChanging="dgvMarcas_PageIndexChanging"                         
+                            OnRowCommand="dgvMarcas_RowCommand">
+
+                            <Columns>
+                                <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
+                                <asp:ButtonField  ButtonType="Link" Text="&#x270d" HeaderText="Modificar" CommandName="Modificar" />
+                                <asp:ButtonField  ButtonType="Link" Text="&#x274c" HeaderText="Eliminar" CommandName="Eliminar" />
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="m-3">
+                        <asp:Label ID="lblNombre" runat="server" Text="Nombre: "></asp:Label>
+                    </div>
+                    <div class="m-3">
+                        <asp:TextBox ID="txtNombre" runat="server" ></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvNombre" runat="server" maxLength="100" ControlToValidate="txtNombre" ErrorMessage="Este campo es requerido."></asp:RequiredFieldValidator>
+                    </div>
+                    <div class="m-3">
+                        <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />
+                        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"  OnClick="btnCancelar_Click"/>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
 </asp:Content>

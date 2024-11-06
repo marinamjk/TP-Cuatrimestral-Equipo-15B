@@ -268,8 +268,15 @@ Create Procedure sp_AgregarAFavoritos(
 @IDArticulo int
 )as
 begin
+IF NOT EXISTS (
+        SELECT 1 
+        FROM Favoritos 
+        WHERE IDUsuario = @IDUsuario AND IDArticulo = @IDArticulo
+    )
+	begin
 	Insert into Favoritos(IDUsuario, IDArticulo)
 	values(@IDUsuario, @IDArticulo)
+	end
 end
 go
 

@@ -41,6 +41,24 @@ namespace Negocio
             return listaMarcas;
         }
 
+        public void agregarMarca(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_AgregarMarca");
+                datos.setearParametros("@Nombre", marca.Nombre);
+                datos.ejecutarAccion(); 
+
+            } catch (Exception ex) {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void modificarMarca(Marca marca)
         {
             AccesoDatos datos = new AccesoDatos();
