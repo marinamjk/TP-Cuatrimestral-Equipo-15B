@@ -77,15 +77,7 @@
                     <%--Va a sacar las provincias de la base de datos--%>
                     <div class="form-group mt-3">
                         <asp:DropDownList ID="DropDownListProvincia" runat="server" CssClass="form-select form-select-lg" placeholder="Provincia">
-                            <asp:ListItem Text="Provincia" Value="" />
-                            <asp:ListItem Text="Buenos Aires" Value="Buenos Aires" />
-                            <asp:ListItem Text="Córdoba" Value="Córdoba" />
-                            <asp:ListItem Text="Santa Fe" Value="Santa Fe" />
-                            <asp:ListItem Text="Mendoza" Value="Mendoza" />
-                            <asp:ListItem Text="Tucumán" Value="Tucumán" />
-                            <asp:ListItem Text="Entre Ríos" Value="Entre Ríos" />
-                            <asp:ListItem Text="Salta" Value="Salta" />
-                            <asp:ListItem Text="Misiones" Value="Misiones" />                            
+                                                
                         </asp:DropDownList>
                      </div>
                      
