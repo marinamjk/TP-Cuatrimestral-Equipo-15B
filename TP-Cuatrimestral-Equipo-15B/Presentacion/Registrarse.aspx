@@ -38,7 +38,7 @@
       <asp:TextBox ID="TbContraseña" runat="server" CssClass="form-control" placeholder="Contraseña" type="password"></asp:TextBox>
     </div>
     <div class="form-group col-md-2">
-      <label for="inputPassword4">Contraseña</label>
+      <label for="inputPassword4">Repetir Contraseña</label>
       <asp:TextBox ID="TbConfirmaContraseña" runat="server" CssClass="form-control" placeholder="Repita contraseña" type="password"></asp:TextBox>
     </div>
   <div class="mb-4">

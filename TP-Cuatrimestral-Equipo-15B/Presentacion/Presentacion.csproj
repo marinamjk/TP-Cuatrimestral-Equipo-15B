@@ -113,6 +113,7 @@
     <Content Include="Web.config" />
     <Content Include="login.aspx" />
     <Content Include="Registrarse.aspx" />
+    <Content Include="ValidarUsuario.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministrarArticulos.aspx.cs">
@@ -244,6 +245,13 @@
     </Compile>
     <Compile Include="Registrarse.aspx.designer.cs">
       <DependentUpon>Registrarse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ValidarUsuario.aspx.cs">
+      <DependentUpon>ValidarUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ValidarUsuario.aspx.designer.cs">
+      <DependentUpon>ValidarUsuario.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
