@@ -22,14 +22,21 @@ namespace Presentacion
             UsuarioManager agregar = new UsuarioManager();
             try
             {
-                usuario.Nombre = TbNombre.Text;
-                usuario.Apellido = TbApellido.Text;
-                usuario.Mail = TbMail.Text;
-                usuario.Dni = TbDocumento.Text;
                 usuario.Contraseña = TbContraseña.Text;
-                usuario.telefono = TbTelefono.Text;
-                agregar.agregarUsuario(usuario);
-                Response.Redirect("Default.aspx", false);
+                usuario.Mail = TbMail.Text;
+                if(usuario.Contraseña == TbConfirmaContraseña.Text && usuario.Mail != "")
+                {
+                    usuario.Nombre = TbNombre.Text;
+                    usuario.Apellido = TbApellido.Text;
+                    usuario.Dni = TbDocumento.Text;
+                    usuario.telefono = TbTelefono.Text;
+                    agregar.agregarUsuario(usuario);
+                    Response.Redirect("Default.aspx", false);
+                }
+                else
+                {
+                    Response.Redirect("Registrarse.aspx", false);
+                }
             }
             catch (Exception ex)
             {

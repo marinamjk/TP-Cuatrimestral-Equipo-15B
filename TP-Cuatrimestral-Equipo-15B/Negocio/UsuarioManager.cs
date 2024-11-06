@@ -38,7 +38,7 @@ namespace Negocio
                 datos.setearParametros("@DNI", usuario.Dni);
                 datos.setearParametros("@Email",usuario.Mail);
                 datos.setearParametros("@Contrasenia", usuario.Contraseña);
-                datos.ejecutarEscalar();
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {

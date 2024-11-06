@@ -12,9 +12,11 @@ namespace Presentacion
     public partial class DatosContacto : System.Web.UI.Page
     {
         private CarritoNegocio carritoNegocio;
+        private ProvinciaNegocio provinciaNegocio;
         protected void Page_Load(object sender, EventArgs e)
         {
             carritoNegocio = new CarritoNegocio();
+            provinciaNegocio = new ProvinciaNegocio();
 
             if (!IsPostBack)
             {
@@ -22,6 +24,7 @@ namespace Presentacion
                 //DatosDestinatario.Visible = false;
                 //DatosFacturacion.Visible = false;
                 CargarResumenCompra();
+                CargarProvincias();
             }
         }
 
@@ -43,6 +46,18 @@ namespace Presentacion
             }
         }
 
+        private void CargarProvincias()
+        {
+            List<Provincia> provincias = provinciaNegocio.ObtenerProvincias();
+            DropDownListProvincia.DataSource = provincias;
+            DropDownListProvincia.DataTextField = "Nombre";
+            DropDownListProvincia.DataValueField = "Id";
+            DropDownListProvincia.DataBind();
+            DropDownListProvincia.Items.Insert(0, new ListItem("Seleccione Provincia", ""));
+        }
+
+
+
         protected void btnMediosDePago_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/CheckOut.aspx");
@@ -60,6 +75,22 @@ namespace Presentacion
                 DatosFacturacion.Visible = true;
                 DatosDestinatario.Visible = false;
             }
+        }
+
+        protected void txtCodigoPostal_TextChanged(object sender, EventArgs e)
+        {
+            int codogpPostal;
+
+            if (int.TryParse(txtCodigoPostal.Text, out codogpPostal))
+            {
+                bool esValido = provinciaNegocio.ValidarCodigoPostal(codogpPostal);
+                lblCPValidacion.Text = esValido ? "Codigo Postal Valido" : "Codigo Postal invalido";
+            }
+            else
+            {
+                lblCPValidacion.Text = "El Código Postal es invalido";
+            }
+
         }
     }
 }

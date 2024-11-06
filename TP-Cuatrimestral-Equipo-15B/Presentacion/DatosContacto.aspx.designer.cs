@@ -96,31 +96,22 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.TextBox TextBox9;
 
         /// <summary>
-        /// Control TextBox10.
+        /// Control txtCodigoPostal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox10;
+        protected global::System.Web.UI.WebControls.TextBox txtCodigoPostal;
 
         /// <summary>
-        /// Control TextBox11.
+        /// Control lblCPValidacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox11;
-
-        /// <summary>
-        /// Control DropDownListProvincia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListProvincia;
+        protected global::System.Web.UI.WebControls.Label lblCPValidacion;
 
         /// <summary>
         /// Control TextBox12.
@@ -132,13 +123,13 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.TextBox TextBox12;
 
         /// <summary>
-        /// Control TextBox13.
+        /// Control DropDownListProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox13;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListProvincia;
 
         /// <summary>
         /// Control DatosFacturacion.
