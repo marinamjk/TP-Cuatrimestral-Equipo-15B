@@ -80,7 +80,23 @@ namespace Negocio
             }
         }
         
-		
+		public bool ValidarCodigoPostalPorProvincia(int codigoPostal, int provinciaId)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Localidad WHERE CodigoPostal = @CodigoPostal AND ProvinciaId = @ProvinciaID");
+                datos.setearParametros("@CodigoPostal", codigoPostal);
+                datos.setearParametros("@ProvinciaID", provinciaId);
+
+                return datos.ejecutarEscalar() > 0;
+            }
+            finally
+
+            {
+                datos.cerrarConexion();
+            }
+        }
 
     }
 }

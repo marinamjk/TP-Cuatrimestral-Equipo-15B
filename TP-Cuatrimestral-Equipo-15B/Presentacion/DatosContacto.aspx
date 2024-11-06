@@ -76,7 +76,7 @@
                     </div>
                     <%--Va a sacar las provincias de la base de datos--%>
                     <div class="form-group mt-3">
-                        <asp:DropDownList ID="DropDownListProvincia" runat="server" CssClass="form-select form-select-lg" placeholder="Provincia">
+                        <asp:DropDownList ID="DropDownListProvincia" runat="server" CssClass="form-select form-select-lg" placeholder="Provincia" OnSelectedIndexChanged="DropDownListProvincia_SelectedIndexChanged" AutoPostBack="true">
                                                 
                         </asp:DropDownList>
                      </div>

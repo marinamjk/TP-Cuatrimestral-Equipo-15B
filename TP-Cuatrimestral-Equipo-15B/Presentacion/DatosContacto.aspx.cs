@@ -84,13 +84,97 @@ namespace Presentacion
             if (int.TryParse(txtCodigoPostal.Text, out codogpPostal))
             {
                 bool esValido = provinciaNegocio.ValidarCodigoPostal(codogpPostal);
-                lblCPValidacion.Text = esValido ? "Codigo Postal Valido" : "Codigo Postal invalido";
+
+                if (esValido)
+                {
+                    lblCPValidacion.Text ="Codigo Postal Valido";
+                    lblCPValidacion.ForeColor = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    lblCPValidacion.Text = "Codigo Postal Invalido ";
+                    lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+                }
+
             }
             else
             {
                 lblCPValidacion.Text = "El Código Postal es invalido";
+                lblCPValidacion.ForeColor = System.Drawing.Color.Red;
             }
 
+        }
+
+        protected void DropDownListProvincia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if (int.TryParse(DropDownListProvincia.SelectedValue, out int provinciaId))
+            //{
+            //    int codigoPostal;
+
+
+            //    if (int.TryParse(txtCodigoPostal.Text, out codigoPostal))
+            //    {
+
+            //        bool esValido = provinciaNegocio.ValidarCodigoPostalPorProvincia(codigoPostal, provinciaId);
+
+            //        if (esValido)
+            //        {
+            //            lblCPValidacion.Text = "Código Postal válido para la provincia seleccionada.";
+            //            lblCPValidacion.ForeColor = System.Drawing.Color.Green;
+            //        }
+            //        else
+            //        {
+            //            lblCPValidacion.Text = "El Código Postal no corresponde a la provincia seleccionada.";
+            //            lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        lblCPValidacion.Text = "El Código Postal ingresado es inválido.";
+            //        lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+            //    }
+            //}
+            //else
+            //{
+            //    lblCPValidacion.Text = "Seleccione una provincia valida";
+            //    lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+            //}
+            // Verificar si la provincia está seleccionada correctamente
+            if (int.TryParse(DropDownListProvincia.SelectedValue, out int provinciaId))
+            {
+                // Verificar si el Código Postal es un número válido
+                if (int.TryParse(txtCodigoPostal.Text, out int codigoPostal))
+                {
+                    // Validar si el Código Postal corresponde a la provincia seleccionada
+                    bool esValido = provinciaNegocio.ValidarCodigoPostalPorProvincia(codigoPostal, provinciaId);
+
+                    // Mensajes de validación
+                    if (esValido)
+                    {
+                        lblCPValidacion.Text = "Código Postal válido para la provincia seleccionada.";
+                        lblCPValidacion.ForeColor = System.Drawing.Color.Green;
+                    }
+                    else
+                    {
+                        lblCPValidacion.Text = "El Código Postal no corresponde a la provincia seleccionada.";
+                        lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+                    }
+                }
+                else
+                {
+                    lblCPValidacion.Text = "El Código Postal ingresado es inválido.";
+                    lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            else
+            {
+                lblCPValidacion.Text = "Seleccione una provincia válida.";
+                lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+            }
+
+            // Para depurar, podrías agregar estos registros para verificar el flujo:
+            System.Diagnostics.Debug.WriteLine($"Provincia seleccionada ID: {DropDownListProvincia.SelectedValue}");
+            System.Diagnostics.Debug.WriteLine($"Código Postal ingresado: {txtCodigoPostal.Text}");
         }
     }
 }
