@@ -58,9 +58,12 @@
     <Compile Include="ArticuloEnCarrito.cs" />
     <Compile Include="Carrito.cs" />
     <Compile Include="Categoria.cs" />
+    <Compile Include="Direccion.cs" />
     <Compile Include="Imagen.cs" />
+    <Compile Include="Localidad.cs" />
     <Compile Include="Marca.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provincia.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>

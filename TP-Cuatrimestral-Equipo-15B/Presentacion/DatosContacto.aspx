@@ -57,21 +57,21 @@
                     <div class="form-group  mt-3">
                         <asp:TextBox ID="TextBox7" runat="server" CssClass="form-control form-control-lg" placeholder="Teléfono" />
                     </div>
-                    <div class="form-group  mt-3">
-                        <asp:TextBox ID="TextBox8" runat="server" CssClass="form-control form-control-lg" placeholder="Calle" />
-                    </div>
                          
                      <div class="row">
+                        <div class="form-group col-md-6  mt-3">
+                            <asp:TextBox ID="TextBox8" runat="server" CssClass="form-control form-control-lg" placeholder="Calle" />
+                        </div>
                         <div class="form-group col-md-6 mt-3">
                             <asp:TextBox ID="TextBox9" runat="server" CssClass="form-control form-control-lg" placeholder="Número" />
-                        </div>
-                        <div class="form-group col-md-6 mt-3">
-                            <asp:TextBox ID="TextBox10" runat="server" CssClass="form-control form-control-lg" placeholder="Departamento" />
-                        </div>
+                        </div>                        
                      </div>
 
                     <div class="form-group mt-3">
                         <asp:TextBox ID="TextBox11" runat="server" CssClass="form-control  form-control-lg" placeholder="Código Postal" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <asp:TextBox ID="TextBox12" runat="server" CssClass="form-control form-control-lg" placeholder="Localidad" />
                     </div>
                     <%--Va a sacar las provincias de la base de datos--%>
                     <div class="form-group mt-3">
@@ -88,12 +88,7 @@
                         </asp:DropDownList>
                      </div>
                      
-                    <div class="form-group mt-3">
-                        <asp:TextBox ID="TextBox12" runat="server" CssClass="form-control form-control-lg" placeholder="Ciudad" />
-                    </div>
-                    <div class="form-group mt-3">
-                        <asp:TextBox ID="TextBox13" runat="server" CssClass="form-control form-control-lg" placeholder="Barrio" />
-                    </div>                              
+                                             
                 </div>
 
                 <div id="DatosFacturacion" runat="server" visible="false">
