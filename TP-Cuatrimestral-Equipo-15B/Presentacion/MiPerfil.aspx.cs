@@ -15,7 +15,7 @@ namespace Presentacion
 			Usuario usuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
 			if (usuario == null)
 			{
-				Response.Redirect("login.aspx", false);
+				Response.Redirect("login.aspx");
 			}
 		}
 	}
