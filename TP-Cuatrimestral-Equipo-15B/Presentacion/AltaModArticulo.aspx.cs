@@ -22,8 +22,9 @@ namespace Presentacion
 
                 if (!IsPostBack)
                 {
-                    images = new List<Imagen>();                     
-                    //inicializar lista de enteros
+                    images = new List<Imagen>();
+                    Session["ImagesList"] = images;
+
                     List<Categoria> subcategorias = new List<Categoria>();
                     CategoriaNegocio catNegocio = new CategoriaNegocio();
                     subcategorias = catNegocio.listarUltimasSubcategorias();
@@ -135,27 +136,36 @@ namespace Presentacion
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
-        {            
+        {
             //if (!(revUrlImagen.IsValid))
             //{
             //    return;
             //}
-            string url = txtUrlImagen.Text;
-
-            images = (List<Imagen>)Session["ImagesList"];
-            if (images == null)
+            try
             {
-                images = new List<Imagen>();
+                string url = txtUrlImagen.Text;
+
+                images = (List<Imagen>)Session["ImagesList"];
+                if (images == null)
+                {
+                    images = new List<Imagen>();
+                }
+
+                images.Add(new Imagen { UrlImagen = url });
+
+                Session["ImagesList"] = images;
+                RepeaterImages.DataSource = images;
+                RepeaterImages.DataBind();
+
+                txtUrlImagen.Text = string.Empty;
+                CargarImagenes();
             }
-
-            images.Add(new Imagen { UrlImagen = url});
-
-            Session["ImagesList"] = images;
-            RepeaterImages.DataSource = images;
-            RepeaterImages.DataBind();
-
-            txtUrlImagen.Text = string.Empty;
-            CargarImagenes();
+            catch (Exception ex) 
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+                       
         }
 
         protected void btnQuitar_Click(object sender, EventArgs e)

@@ -8,7 +8,7 @@
     <div class="container mt-4">
         <h2 class="mb-4">Mis favoritos</h2>
         <div class="row">
-            <asp:Repeater ID="repArticulos" runat="server" OnItemDataBound="repArticulos_ItemDataBound">
+            <asp:Repeater ID="repFavoritos" runat="server" OnItemDataBound="repFavoritos_ItemDataBound">
                 <ItemTemplate>
 
                     <div class="col-md-12 mb-3">

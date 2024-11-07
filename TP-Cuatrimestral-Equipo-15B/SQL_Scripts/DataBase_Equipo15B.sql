@@ -7,11 +7,35 @@ CREATE table Tarjeta(
 	IdTarjeta int primary key identity(1,1),
 	NumeroTarjeta int not null
 )
+go
+
+-- Tabla Provincia
+CREATE TABLE Provincia (
+    Id TINYINT NOT NULL primary key IDENTITY(1,1),  
+    Nombre NVARCHAR(50) NOT NULL,
+    Codigo31662 CHAR(4) NOT NULL unique
+);
+go
+
+CREATE TABLE Localidad (
+    Id INT NOT NULL IDENTITY(1,1) primary key,
+    ProvinciaId TINYINT NOT NULL,
+    Nombre NVARCHAR(50) NOT NULL,
+    CodigoPostal SMALLINT NOT NULL,
+	FOREIGN KEY (ProvinciaId) REFERENCES Provincia(Id)
+);
+go
 
 CREATE table Direccion(
 	IdDireccion int primary key identity(1,1),
-	Direccion varchar(100) not null
+	Calle varchar(100) not null,
+	Numero INT NOT NULL,                     
+    IdProvincia TINYINT NOT NULL,            
+    IdLocalidad INT NOT NULL,
+	FOREIGN KEY (IdProvincia) REFERENCES Provincia(Id),
+	FOREIGN KEY (IdLocalidad) REFERENCES Localidad(Id),
 )
+go
 
 Create Table Usuarios(
 IDUsuario int not null primary key identity(1,1),
@@ -26,6 +50,7 @@ IDDireccion int null foreign key references Direccion(IdDireccion),
 IDTarjeta int null foreign key references Tarjeta(IDTarjeta),
 UrlFotoPerfil varchar(500) null
 )
+go
 
 Create Table Categorias(
 IDCategoria int not null primary key identity(1,1),
@@ -38,6 +63,7 @@ Create Table Marcas(
 IDMarca int not null primary key identity(1,1),
 Nombre varchar(50) not null,
 )
+go
 
 Create Table Articulos(
 IDArticulo int not null primary key identity(1,1),
@@ -50,6 +76,7 @@ Stock int not null,
 Puntaje decimal(3,1) null,
 Estado bit not null
 )
+go
 
 Create Table Imagenes(
 IDImagen int not null primary key identity(1,1),
@@ -314,55 +341,3 @@ begin catch
 end catch
 end
 go
-
-Insert into Marcas(Nombre) values
-('Dolce Objetos'),
-('Ricchezze'),
-('AMV'),
-('Sin Marca')
-go
-
-Insert into Categorias (Nombre, IDCategoriaPadre) values
-('Muebles de cocina', null),
-('Muebles de comedor', null),
-('Muebles de dormitorio', null)
-Go
-
-Insert into Categorias (Nombre, IDCategoriaPadre) values
-('alacenas', 1),
-('bajo mesadas', 1),
-('Desayunadores', 1),
-('Mesas', 2),
-('Camas', 3),
-('Mesitas de luz', 3)
-Go
-
-Insert into Categorias(Nombre, IDCategoriaPadre) values
-('2 plazas', 8),
-('1 plasa', 8),
-('Ratonas', 7)
-go
-
-Insert Into Articulos(Nombre, Descripcion, IDMarca, IDCategoria, Precio, Stock, Puntaje, Estado) values
-('Alacena 1,20 cm Ricchezze Arco Negro', 'MDP 15mm imprimado, Medidas: 460 x 1200 x 270 mm', 2, 4, 80000, 5, 0, 1),
-('Bajo Mesada Arco 1,20 cm Negro', 'Material del Producto: Mdp 15mm imprimado. Medidas: Alto: 83 cm Ancho: 120 cm Profundidad: 50 cm Peso: 35 kg', 2, 5, 130000, 4, 0, 1),
-('Box de Cama con 4 Cajones + Zapatero Base Somier Blanco', 'Modelo: T6443 EV', 3, 10, 340000, 3, 0, 1),
-('Mesa de Luz Flotante Negro Desayunador Cajon Moderno', 'Medidas: 42x24x35cm', 4, 9, 70000, 4, 0, 1)
-go
-
-Insert into Imagenes(IDArticulo,UrlImagen) values
-(1, 'https://images.fravega.com/f300/421b5390362a977e3c9a48e23806e57c.jpg.webp'),
-(1, 'https://images.fravega.com/f300/0a34b31479e4c3065743cb89509f18fd.jpg.webp'),
-(2, 'https://images.fravega.com/f300/4c6b4ce3dd3559ae1e19e7132f6e50a6.jpg.webp'),
-(2, 'https://images.fravega.com/f300/4bfe1434e0f42d241f3433a115121181.jpg.webp'),
-(3, 'https://images.fravega.com/f300/234050136af6ca0890300c223fbed515.jpg.webp'),
-(4, 'https://images.fravega.com/f300/11cbcd1f3c3ad912ad24cee136aa4ac9.png.webp'),
-(4, 'https://images.fravega.com/f300/18d38a5cb5413051fe6efc2f480582a3.png.webp')
-go
-
-Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (3, 1, 10.0)
-Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (3, 2, 9.0)
-Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (3, 3, 9.0)
-Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (4, 1, 9.0)
-Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (4, 2, 8.0)
-Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (4, 3, 5.0)
