@@ -68,8 +68,9 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li><a class="dropdown-item disabled">Administración</a></li>
+                                     <li><a class="dropdown-item" href="AdministrarArticulos.aspx">Administrar Articulos</a></li>
                                     <li><a class="dropdown-item" href="AdministrarCategoria.aspx">Administrar Categorias</a></li>
-                                    <li><a class="dropdown-item" href="AdministrarMarca.aspx">Administrar Marcas</a></li>
+                                    <li><a class="dropdown-item" href="AdministrarColecciones.aspx">Administrar Colecciones</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">

@@ -8,7 +8,7 @@
                 <asp:GridView CssClass="table table-light" ID="dgvArticulos" DataKeyNames="IdArticulo" runat="server" AutoGenerateColumns="false" OnSelectedIndexChanged="dgvArticulos_SelectedIndexChanged">
                     <Columns>
                         <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
-                        <asp:BoundField HeaderText="Marca" DataField="Marca" />
+                        <asp:BoundField HeaderText="Coleccion" DataField="Coleccion" />
                         <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
                         <asp:BoundField HeaderText="Precio" DataField="Precio" DataFormatString="${0:0.00}" HtmlEncode="false" />
                         <asp:BoundField HeaderText="Stock" DataField="Stock" />

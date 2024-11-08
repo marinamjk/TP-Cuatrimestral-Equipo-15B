@@ -18,7 +18,11 @@
                                 <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                                 <asp:BoundField HeaderText="CategoriaPadre" DataField="IDCategoriaPadre" />
                                 <asp:ButtonField ButtonType="Link" Text="&#x270d" HeaderText="Modificar" CommandName="Modificar" />
-                                <asp:ButtonField ButtonType="Link" Text="&#x274c" HeaderText="Eliminar" CommandName="Eliminar" />
+                                <asp:TemplateField HeaderText="Activo">
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="chkEstado" runat="server" Checked='<%# Eval("Estado") %>' OnCheckedChanged="chkEstado_CheckedChanged" AutoPostBack="true" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </div>

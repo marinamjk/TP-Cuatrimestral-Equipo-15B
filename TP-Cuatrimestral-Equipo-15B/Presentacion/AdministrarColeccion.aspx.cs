@@ -87,7 +87,7 @@ namespace Presentacion
             int itemId = Convert.ToInt32(dgvColecciones.DataKeys[row.RowIndex].Value);
             bool nuevoEstado = chk.Checked;
             cn.eliminarColeccionLogicamente(itemId, nuevoEstado);
-            CargarGridView();
+          
         }
 
         protected void dgvColecciones_RowCommand(object sender, GridViewCommandEventArgs e)

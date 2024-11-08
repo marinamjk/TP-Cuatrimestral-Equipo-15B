@@ -64,6 +64,7 @@ namespace Presentacion
             try
             {
                 int index;
+
                 if (int.TryParse(e.CommandArgument.ToString(), out index))
                 {
                     if (index >= 0 && index < dgvCategorias.DataKeys.Count)
@@ -88,11 +89,7 @@ namespace Presentacion
 
                     Session.Add("categoriaSeleccionada", categoria);
                 }
-                //else if (e.CommandName == "Eliminar")
-                //{
-                //    catNegocio.eliminarCategoria(id);
-                //    CargarGridView();
-                //}
+               
             }
             catch (SqlException sq)
             {
@@ -129,7 +126,7 @@ namespace Presentacion
                     catNegocio.modificarCategoria(categoria);
                     btnAgregar.Text = "Agregar";
                     txtNombre.Text = string.Empty;
-                    Session["marcaSeleccionada"] = null;
+                    Session["categoriaSeleccionada"] = null;
 
                 }
                 else
@@ -159,11 +156,23 @@ namespace Presentacion
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Session["marcaSeleccionada"] = null;
+            Session["categoriaSeleccionada"] = null;
             txtNombre.Text = string.Empty;
             ddlCategoriasPadre.SelectedIndex = 0;
             chkSinCat.Checked = false;
             btnAgregar.Text = "Agregar";
+        }
+
+        protected void chkEstado_CheckedChanged(object sender, EventArgs e)
+        {
+
+            CategoriaNegocio cn = new CategoriaNegocio();
+            CheckBox chk = (CheckBox)sender;
+            GridViewRow row = (GridViewRow)chk.NamingContainer;
+            int itemId = Convert.ToInt32(dgvCategorias.DataKeys[row.RowIndex].Value);
+            bool nuevoEstado = chk.Checked;
+            cn.eliminarCategoriaLogicamente(itemId, nuevoEstado);
+        
         }
     }
 

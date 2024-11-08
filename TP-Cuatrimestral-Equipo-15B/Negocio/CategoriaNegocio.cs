@@ -134,7 +134,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("Select Nombre, IDCategoriaPadre from Categorias where IDCategoria=" + IdCategoria);
+                datos.setearConsulta("Select Nombre, IDCategoriaPadre, Estado from Categorias where IDCategoria=" + IdCategoria);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
