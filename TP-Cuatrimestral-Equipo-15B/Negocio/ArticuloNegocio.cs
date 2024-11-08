@@ -32,10 +32,10 @@ namespace Negocio
                     if (!(datos.Lector["Descripcion"] is DBNull))
                         aux.Descripcion = (string)datos.Lector["Descripcion"];
                                        
-                    aux.Marca= new Marca();
-                    if (!(datos.Lector["IDMarca"] is DBNull))
-                        aux.Marca.IdMarca = (int)datos.Lector["IDMarca"];
-                    aux.Marca.Nombre = (string)datos.Lector["NombreMarca"];
+                    aux.Coleccion= new Coleccion();
+                    if (!(datos.Lector["IDColeccion"] is DBNull))
+                        aux.Coleccion.IdColeccion = (int)datos.Lector["IDColeccion"];
+                    aux.Coleccion.Nombre = (string)datos.Lector["NombreColeccion"];
 
                     aux.Categoria = new Categoria();
                     aux.Categoria.IdCategoria = (int)datos.Lector["IDCategoria"];
@@ -78,7 +78,7 @@ namespace Negocio
             AccesoDatos datos= new AccesoDatos();
             try
             {
-                datos.setearConsulta("Select A.Nombre, A.Descripcion, A.IDMarca, M.Nombre as 'NombreMarca', A.IDCategoria, C.Nombre as 'NombreCategoria', A.Precio, A.Stock, A.Puntaje from Articulos A Inner Join Marcas M on M.IDMarca= A.IDMarca inner join Categorias C on C.IDCategoria= A.IDCategoria where IDArticulo =" + id);
+                datos.setearConsulta("Select A.Nombre, A.Descripcion, A.IDColeccion, CO.Nombre as 'NombreColeccion', A.IDCategoria, C.Nombre as 'NombreCategoria', A.Precio, A.Stock, A.Puntaje from Articulos A Inner Join Colecciones CO on CO.IDColeccion= A.IDColeccion inner join Categorias C on C.IDCategoria= A.IDCategoria where IDArticulo =" + id);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -89,10 +89,10 @@ namespace Negocio
                         aux.Descripcion = (string)datos.Lector["Descripcion"];
 
 
-                    aux.Marca = new Marca();
-                    if (!(datos.Lector["IDMarca"] is DBNull))
-                        aux.Marca.IdMarca = (int)datos.Lector["IDMarca"];
-                    aux.Marca.Nombre = (string)datos.Lector["NombreMarca"];
+                    aux.Coleccion = new Coleccion();
+                    if (!(datos.Lector["IDColeccion"] is DBNull))
+                        aux.Coleccion.IdColeccion = (int)datos.Lector["IDColeccion"];
+                    aux.Coleccion.Nombre = (string)datos.Lector["NombreColeccion"];
 
                     aux.Categoria = new Categoria();
                     aux.Categoria.IdCategoria = (int)datos.Lector["IDCategoria"];
@@ -129,7 +129,7 @@ namespace Negocio
                 datos.setearProcedimiento("sp_AgregarArticulo");
                 datos.setearParametros("@Nombre", nuevo.Nombre);
                 datos.setearParametros("@Descripcion", nuevo.Descripcion);
-                datos.setearParametros("@IDMarca", nuevo.Marca.IdMarca);
+                datos.setearParametros("@IDColeccion", nuevo.Coleccion.IdColeccion);
                 datos.setearParametros("@IDCategoria", nuevo.Categoria.IdCategoria);
                 datos.setearParametros("@Precio", nuevo.Precio);
                 datos.setearParametros("@Stock", nuevo.Stock);
@@ -154,7 +154,7 @@ namespace Negocio
                 datos.setearParametros("@IDArticulo", art.IdArticulo);
                 datos.setearParametros("@Nombre", art.Nombre);     
                 datos.setearParametros("@Descripcion", art.Descripcion);
-                datos.setearParametros("@IDMarca", art.Marca.IdMarca);
+                datos.setearParametros("@IDColeccion", art.Coleccion.IdColeccion);
                 datos.setearParametros("@IDCategoria", art.Categoria.IdCategoria);
                 datos.setearParametros("@Precio", art.Precio);
                 datos.setearParametros("@Stock", art.Stock);
@@ -170,25 +170,25 @@ namespace Negocio
             }
         }
 
-        public void eliminarArticuloFisicamente(int idArt)
-        {
-            AccesoDatos datos = new AccesoDatos();
+        //public void eliminarArticuloFisicamente(int idArt)
+        //{
+        //    AccesoDatos datos = new AccesoDatos();
 
-            try
-            {
-                datos.setearProcedimiento("sp_EliminarArticuloFisicamente");
-                datos.setearParametros("@IDArticulo", idArt);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+        //    try
+        //    {
+        //        datos.setearProcedimiento("sp_EliminarArticuloFisicamente");
+        //        datos.setearParametros("@IDArticulo", idArt);
+        //        datos.ejecutarAccion();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        datos.cerrarConexion();
+        //    }
+        //}
 
         public void eliminarArticuloLogicamente(int idArt, bool activo= false)
         {

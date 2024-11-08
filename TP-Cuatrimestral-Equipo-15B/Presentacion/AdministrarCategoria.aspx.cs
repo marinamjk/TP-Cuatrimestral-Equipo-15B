@@ -88,11 +88,11 @@ namespace Presentacion
 
                     Session.Add("categoriaSeleccionada", categoria);
                 }
-                else if (e.CommandName == "Eliminar")
-                {
-                    catNegocio.eliminarCategoria(id);
-                    CargarGridView();
-                }
+                //else if (e.CommandName == "Eliminar")
+                //{
+                //    catNegocio.eliminarCategoria(id);
+                //    CargarGridView();
+                //}
             }
             catch (SqlException sq)
             {

@@ -9,7 +9,6 @@ CREATE table Tarjeta(
 )
 go
 
--- Tabla Provincia
 CREATE TABLE Provincia (
     Id TINYINT NOT NULL primary key IDENTITY(1,1),  
     Nombre NVARCHAR(50) NOT NULL,
@@ -48,7 +47,8 @@ Contrasenia varchar(50) not null,
 Telefono varchar(50) null,
 IDDireccion int null foreign key references Direccion(IdDireccion),
 IDTarjeta int null foreign key references Tarjeta(IDTarjeta),
-UrlFotoPerfil varchar(500) null
+UrlFotoPerfil varchar(500) null,
+Estado bit not null
 )
 go
 
@@ -56,12 +56,14 @@ Create Table Categorias(
 IDCategoria int not null primary key identity(1,1),
 Nombre varchar(50) not null,
 IDCategoriaPadre int null,
+Estado bit not null,
 FOREIGN KEY (IDCategoriaPadre) REFERENCES Categorias(IDCategoria)
 )
 
-Create Table Marcas(
-IDMarca int not null primary key identity(1,1),
+Create Table Colecciones(
+IDColeccion int not null primary key identity(1,1),
 Nombre varchar(50) not null,
+Estado bit not null
 )
 go
 
@@ -69,7 +71,7 @@ Create Table Articulos(
 IDArticulo int not null primary key identity(1,1),
 Nombre varchar(100) not null,
 Descripcion varchar(3000) null,
-IDMarca int null foreign key references Marcas(IDMarca),
+IDColeccion int null foreign key references Colecciones(IDColeccion),
 IDCategoria int not null foreign key references Categorias(IDCategoria),
 Precio money not null,
 Stock int not null,
@@ -101,12 +103,12 @@ Primary key (IDUsuario, IDArticulo)
 )
 go
 
-Create Procedure sp_listarArticulos
+create Procedure sp_listarArticulos
 As
 Begin
-	Select A.IDArticulo, A.Nombre, A.Descripcion, A.IDMarca, M.Nombre as 'NombreMarca', A.IDCategoria, C.Nombre as 'NombreCategoria', A.Precio, A.Stock, a.Puntaje, A.Estado 
+	Select A.IDArticulo, A.Nombre, A.Descripcion, A.IDColeccion, CO.Nombre as 'NombreColeccion', A.IDCategoria, C.Nombre as 'NombreCategoria', A.Precio, A.Stock, a.Puntaje, A.Estado 
 	from Articulos A
-	INNER JOIN Marcas M ON M.IDMarca=A.IDMarca
+	INNER JOIN Colecciones CO ON CO.IDColeccion=A.IDColeccion
 	INNER JOIN Categorias C on C.IDCategoria= A.IDCategoria
 End
 go
@@ -114,15 +116,15 @@ go
 Create Procedure sp_AgregarArticulo(
 @Nombre varchar(100),
 @Descripcion varchar(3000),
-@IDMarca int,
+@IDColeccion int,
 @IDCategoria int,
 @Precio money,
 @Stock int
 )
 as
 begin
-Insert into Articulos (Nombre, Descripcion, IDMarca, IDCategoria, Precio, Stock, Puntaje, Estado) output inserted.IDArticulo values
-(@Nombre, @Descripcion, @IDMarca, @IDCategoria, @Precio, @Stock, 0, 1)
+Insert into Articulos (Nombre, Descripcion, IDColeccion, IDCategoria, Precio, Stock, Puntaje, Estado) output inserted.IDArticulo values
+(@Nombre, @Descripcion, @IDColeccion, @IDCategoria, @Precio, @Stock, 0, 1)
 end
 go
 
@@ -130,32 +132,15 @@ Create Procedure sp_ModificarArticulo (
 @IDArticulo int,
 @Nombre varchar(100),
 @Descripcion varchar(3000),
-@IDMarca int,
+@IDColeccion int,
 @IDCategoria int,
 @Precio money,
 @Stock int
 )
 as
 begin
-Update Articulos set Nombre= @Nombre, Descripcion=@Descripcion, IDMarca=@IDMarca, IDCategoria=@IDCategoria, Precio=@Precio, Stock=@Stock, Puntaje=0, Estado=1
+Update Articulos set Nombre= @Nombre, Descripcion=@Descripcion, IDColeccion=@IDColeccion, IDCategoria=@IDCategoria, Precio=@Precio, Stock=@Stock, Puntaje=0, Estado=1
 where IDArticulo= @IDArticulo
-end
-go
-
-Create Procedure sp_EliminarArticuloFisicamente(
-@IDArticulo int
-)
-as
-begin
-	begin try
-		begin transaction
-			Delete from Imagenes where IDArticulo = @IDArticulo;
-			Delete from Articulos where IDArticulo= @IDArticulo;
-		commit transaction
-	end try
-	begin catch	
-		rollback transaction
-	end catch
 end
 go
 
@@ -189,46 +174,48 @@ begin
 end
 go
 
-Create Procedure sp_listarMarcas
+Create Procedure sp_listarColecciones
 As
 Begin
-	Select IDMarca, Nombre from Marcas
+	Select IDColeccion, Nombre, Estado from Colecciones
 End
 go
 
-Create Procedure sp_AgregarMarca(
+Create Procedure sp_AgregarColeccion(
 @Nombre varchar(50)
 ) as
 begin
-	Insert into Marcas (Nombre) values
-	(@Nombre)
+	Insert into Colecciones (Nombre, Estado) values
+	(@Nombre, 1)
 end
 go
 
-Create Procedure sp_ModificarMarca(
-@IDMarca int,
+Create Procedure sp_ModificarColeccion(
+@IDColeccion int,
 @Nombre varchar(50)
 ) 
 as
 begin
-	Update Marcas set Nombre= @Nombre
-	where IDMarca= @IDMarca
+	Update Colecciones set Nombre= @Nombre
+	where IDColeccion= @IDColeccion
 end
 go
 
-Create Procedure sp_EliminarMarca(
-@IDMarca int
+Create Procedure sp_EliminarColeccionLogicamente(
+@IDColeccion int,
+@Estado bit
 )
 as
 begin
-	Delete from Marcas where IDMarca= @IDMarca
+	Update Colecciones set Estado=@Estado where IDColeccion=@IDColeccion
 end
 go
+
 
 Create Procedure sp_listarCategorias
 As
 Begin
-	Select IDCategoria, Nombre, IDCategoriaPadre from Categorias
+	Select IDCategoria, Nombre, IDCategoriaPadre, Estado from Categorias
 End
 go
 
@@ -237,7 +224,7 @@ Create Procedure sp_listarSubcategorias(
 )
 as
 Begin
- Select IDCategoria, Nombre, IDCategoriaPadre 
+ Select IDCategoria, Nombre, IDCategoriaPadre, Estado 
  from Categorias 
  where (IDCategoriaPadre = @idCatPadre OR (@idCatPadre IS NULL AND IDCategoriaPadre IS NULL));
 End
@@ -246,7 +233,7 @@ go
 Create Procedure sp_ListarUltimasSubcategorias
 as
 begin
-	Select IDCategoria, Nombre, IDCategoriaPadre from Categorias 
+	Select IDCategoria, Nombre, IDCategoriaPadre, Estado from Categorias 
 	where IDCategoria not in (select IDCategoriaPadre from Categorias
 	where IDCategoriaPadre is not null)
 end
@@ -257,8 +244,8 @@ Create Procedure sp_AgregarCategoria(
 @IDCategoriaPadre int= NULL
 ) as
 begin
-	Insert into Categorias (Nombre, IDCategoriaPadre) values
-	(@Nombre, @IDCategoriaPadre)
+	Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
+	(@Nombre, @IDCategoriaPadre, 1)
 end
 go
 
@@ -273,12 +260,13 @@ begin
 end
 go
 
-Create Procedure sp_EliminarCategoria(
-@IDCategoria int
+Create Procedure sp_EliminarCategoriaLogicamente(
+@IDCategoria int,
+@Estado bit
 )
 as
 begin
-	Delete from Categorias where IDCategoria= @IDCategoria
+	Update Categorias set Estado= @Estado where IDCategoria= @IDCategoria
 end
 go
 

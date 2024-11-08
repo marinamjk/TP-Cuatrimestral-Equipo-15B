@@ -26,6 +26,8 @@ namespace Negocio
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     if (!(datos.Lector["IDCategoriaPadre"] is DBNull))
                         aux.IDCategoriaPadre = (int)datos.Lector["IDCategoriaPadre"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
+
                     listaCategorias.Add(aux);
                 }
             }
@@ -56,6 +58,7 @@ namespace Negocio
                     aux.IdCategoria = (int)datos.Lector["IDCategoria"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.IDCategoriaPadre = datos.Lector["IDCategoriaPadre"] as int?;
+                    aux.Estado = (bool)datos.Lector["Estado"];
                     listaSubcategorias.Add(aux);
                 }
             }
@@ -86,6 +89,7 @@ namespace Negocio
                     aux.IdCategoria = (int)datos.Lector["IDCategoria"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.IDCategoriaPadre = datos.Lector["IDCategoriaPadre"] as int?;
+                    aux.Estado = (bool)datos.Lector["Estado"];
                     listaSubcategorias.Add(aux);
                 }
             }
@@ -138,6 +142,7 @@ namespace Negocio
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     if (!(datos.Lector["IDCategoriaPadre"] is DBNull))
                         aux.IDCategoriaPadre = (int)datos.Lector["IDCategoriaPadre"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
                 }
             }
             catch (Exception ex)
@@ -173,14 +178,15 @@ namespace Negocio
 
         }
 
-        public void eliminarCategoria(int idCat)
+        public void eliminarCategoriaLogicamente(int idCat, bool estado)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearProcedimiento("sp_EliminarCategoria");
+                datos.setearProcedimiento("sp_EliminarCategoriaLogicamente");
                 datos.setearParametros("@IDCategoria", idCat);
+                datos.setearParametros("@Estado", estado);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)

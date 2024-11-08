@@ -73,7 +73,7 @@
   <ItemGroup>
     <Content Include="AdministrarArticulos.aspx" />
     <Content Include="AdministrarCategoria.aspx" />
-    <Content Include="AdministrarMarca.aspx" />
+    <Content Include="AdministrarColeccion.aspx" />
     <Content Include="AdministrarPedido.aspx" />
     <Content Include="AltaModArticulo.aspx" />
     <Content Include="Carrito.aspx" />
@@ -130,12 +130,12 @@
     <Compile Include="AdministrarCategoria.aspx.designer.cs">
       <DependentUpon>AdministrarCategoria.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AdministrarMarca.aspx.cs">
-      <DependentUpon>AdministrarMarca.aspx</DependentUpon>
+    <Compile Include="AdministrarColeccion.aspx.cs">
+      <DependentUpon>AdministrarColeccion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AdministrarMarca.aspx.designer.cs">
-      <DependentUpon>AdministrarMarca.aspx</DependentUpon>
+    <Compile Include="AdministrarColeccion.aspx.designer.cs">
+      <DependentUpon>AdministrarColeccion.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdministrarPedido.aspx.cs">
       <DependentUpon>AdministrarPedido.aspx</DependentUpon>

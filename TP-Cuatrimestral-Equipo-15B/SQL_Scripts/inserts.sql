@@ -1,49 +1,80 @@
 Use ECOMMERCE_EQUIPO15B
 go
 
-Insert into Marcas(Nombre) values
-('Dolce Objetos'),
-('Ricchezze'),
-('AMV'),
-('Sin Marca')
+Insert into Colecciones(Nombre, Estado) values
+('Blanco Crema', 1),
+('Ocre', 1),
+('Negro Mate', 1),
+('Azul Petróleo', 1),
+('Gris Arena', 1),
+('Verde Oliva', 1)
 go
 
-Insert into Categorias (Nombre, IDCategoriaPadre) values
-('Muebles de cocina', null),
-('Muebles de comedor', null),
-('Muebles de dormitorio', null)
+Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
+('Platos', null, 1),
+('Cazuelas', null, 1),
+('Tazas', null, 1),
+('Jarras y Jarrones', null, 1),
+('Bowls', null, 1),
+('Macetas', null, 1)
 Go
 
-Insert into Categorias (Nombre, IDCategoriaPadre) values
-('alacenas', 1),
-('bajo mesadas', 1),
-('Desayunadores', 1),
-('Mesas', 2),
-('Camas', 3),
-('Mesitas de luz', 3)
+Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
+('Large', 1, 1),
+('Medium', 1, 1),
+('Small', 1, 1),
+('Plato Hondo', 1, 1),
+('Cazuela Grande', 2, 1),
+('Cazuela Mediana', 2, 1),
+('Nespresso Grande', 3, 1),
+('Modena', 3, 1),
+('Oriental', 3, 1),
+('Jarrito', 3, 1),
+('Bowl Grande', 5, 1),
+('Bowl Chico', 5, 1),
+('Dip', 5, 1),
+('Ensaladera', 5, 1)
 Go
 
-Insert into Categorias(Nombre, IDCategoriaPadre) values
-('2 plazas', 8),
-('1 plasa', 8),
-('Ratonas', 7)
-go
 
-Insert Into Articulos(Nombre, Descripcion, IDMarca, IDCategoria, Precio, Stock, Puntaje, Estado) values
-('Alacena 1,20 cm Ricchezze Arco Negro', 'MDP 15mm imprimado, Medidas: 460 x 1200 x 270 mm', 2, 4, 80000, 5, 0, 1),
-('Bajo Mesada Arco 1,20 cm Negro', 'Material del Producto: Mdp 15mm imprimado. Medidas: Alto: 83 cm Ancho: 120 cm Profundidad: 50 cm Peso: 35 kg', 2, 5, 130000, 4, 0, 1),
-('Box de Cama con 4 Cajones + Zapatero Base Somier Blanco', 'Modelo: T6443 EV', 3, 10, 340000, 3, 0, 1),
-('Mesa de Luz Flotante Negro Desayunador Cajon Moderno', 'Medidas: 42x24x35cm', 4, 9, 70000, 4, 0, 1)
+Insert Into Articulos(Nombre, Descripcion, IDColeccion, IDCategoria, Precio, Stock, Puntaje, Estado) values
+('PLATO LARGE BLANCO CREMA', 'Medidas: 26cms de diámetro. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 7, 38400.00, 5, 0, 1),
+('JARRA BLANCO CREMA ', 'Medidas: 17 cms de  diámetro x 13 cms de alto. Capacidad: 1 litro. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 4, 55200.00, 4, 0, 1),
+('CAZUELA GRANDE BLANCO CREMA (esmaltada full)', 'Medidas: 22 cms de diámetro x 4,5 cms de alto. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 11, 51200.00, 3, 0, 1),
+('PLATO MEDIUM BLANCO CREMA', 'Medidas: 20 cms de diámetro.Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 8, 38000.00, 5, 0, 1),
+('CAZUELA MEDIANA BLANCO CREMA', 'Medidas: 17 cms de diámetro x 4 cms de alto..Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 12, 29400.00, 5, 0, 1),
+('TAZA MODENA BLANCO CREMA', 'Capacidad: 140 ml. Medidas: 5,5 cms de diámetro x 7cms de alto. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 14, 23500.00, 10, 0, 1),
+('JARRA NEGRA', 'Medidas: 17 cms de diámetro x 13 cms de alto. Capacidad: 1 litro. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 3, 4, 55200.00, 8, 0, 1),
+('TAZA NESPRESSO NEGRO MATE', 'Capacidad: 320 ml. Medidas: 8 cms de diámetro x 9 cms de alto. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 3, 13, 27890.00, 15, 0, 1),
+('BOWL DIP NEGRO MATE', 'Medidas: 11cms de diámetro x 6cms de alto. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 3, 20, 28200.00, 20, 0, 1),
+('BOWL NEGRO MATE', 'Medidas: 14,5cms de diámetro x 8cms de alto. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 3, 18, 35800.00, 20, 0, 1),
+('TAZA ORIENTAL OCRE', 'Medidas: 6 cms de diámetro x 7 cms de alto. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 2, 15, 24300.00, 12, 0, 1)
 go
 
 Insert into Imagenes(IDArticulo,UrlImagen) values
-(1, 'https://images.fravega.com/f300/421b5390362a977e3c9a48e23806e57c.jpg.webp'),
-(1, 'https://images.fravega.com/f300/0a34b31479e4c3065743cb89509f18fd.jpg.webp'),
-(2, 'https://images.fravega.com/f300/4c6b4ce3dd3559ae1e19e7132f6e50a6.jpg.webp'),
-(2, 'https://images.fravega.com/f300/4bfe1434e0f42d241f3433a115121181.jpg.webp'),
-(3, 'https://images.fravega.com/f300/234050136af6ca0890300c223fbed515.jpg.webp'),
-(4, 'https://images.fravega.com/f300/11cbcd1f3c3ad912ad24cee136aa4ac9.png.webp'),
-(4, 'https://images.fravega.com/f300/18d38a5cb5413051fe6efc2f480582a3.png.webp')
+(1, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-742-433aaa763d63e43ed316994603306058-1024-1024.webp'),
+(1, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-746-500060156d80bab7bb16994603345191-1024-1024.webp'),
+(1, 'https://acdn.mitiendanube.com/stores/001/123/351/products/116a0112-35373436e9698e4c5617157129464077-1024-1024.webp'),
+(2, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-estudio-sessiones-2211-ecc13e7b75f83a0b5816848565304250-1024-1024.webp'),
+(2, 'https://acdn.mitiendanube.com/stores/001/123/351/products/img_1614-021cc03bff9240235517107866073984-1024-1024.webp'),
+(3, 'https://acdn.mitiendanube.com/stores/001/123/351/products/img_2112-5a13eef21fe2ae0f3117139207174247-1024-1024.webp'),
+(3, 'https://acdn.mitiendanube.com/stores/001/123/351/products/img_2110-97e29ee2be28e50f4f17139207152257-1024-1024.webp'),
+(4, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-844-acf6f04de90b08ad3516994620486444-1024-1024.webp'),
+(4, 'https://acdn.mitiendanube.com/stores/001/123/351/products/116a0112-8e3c8808fdd869093917157129103667-1024-1024.webp'),
+(5, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-nuevas-nuevas-1091-db379fb5052fd9077516853924210722-1024-1024.webp'),
+(5, 'https://acdn.mitiendanube.com/stores/001/123/351/products/116a0101-f882138a54969746e417157124825676-1024-1024.webp'),
+(6, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-1583-df47e0b46c4e5a036617108815441710-1024-1024.webp'),
+(6, 'https://acdn.mitiendanube.com/stores/001/123/351/products/116a0086-43448f01055dc9e07017157117625995-1024-1024.webp'),
+(7, 'https://acdn.mitiendanube.com/stores/001/123/351/products/dsc09955-07767a1da1e6b2a42117107871141785-1024-1024.webp'),
+(7, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-estudio-sessiones-2271-6689a057141a9dc3c516773375075028-1024-1024.webp'),
+(8, 'https://acdn.mitiendanube.com/stores/001/123/351/products/img_26561-955ca62249e0cf272116848607148845-1024-1024.webp'),
+(8, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-1229-7b845e0ee789fc53fb17093195407316-1024-1024.webp'),
+(9, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-nuevas-nuevas-0841-0cd06577c6104fc98f16853915049878-1024-1024.webp'),
+(9, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-nuevas-nuevas-0981-980a7288695dc6906c16853915050495-1024-1024.webp'),
+(10, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-estudio-sessiones-33441-963b0ace4980ce63b116783158679755-1024-1024.webp'),
+(10, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-estudio-sessiones-33541-58ad318a07be46c16416783158680853-1024-1024.webp'),
+(11, 'https://acdn.mitiendanube.com/stores/001/123/351/products/atavio-1971-caa7df23417826f97517284295123165-1024-1024.webp'),
+(11, 'https://acdn.mitiendanube.com/stores/001/123/351/products/img_1978-655c34f65abdf7165317152087531371-1024-1024.webp')
 go
 
 Insert into Puntajes(IDArticulo, IDPedido, Puntuacion) values (3, 1, 10.0)

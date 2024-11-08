@@ -34,9 +34,9 @@ namespace Presentacion
                     ddlCategoria.DataTextField = "Nombre";
                     ddlCategoria.DataBind();
 
-                    MarcaNegocio marcaNegocio = new MarcaNegocio();
-                    ddlMarca.DataSource = marcaNegocio.listarMarcas();
-                    ddlMarca.DataValueField = "IdMarca";
+                    ColeccionNegocio cn = new ColeccionNegocio();
+                    ddlMarca.DataSource = cn.listarColecciones();
+                    ddlMarca.DataValueField = "IdColeccion";
                     ddlMarca.DataTextField = "Nombre";
                     ddlMarca.DataBind();
 
@@ -54,7 +54,7 @@ namespace Presentacion
                         txtPrecio.Text = artMod.Precio.ToString("F2");
                         txtStock.Text = artMod.Stock.ToString();
                         ddlCategoria.SelectedValue = artMod.Categoria.IdCategoria.ToString();
-                        ddlMarca.SelectedValue = artMod.Marca.IdMarca.ToString();
+                        ddlMarca.SelectedValue = artMod.Coleccion.IdColeccion.ToString();
                                                 
                         images = imNegocio.buscarImagenesXArticulo(idArtMod);
                         Session["ImagesList"] = images;
@@ -87,8 +87,8 @@ namespace Presentacion
                 Articulo nuevo = new Articulo();
 
                 nuevo.Nombre = txtNombre.Text;
-                nuevo.Marca = new Marca();
-                nuevo.Marca.IdMarca = int.Parse(ddlMarca.SelectedValue);
+                nuevo.Coleccion = new Coleccion();
+                nuevo.Coleccion.IdColeccion = int.Parse(ddlMarca.SelectedValue);
                 nuevo.Descripcion = txtDescripcion.Text;
                 nuevo.Categoria = new Categoria();
                 nuevo.Categoria.IdCategoria = int.Parse(ddlCategoria.SelectedValue);

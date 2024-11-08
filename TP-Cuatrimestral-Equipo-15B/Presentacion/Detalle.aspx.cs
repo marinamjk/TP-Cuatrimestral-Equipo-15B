@@ -115,7 +115,7 @@ namespace Presentacion
                 {
 
                     nombreArt = articulo.Nombre.ToString();
-                    marcaArt = articulo.Marca.Nombre;
+                    marcaArt = articulo.Coleccion.Nombre;
                     descripcionArt = articulo.Descripcion;
                     lblPuntaje.Text = "Puntaje: " + articulo.Puntaje.ToString("F2");
                     lblPrecio.Text = "$" + (articulo.Precio).ToString("F2");
@@ -141,7 +141,7 @@ namespace Presentacion
                 if (chkConfirmarEliminacion.Checked)
                 {
                     ArticuloNegocio artNegocio = new ArticuloNegocio();
-                    artNegocio.eliminarArticuloFisicamente(articulo.IdArticulo);
+                    //artNegocio.eliminarArticuloFisicamente(articulo.IdArticulo);
                     Response.Redirect("~/Default.aspx", false);
 
                 }

@@ -8,25 +8,26 @@ using AccesoADatos;
 
 namespace Negocio
 {
-    public class MarcaNegocio
+    public class ColeccionNegocio
     {
                
-        public List<Marca> listarMarcas()
+        public List<Coleccion> listarColecciones()
         {
-            List<Marca> listaMarcas = new List<Marca>();
+            List<Coleccion> listaColecciones = new List<Coleccion>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearProcedimiento("sp_listarMarcas");
+                datos.setearProcedimiento("sp_listarColecciones");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
-                    Marca aux= new Marca();
-                    aux.IdMarca = (int)datos.Lector["IDMarca"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];            
-                    listaMarcas.Add(aux);
+                    Coleccion aux= new Coleccion();
+                    aux.IdColeccion = (int)datos.Lector["IDColeccion"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
+                    listaColecciones.Add(aux);
                 }
             }
             catch (Exception ex)
@@ -38,16 +39,16 @@ namespace Negocio
                 datos.cerrarConexion();
             }
 
-            return listaMarcas;
+            return listaColecciones;
         }
 
-        public void agregarMarca(Marca marca)
+        public void agregarColeccion(Coleccion coleccion)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearProcedimiento("sp_AgregarMarca");
-                datos.setearParametros("@Nombre", marca.Nombre);
+                datos.setearProcedimiento("sp_AgregarColeccion");
+                datos.setearParametros("@Nombre", coleccion.Nombre);
                 datos.ejecutarAccion(); 
 
             } catch (Exception ex) {
@@ -59,14 +60,14 @@ namespace Negocio
             }
         }
 
-        public void modificarMarca(Marca marca)
+        public void modificarColeccion(Coleccion coleccion)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearProcedimiento("sp_ModificarMarca");
-                datos.setearParametros("@IDMarca", marca.IdMarca);          
-                datos.setearParametros("@Nombre", marca.Nombre);
+                datos.setearProcedimiento("sp_ModificarColeccion");
+                datos.setearParametros("@IDColeccion", coleccion.IdColeccion);          
+                datos.setearParametros("@Nombre", coleccion.Nombre);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -80,14 +81,15 @@ namespace Negocio
 
         }
 
-        public void eliminarMarca(int idMarca)
+        public void eliminarColeccionLogicamente(int idColeccion, bool estado)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearProcedimiento("sp_EliminarMarca");
-                datos.setearParametros("@IDMarca", idMarca);
+                datos.setearProcedimiento("sp_EliminarColeccionLogicamente");
+                datos.setearParametros("@IDColeccion", idColeccion);
+                datos.setearParametros("@Estado", estado);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
