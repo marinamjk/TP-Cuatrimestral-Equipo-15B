@@ -33,10 +33,10 @@
                                 <%}
                                   else
                                   {%>
-                                    <li><a class="dropdown-item" href="/MiPerfil.aspx">Mi Perfil</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
+                                    <li><a class="dropdown-item" href="/MiPerfil.aspx">Mi Perfil</a></li>
                                     <li><a class="dropdown-item" href="#">Salir</a></li>
                                   <%}%>
                             </ul>
@@ -47,7 +47,7 @@
                             </li>  
                         <%}%>
                         
-                        <%if (Session["usuario"] != null) {%>
+                        <%if ((Session["usuario"]!= null && ((dominio.Usuario)Session["usuario"]).tipoUsuario == dominio.tipoUsuario.NORMAL)) {%>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta
                                 </a>
@@ -57,6 +57,9 @@
                                     <li><a class="dropdown-item" href="Historial.aspx">Historial</a></li>
                                 </ul>
                             </li>
+                           <%} %>
+                        <%if ((Session["usuario"]!= null && ((dominio.Usuario)Session["usuario"]).tipoUsuario == dominio.tipoUsuario.ADMIN))
+                            {%>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Comercio
                                 </a>
@@ -73,13 +76,14 @@
                                     <li><a class="dropdown-item" href="AdministrarColecciones.aspx">Administrar Colecciones</a></li>
                                 </ul>
                             </li>
+                        <%} %>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="Carrito.aspx" style="line-height: 0">
                                     <i class="bi bi-cart2" style="font-size: 25px;"></i>
                                 </a>
                             </li>
 
-                        <%}%>
+                     
                     </ul>
                 </div>
             </div>

@@ -85,5 +85,36 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool loguear(Usuario usuario)
+        {
+            AccesoDatos datos= new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Select IDUsuario, IDTipoUsuario, Estado from Usuarios where Email=@Email and Contrasenia=@Contrasenia");
+                datos.setearParametros("@Email", usuario.Mail);
+                datos.setearParametros("@Contrasenia", usuario.Contraseña);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    usuario.IdUsuario = (int)(datos.Lector["IDUsuario"]);
+                    usuario.tipoUsuario = (int)datos.Lector["IDTipoUsuario"] == 2 ? tipoUsuario.NORMAL : tipoUsuario.ADMIN;
+                    usuario.Estado = (bool)datos.Lector["Estado"];
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
     }
 }

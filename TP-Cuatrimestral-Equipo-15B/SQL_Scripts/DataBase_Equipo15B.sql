@@ -3,12 +3,6 @@ Collate Latin1_General_CI_AI
 Go
 Use ECOMMERCE_EQUIPO15B
 
-CREATE table Tarjeta(
-	IdTarjeta int primary key identity(1,1),
-	NumeroTarjeta int not null
-)
-go
-
 CREATE TABLE Provincia (
     Id TINYINT NOT NULL primary key IDENTITY(1,1),  
     Nombre NVARCHAR(50) NOT NULL,
@@ -36,21 +30,27 @@ CREATE table Direccion(
 )
 go
 
-Create Table Usuarios(
-IDUsuario int not null primary key identity(1,1),
-IDTipoUsuario int not null,
+Create Table DatosPersonales(
+IDDatosPersonales int primary key identity(1,1),
 Nombre varchar(50) not null,
 Apellido varchar(50) not null,
 DNI varchar(10) not null,
-Email varchar(250) not null unique,
-Contrasenia varchar(50) not null,
 Telefono varchar(50) null,
 IDDireccion int null foreign key references Direccion(IdDireccion),
-IDTarjeta int null foreign key references Tarjeta(IDTarjeta),
-UrlFotoPerfil varchar(500) null,
+UrlFotoPerfil varchar(500) null
+)
+go
+
+Create Table Usuarios(
+IDUsuario int not null primary key identity(1,1),
+Email varchar(250) not null unique,
+Contrasenia varchar(50) not null,
+IDTipoUsuario int not null,
+IDDatosPersonales int null foreign key references DatosPersonales(IDDatosPersonales),
 Estado bit not null
 )
 go
+
 
 Create Table Categorias(
 IDCategoria int not null primary key identity(1,1),
@@ -59,6 +59,7 @@ IDCategoriaPadre int null,
 Estado bit not null,
 FOREIGN KEY (IDCategoriaPadre) REFERENCES Categorias(IDCategoria)
 )
+go
 
 Create Table Colecciones(
 IDColeccion int not null primary key identity(1,1),
@@ -101,6 +102,15 @@ Foreign key(IDUsuario) references Usuarios(IDUsuario),
 Foreign key(IDArticulo) references Articulos(IDArticulo),
 Primary key (IDUsuario, IDArticulo)
 )
+go
+
+Create procedure sp_InciarSesion(
+@Email varchar(250),
+@Contrasenia varchar(50)
+)as
+begin
+	Select IDUsuario, IDTipoUsuario, Estado from Usuarios where Email=@Email and Contrasenia=@Contrasenia
+end
 go
 
 create Procedure sp_listarArticulos

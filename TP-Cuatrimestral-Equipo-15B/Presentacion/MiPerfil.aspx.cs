@@ -18,5 +18,20 @@ namespace Presentacion
 				Response.Redirect("login.aspx");
 			}
 		}
-	}
+
+        protected void btnAgregarDireccion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void txtCodigoPostal_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void DropDownListProvincia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
