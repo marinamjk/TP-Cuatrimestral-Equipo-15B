@@ -26,6 +26,7 @@
 
             <div class="input-group-append mt-3">
                 <asp:Button ID="btnRegistrarse" runat="server" CssClass="btn btn-outline-primary" Text="Registrarse" OnClick="btnRegistrarse_Click" />
+                <a href="Default.aspx">Cancelar</a>
             </div>
 
         </div>

@@ -27,7 +27,7 @@ namespace Presentacion
 
                     List<Categoria> subcategorias = new List<Categoria>();
                     CategoriaNegocio catNegocio = new CategoriaNegocio();
-                    subcategorias = catNegocio.listarUltimasSubcategorias();
+                    subcategorias = catNegocio.listarUltimasSubcategorias().Where(c => c.Estado == true).ToList(); ;
 
                     ddlCategoria.DataSource = subcategorias;
                     ddlCategoria.DataValueField = "IdCategoria";
@@ -35,7 +35,7 @@ namespace Presentacion
                     ddlCategoria.DataBind();
 
                     ColeccionNegocio cn = new ColeccionNegocio();
-                    ddlMarca.DataSource = cn.listarColecciones();
+                    ddlMarca.DataSource = cn.listarColecciones().Where(c=>c.Estado==true).ToList();
                     ddlMarca.DataValueField = "IdColeccion";
                     ddlMarca.DataTextField = "Nombre";
                     ddlMarca.DataBind();
