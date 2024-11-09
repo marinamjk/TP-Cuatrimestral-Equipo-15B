@@ -27,22 +27,17 @@ namespace Negocio
             return usuarios;
         }
 
-        public void agregarUsuario(Usuario usuario)
+        public int agregarUsuario(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
-            try {
-                int id;
-                datos.setearConsulta("INSERT INTO Usuarios(Nombre,Apellido,DNI,Email,Contrasenia,Telefono,IDTipoUsuario) values (@Nombre,@apellido,@DNI,@Email,@Contrasenia,'1169821424',1)");
-                datos.setearParametros("@Nombre",usuario.Nombre);
-                datos.setearParametros("@apellido",usuario.Apellido);
-                datos.setearParametros("@DNI", usuario.Dni);
-                datos.setearParametros("@Email",usuario.Mail);
+            try {            
+                datos.setearProcedimiento("sp_AgregarUsuario");
+                datos.setearParametros("@Email", usuario.Mail);             
                 datos.setearParametros("@Contrasenia", usuario.Contraseña);
-                datos.ejecutarAccion();
+                return datos.ejecutarEscalar();
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -51,47 +46,47 @@ namespace Negocio
             }
         }
 
-        public Usuario iniciar_sesion(Usuario usuario)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("SELECT IdUsuario, Nombre, Apellido, Email, Contrasenia FROM Usuarios where @email = Email");
-                datos.setearParametros("@email", usuario.Mail);
-                datos.ejecutarLectura();
-                Usuario aux = new Usuario();
-                while (datos.Lector.Read())
-                {   
-                    aux.IdUsuario = (int)datos.Lector["IdUsuario"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Apellido = (string)datos.Lector["Apellido"];
-                    aux.Mail = (string)datos.Lector["Email"];
-                    aux.Contraseña = (string)datos.Lector["Contrasenia"];
-                }
-                if((aux.Mail == usuario.Mail && aux.Contraseña == usuario.Contraseña))
-                {
-                    return aux;
-                }
-                return null;
+        //public Usuario iniciar_sesion(Usuario usuario)
+        //{
+        //    AccesoDatos datos = new AccesoDatos();
+        //    try
+        //    {
+        //        datos.setearConsulta("SELECT IdUsuario, Nombre, Apellido, Email, Contrasenia FROM Usuarios where @email = Email");
+        //        datos.setearParametros("@email", usuario.Mail);
+        //        datos.ejecutarLectura();
+        //        Usuario aux = new Usuario();
+        //        while (datos.Lector.Read())
+        //        {   
+        //            aux.IdUsuario = (int)datos.Lector["IdUsuario"];
+        //            aux.Nombre = (string)datos.Lector["Nombre"];
+        //            aux.Apellido = (string)datos.Lector["Apellido"];
+        //            aux.Mail = (string)datos.Lector["Email"];
+        //            aux.Contraseña = (string)datos.Lector["Contrasenia"];
+        //        }
+        //        if((aux.Mail == usuario.Mail && aux.Contraseña == usuario.Contraseña))
+        //        {
+        //            return aux;
+        //        }
+        //        return null;
                 
-            }
-            catch (Exception)
-            {
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        datos.cerrarConexion();
+        //    }
+        //}
 
         public bool loguear(Usuario usuario)
         {
             AccesoDatos datos= new AccesoDatos();
             try
             {
-                datos.setearConsulta("Select IDUsuario, IDTipoUsuario, Estado from Usuarios where Email=@Email and Contrasenia=@Contrasenia");
+                datos.setearConsulta("Select IDUsuario, IDTipoUsuario from Usuarios where Email=@Email and Contrasenia=@Contrasenia");
                 datos.setearParametros("@Email", usuario.Mail);
                 datos.setearParametros("@Contrasenia", usuario.Contraseña);
                 datos.ejecutarLectura();
@@ -99,8 +94,7 @@ namespace Negocio
                 while (datos.Lector.Read())
                 {
                     usuario.IdUsuario = (int)(datos.Lector["IDUsuario"]);
-                    usuario.tipoUsuario = (int)datos.Lector["IDTipoUsuario"] == 2 ? tipoUsuario.NORMAL : tipoUsuario.ADMIN;
-                    usuario.Estado = (bool)datos.Lector["Estado"];
+                    usuario.tipoUsuario = (int)datos.Lector["IDTipoUsuario"] == 2 ? tipoUsuario.NORMAL : tipoUsuario.ADMIN;                    
                     return true;
                 }
 

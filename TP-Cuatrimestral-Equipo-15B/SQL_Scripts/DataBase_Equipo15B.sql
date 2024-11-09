@@ -46,8 +46,7 @@ IDUsuario int not null primary key identity(1,1),
 Email varchar(250) not null unique,
 Contrasenia varchar(50) not null,
 IDTipoUsuario int not null,
-IDDatosPersonales int null foreign key references DatosPersonales(IDDatosPersonales),
-Estado bit not null
+IDDatosPersonales int null foreign key references DatosPersonales(IDDatosPersonales)
 )
 go
 
@@ -109,7 +108,17 @@ Create procedure sp_InciarSesion(
 @Contrasenia varchar(50)
 )as
 begin
-	Select IDUsuario, IDTipoUsuario, Estado from Usuarios where Email=@Email and Contrasenia=@Contrasenia
+	Select IDUsuario, IDTipoUsuario from Usuarios where Email=@Email and Contrasenia=@Contrasenia
+end
+go
+
+Create procedure sp_AgregarUsuario(
+@Email varchar(250),
+@Contrasenia varchar(50)
+)as
+begin
+	Insert into Usuarios (Email, Contrasenia, IDTipoUsuario) output inserted.IDUsuario values 
+	(@Email, @Contrasenia, 0)
 end
 go
 

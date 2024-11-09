@@ -16,32 +16,57 @@ namespace Presentacion
 
         }
 
-        protected void BtAceptar_Click(object sender, EventArgs e)
+        //protected void BtAceptar_Click(object sender, EventArgs e)
+        //{
+            //Usuario usuario = new Usuario();
+            //UsuarioManager agregar = new UsuarioManager();
+            //try
+            //{
+            //    usuario.Contraseña = TbContraseña.Text;
+            //    usuario.Mail = TbMail.Text;
+            //    if(usuario.Contraseña == TbConfirmaContraseña.Text && usuario.Mail != "")
+            //    {
+            //        usuario.Nombre = TbNombre.Text;
+            //        usuario.Apellido = TbApellido.Text;
+            //        usuario.Dni = TbDocumento.Text;
+            //        usuario.telefono = TbTelefono.Text;
+            //        agregar.agregarUsuario(usuario);
+            //        Response.Redirect("Default.aspx", false);
+            //    }
+            //    else
+            //    {
+            //        Response.Redirect("Registrarse.aspx", false);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //     throw ex;
+            //}
+        //}
+   
+
+        protected void btnRegistrarse_Click(object sender, EventArgs e)
         {
-            Usuario usuario = new Usuario();
-            UsuarioManager agregar = new UsuarioManager();
             try
             {
-                usuario.Contraseña = TbContraseña.Text;
-                usuario.Mail = TbMail.Text;
-                if(usuario.Contraseña == TbConfirmaContraseña.Text && usuario.Mail != "")
+                Usuario usuario = new Usuario();
+                UsuarioManager um = new UsuarioManager();
+                usuario.Mail = txtEmail.Text;
+                if (txtContraseña.Text == txtContraseña2.Text && txtContraseña.Text != string.Empty)
                 {
-                    usuario.Nombre = TbNombre.Text;
-                    usuario.Apellido = TbApellido.Text;
-                    usuario.Dni = TbDocumento.Text;
-                    usuario.telefono = TbTelefono.Text;
-                    agregar.agregarUsuario(usuario);
-                    Response.Redirect("Default.aspx", false);
+                    usuario.Contraseña = txtContraseña.Text;
                 }
-                else
-                {
-                    Response.Redirect("Registrarse.aspx", false);
-                }
+                int id = um.agregarUsuario(usuario);
+                //enviar email de bienvenida
+
+                Response.Redirect("Default.aspx", false);
+
             }
             catch (Exception ex)
             {
-
-                 throw ex;
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
             }
         }
     }

@@ -17,17 +17,17 @@ namespace dominio
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Dni { get; set; }
+        public string telefono { get; set; }
         public string Mail { get; set; }
         public string Contraseña { get; set; }
         public tipoUsuario tipoUsuario{ get; set; }
-        public string telefono {  get; set; }
-        public int IdDireccion { get; set; }
-        public string Foto {  get; set; }
-        public bool Estado { get; set; }
+        public Direccion Direccion { get; set; }
+        public string Foto {  get; set; }       
 
-        public void SetTipoUsuario(bool vendedor)
+        public void setTipoUsuario(bool tipo)
         {
-            tipoUsuario = vendedor ? tipoUsuario.ADMIN : tipoUsuario.NORMAL;
+            tipoUsuario= tipo == false ? tipoUsuario = tipoUsuario.NORMAL : tipoUsuario.ADMIN;
         }
+              
     }
 }
