@@ -49,11 +49,6 @@ namespace Presentacion
         {
             Session["usuario"] = null;
             Response.Redirect("Default.aspx", false);
-        }
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Session["usuario"] = null;
-            Response.Redirect("Default.aspx", false);
-        }
+        }  
     }
 }
