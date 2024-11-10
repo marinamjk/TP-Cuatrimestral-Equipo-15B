@@ -33,21 +33,13 @@ namespace Presentacion
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-<<<<<<< HEAD
         /// Control btnSalir.
-=======
-        /// Control Button1.
->>>>>>> a41fa083009da8e7c2916a6122d79ba5040bfb09
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-<<<<<<< HEAD
         protected global::System.Web.UI.WebControls.Button btnSalir;
-=======
-        protected global::System.Web.UI.WebControls.Button Button1;
->>>>>>> a41fa083009da8e7c2916a6122d79ba5040bfb09
 
         /// <summary>
         /// Control ContentPlaceHolder1.

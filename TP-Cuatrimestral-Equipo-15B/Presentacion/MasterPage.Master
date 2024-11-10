@@ -32,8 +32,7 @@
                                     {%>
                                 <li><a class="dropdown-item" href="/login.aspx">Iniciar sesion</a></li>
                                 <%}
-<<<<<<< HEAD
-                                    else
+                                 else
                                     {%>
 
                                 <li><a class="dropdown-item" href="/MiPerfil.aspx">Mi Perfil</a></li>
@@ -44,38 +43,8 @@
                                 <%}%>
                             </ul>
                         </li>
-                        <%if (!(Negocio.Seguridad.sesionActiva(Session["usuario"])))
-=======
-                                  else
-                                  {%>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="/MiPerfil.aspx">Mi Perfil</a></li>
-                                    <li><asp:Button CssClass="dropdown-item" ID="Button1" runat="server" Text="Salir" OnClick="Button1_Click" /></li>
-                                  <%}%>
-                            </ul>
-                        </li>
-                        <%if(Session["usuario"] == null) {%> 
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="Registrarse.aspx">Registrarme</a>
 
-                            </li>  
-                        <%}%>
-                        
-                        <%if ((Session["usuario"]!= null && ((dominio.Usuario)Session["usuario"]).tipoUsuario == dominio.tipoUsuario.NORMAL)) {%>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item disabled">Compras</a></li>
-                                    <li><a class="dropdown-item" href="Favoritos.aspx">Favoritos</a></li>
-                                    <li><a class="dropdown-item" href="Historial.aspx">Historial</a></li>
-                                </ul>
-                            </li>
-                           <%} %>
-                        <%if ((Session["usuario"]!= null && ((dominio.Usuario)Session["usuario"]).tipoUsuario == dominio.tipoUsuario.ADMIN))
->>>>>>> a41fa083009da8e7c2916a6122d79ba5040bfb09
+                        <%if (!Negocio.Seguridad.sesionActiva(Session["usuario"]))
                             {%>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="Registrarse.aspx">Registrarme</a>
