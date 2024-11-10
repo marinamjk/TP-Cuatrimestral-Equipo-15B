@@ -10,22 +10,22 @@ namespace Negocio
 {
     public class UsuarioManager
     {
-        public List<Usuario> listar()
-        {
-            List<Usuario> usuarios = new List<Usuario>();
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
+        //public List<Usuario> listar()
+        //{
+        //    List<Usuario> usuarios = new List<Usuario>();
+        //    AccesoDatos datos = new AccesoDatos();
+        //    try
+        //    {
 
-            }
-            catch (Exception)
-            {
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
+        //        throw;
+        //    }
 
-            return usuarios;
-        }
+        //    return usuarios;
+        //}
 
         public int agregarUsuario(Usuario usuario)
         {

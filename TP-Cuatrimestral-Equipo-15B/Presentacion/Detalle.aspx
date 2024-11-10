@@ -124,22 +124,25 @@
                 <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClientClick="toggleIcon(this); return false" OnClick="btnFavorito_Click" />
                 <i id="icon" class="bi bi-heart"></i>
             </div>
+            <% if(Negocio.Seguridad.esAdministrador(Session["usuario"]))
+                { %>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
                     <div>
                         <asp:Button ID="Modificar" runat="server" Text="Modificar" CssClass="btn btn-primary" OnClick="Modificar_Click" />
                         <asp:Button ID="btnDeshabilitar" runat="server" Text="Deshabilitar"  cssClass="btn btn-warning" OnClick="btnDeshabilitar_Click"/>
-                        <asp:Button ID="btnEliminarArticulo" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminarArticulo_Click" />
+                        <%--<asp:Button ID="btnEliminarArticulo" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminarArticulo_Click" />--%>
                     </div>
-                    <%if (ConfirmarEliminacion)
+             <%--       <%if (ConfirmarEliminacion)
                         { %>
                     <div class="m-3">
                         <asp:CheckBox ID="chkConfirmarEliminacion" Text="Confirmar eliminación" runat="server" />
                         <asp:Button ID="btnConfirmarEliminacion" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnConfirmarEliminacion_Click" />
                     </div>
-                    <%} %>
+                    <%} %>--%>
                 </ContentTemplate>
             </asp:UpdatePanel>
+            <%} %>
         </div>
     </div>
 

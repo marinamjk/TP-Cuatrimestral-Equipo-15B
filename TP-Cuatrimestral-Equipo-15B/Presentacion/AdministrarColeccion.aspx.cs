@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace Presentacion
 {
-    public partial class AdministrarMarca : System.Web.UI.Page
+    public partial class AdministrarColeccion : System.Web.UI.Page
     {
         protected int id;
         Coleccion col;

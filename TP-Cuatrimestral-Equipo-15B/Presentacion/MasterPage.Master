@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="Presentacion.Site1" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="Presentacion.MasterPage" %>
 
 <!DOCTYPE html>
 
@@ -20,7 +20,7 @@
             <div class="container-fluid d-flex">
                 <a class="navbar-brand" href="Default.aspx">E-Commerce</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                 
+
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                         <li class="nav-item dropdown">
@@ -28,62 +28,66 @@
                                 <img src="Recursos/usuario.png" alt="Iniciar Sesión" width="30" height="30" class="d-inline-block" style="margin-right: 10px;">
                                 <%=Inicio%></a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <%if (Session["usuario"] == null) {%>
-                                    <li><a class="dropdown-item" href="/login.aspx">Iniciar sesion</a></li>
+                                <%if (!(Negocio.Seguridad.sesionActiva(Session["usuario"])))
+                                    {%>
+                                <li><a class="dropdown-item" href="/login.aspx">Iniciar sesion</a></li>
                                 <%}
-                                  else
-                                  {%>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="/MiPerfil.aspx">Mi Perfil</a></li>
-                                    <li><a class="dropdown-item" href="#">Salir</a></li>
-                                  <%}%>
+                                    else
+                                    {%>
+
+                                <li><a class="dropdown-item" href="/MiPerfil.aspx">Mi Perfil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="dropdown-item" OnClick="btnSalir_Click" />
+                                <%}%>
                             </ul>
                         </li>
-                        <%if(Session["usuario"] == null) {%> 
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="Registrarse.aspx">Registrarme</a>
-                            </li>  
-                        <%}%>
-                        
-                        <%if ((Session["usuario"]!= null && ((dominio.Usuario)Session["usuario"]).tipoUsuario == dominio.tipoUsuario.NORMAL)) {%>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item disabled">Compras</a></li>
-                                    <li><a class="dropdown-item" href="Favoritos.aspx">Favoritos</a></li>
-                                    <li><a class="dropdown-item" href="Historial.aspx">Historial</a></li>
-                                </ul>
-                            </li>
-                           <%} %>
-                        <%if ((Session["usuario"]!= null && ((dominio.Usuario)Session["usuario"]).tipoUsuario == dominio.tipoUsuario.ADMIN))
+                        <%if (!(Negocio.Seguridad.sesionActiva(Session["usuario"])))
                             {%>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Comercio
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item disabled">Ventas</a></li>
-                                    <li><a class="dropdown-item" href="#">Pedidos</a></li>
-                                    <li><a class="dropdown-item" href="AltaModArticulo.aspx">Agregar Artículo</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item disabled">Administración</a></li>
-                                     <li><a class="dropdown-item" href="AdministrarArticulos.aspx">Administrar Articulos</a></li>
-                                    <li><a class="dropdown-item" href="AdministrarCategoria.aspx">Administrar Categorias</a></li>
-                                    <li><a class="dropdown-item" href="AdministrarColeccion.aspx">Administrar Colecciones</a></li>
-                                </ul>
-                            </li>
-                        <%} %>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="Carrito.aspx" style="line-height: 0">
-                                    <i class="bi bi-cart2" style="font-size: 25px;"></i>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="Registrarse.aspx">Registrarme</a>
+                        </li>
+                        <%}%>
 
-                     
+                        <%if (Negocio.Seguridad.sesionActiva(Session["usuario"]) && !Negocio.Seguridad.esAdministrador(Session["usuario"]))
+                            {%>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item disabled">Compras</a></li>
+                                <li><a class="dropdown-item" href="Favoritos.aspx">Favoritos</a></li>
+                                <li><a class="dropdown-item" href="Historial.aspx">Historial</a></li>
+                            </ul>
+                        </li>
+                        <%} %>
+                        <%if (Negocio.Seguridad.esAdministrador(Session["usuario"]))
+                            {%>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Comercio
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item disabled">Ventas</a></li>
+                                <li><a class="dropdown-item" href=#>Administrar Pedidos</a></li>
+                                <li><a class="dropdown-item" href="AltaModArticulo.aspx">Agregar Artículo</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item disabled">Administración</a></li>
+                                <li><a class="dropdown-item" href="AdministrarArticulos.aspx">Administrar Articulos</a></li>
+                                <li><a class="dropdown-item" href="AdministrarCategoria.aspx">Administrar Categorias</a></li>
+                                <li><a class="dropdown-item" href="AdministrarColeccion.aspx">Administrar Colecciones</a></li>
+                            </ul>
+                        </li>
+                        <%} %>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="Carrito.aspx" style="line-height: 0">
+                                <i class="bi bi-cart2" style="font-size: 25px;"></i>
+                            </a>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>
@@ -91,7 +95,6 @@
         <br />
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                
             </asp:ContentPlaceHolder>
         </div>
     </form>

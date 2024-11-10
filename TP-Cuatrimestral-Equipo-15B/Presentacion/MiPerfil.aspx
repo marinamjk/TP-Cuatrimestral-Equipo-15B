@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Miperfil.aspx.cs" Inherits="Presentacion.Mi_perfil" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Miperfil.aspx.cs" Inherits="Presentacion.MiPerfil" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -10,7 +10,7 @@
             <div class="card">
                 <img src="https://via.placeholder.com/150" class="card-img-top rounded-circle" alt="Foto de perfil" />
                 <div class="card-body">
-                    <h5 class="card-title"><%=((dominio.Usuario)(Session["usuario"])).Nombre%> <%=((dominio.Usuario)(Session["usuario"])).Apellido%></h5>
+                    <h5 class="card-title"><%=titulo%></h5>
                 </div>
             </div>
         </div>

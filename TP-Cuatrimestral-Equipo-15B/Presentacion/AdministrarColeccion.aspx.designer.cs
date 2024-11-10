@@ -11,7 +11,7 @@ namespace Presentacion
 {
 
 
-    public partial class AdministrarMarca
+    public partial class AdministrarColeccion
     {
 
         /// <summary>

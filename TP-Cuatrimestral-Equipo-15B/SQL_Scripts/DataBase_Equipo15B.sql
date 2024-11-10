@@ -118,7 +118,7 @@ Create procedure sp_AgregarUsuario(
 )as
 begin
 	Insert into Usuarios (Email, Contrasenia, IDTipoUsuario) output inserted.IDUsuario values 
-	(@Email, @Contrasenia, 0)
+	(@Email, @Contrasenia, 2)
 end
 go
 

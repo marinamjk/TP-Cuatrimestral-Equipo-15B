@@ -11,7 +11,7 @@ namespace Presentacion
 {
 
 
-    public partial class Mi_perfil
+    public partial class MiPerfil
     {
 
         /// <summary>

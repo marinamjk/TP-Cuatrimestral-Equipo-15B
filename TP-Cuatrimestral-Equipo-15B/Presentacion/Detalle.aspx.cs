@@ -18,12 +18,12 @@ namespace Presentacion
         protected string CategoriaArt;
         protected int idArticulo;
 
-        public bool ConfirmarEliminacion { get; set; }
+        //public bool ConfirmarEliminacion { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                ConfirmarEliminacion = false;
+                //ConfirmarEliminacion = false;
                 if (!IsPostBack)
                 {
                     string idQuery = Request.QueryString["id"];
@@ -130,29 +130,29 @@ namespace Presentacion
             }
            
         }
-        protected void btnEliminarArticulo_Click(object sender, EventArgs e)
-        {
-            ConfirmarEliminacion = true;
-        }
-        protected void btnConfirmarEliminacion_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (chkConfirmarEliminacion.Checked)
-                {
-                    ArticuloNegocio artNegocio = new ArticuloNegocio();
-                    //artNegocio.eliminarArticuloFisicamente(articulo.IdArticulo);
-                    Response.Redirect("~/Default.aspx", false);
+        //protected void btnEliminarArticulo_Click(object sender, EventArgs e)
+        //{
+        //    ConfirmarEliminacion = true;
+        //}
+        //protected void btnConfirmarEliminacion_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (chkConfirmarEliminacion.Checked)
+        //        {
+        //            ArticuloNegocio artNegocio = new ArticuloNegocio();
+        //            //artNegocio.eliminarArticuloFisicamente(articulo.IdArticulo);
+        //            Response.Redirect("~/Default.aspx", false);
 
-                }
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx",false);
-            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Session.Add("error", ex.ToString());
+        //        Response.Redirect("Error.aspx",false);
+        //    }
 
-        }
+        //}
 
         protected void Modificar_Click(object sender, EventArgs e)
         {

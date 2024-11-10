@@ -11,7 +11,7 @@ namespace Presentacion
 {
 
 
-    public partial class WebForm2
+    public partial class Registrarse
     {
 
         /// <summary>

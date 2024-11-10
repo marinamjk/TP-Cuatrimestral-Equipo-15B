@@ -5,18 +5,20 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
+using Negocio;
 
 namespace Presentacion
 {
-	public partial class Mi_perfil : System.Web.UI.Page
+	public partial class MiPerfil : System.Web.UI.Page
 	{
+        public string titulo;
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			Usuario usuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
-			if (usuario == null)
-			{
-				Response.Redirect("login.aspx");
-			}
+            if (Seguridad.sesionActiva(Session["usuario"])){            
+                Usuario us = (Usuario)Session["usuario"];
+                titulo = us.Nombre;
+            }
+		
 		}
 
         protected void btnAgregarDireccion_Click(object sender, EventArgs e)

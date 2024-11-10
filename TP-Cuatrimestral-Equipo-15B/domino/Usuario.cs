@@ -24,9 +24,9 @@ namespace dominio
         public Direccion Direccion { get; set; }
         public string Foto {  get; set; }       
 
-        public void setTipoUsuario(bool tipo)
+        public bool esAdministrador()
         {
-            tipoUsuario= tipo == false ? tipoUsuario = tipoUsuario.NORMAL : tipoUsuario.ADMIN;
+            return tipoUsuario== tipoUsuario.ADMIN? true : false;
         }
               
     }
