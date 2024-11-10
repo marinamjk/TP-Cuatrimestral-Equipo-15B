@@ -20,7 +20,9 @@ namespace Presentacion
             }
             else
             {
-                Inicio = ((Usuario)Session["usuario"]).Nombre;
+                int index = ((Usuario) Session["usuario"]).Mail.IndexOf("@");
+                string nombre = ((Usuario)Session["usuario"]).Mail.Substring(0,index);
+                Inicio = nombre;
             }
             //si hay un usuario ingresado cambiar Inicio a nombre de usuario
 
@@ -44,6 +46,11 @@ namespace Presentacion
         }
 
         protected void btnSalir_Click(object sender, EventArgs e)
+        {
+            Session["usuario"] = null;
+            Response.Redirect("Default.aspx", false);
+        }
+        protected void Button1_Click(object sender, EventArgs e)
         {
             Session["usuario"] = null;
             Response.Redirect("Default.aspx", false);
