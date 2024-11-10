@@ -37,13 +37,14 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li><a class="dropdown-item" href="/MiPerfil.aspx">Mi Perfil</a></li>
-                                    <li><a class="dropdown-item" href="#">Salir</a></li>
+                                    <li><asp:Button CssClass="dropdown-item" ID="Button1" runat="server" Text="Salir" OnClick="Button1_Click" /></li>
                                   <%}%>
                             </ul>
                         </li>
                         <%if(Session["usuario"] == null) {%> 
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="Registrarse.aspx">Registrarme</a>
+
                             </li>  
                         <%}%>
                         
