@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form>
+   
       <div class="container mt-6">
         <div class="row justify-content-center">
             <label>Codigo</label>
@@ -10,5 +10,5 @@
         </div>
       </div>
     <asp:Button ID="BtAceptar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Aceptar" OnClick="BtAceptar_Click" />
-</form>
+
 </asp:Content>

@@ -47,7 +47,7 @@ namespace Presentacion
 
         protected void btnSalir_Click(object sender, EventArgs e)
         {
-            Session["usuario"] = null;
+            Session.Clear();
             Response.Redirect("Default.aspx", false);
         }  
     }

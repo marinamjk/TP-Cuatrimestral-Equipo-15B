@@ -57,7 +57,8 @@ namespace Presentacion
                 {
                     usuario.Contraseña = txtContraseña.Text;
                 }
-                int id = um.agregarUsuario(usuario);
+                usuario.IdUsuario = um.agregarUsuario(usuario);
+                Session.Add("usuario", usuario);
                 //enviar email de bienvenida
 
                 Response.Redirect("Default.aspx", false);
