@@ -14,15 +14,22 @@ namespace Presentacion
         public string Inicio { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null ) 
+            if (Seguridad.sesionActiva(Session["usuario"]) == true) 
             {
                 Inicio = "Iniciar Sesión";
             }
             else
             {
-                int index = ((Usuario) Session["usuario"]).Mail.IndexOf("@");
-                string nombre = ((Usuario)Session["usuario"]).Mail.Substring(0,index);
-                Inicio = nombre;
+                if (((Usuario)Session["usuario"]).Nombre != null)
+                {
+                    Inicio = ((Usuario)Session["usuario"]).Nombre;
+                }
+                else
+                {
+                    int index = ((Usuario) Session["usuario"]).Mail.IndexOf("@");
+                    string nombre = ((Usuario)Session["usuario"]).Mail.Substring(0,index);
+                    Inicio = nombre;
+                }
             }
             //si hay un usuario ingresado cambiar Inicio a nombre de usuario
 
