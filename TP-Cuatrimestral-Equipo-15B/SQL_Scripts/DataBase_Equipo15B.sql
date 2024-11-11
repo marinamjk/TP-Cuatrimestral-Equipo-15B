@@ -293,7 +293,12 @@ Create Procedure sp_ListarFavoritos(
 @IDUsuario int
 )as
 begin
-	Select IDArticulo from Favoritos where IDUsuario=@IDUsuario
+	Select A.IDArticulo, A.Nombre, A.Descripcion, A.IDColeccion, CO.Nombre as 'NombreColeccion', A.IDCategoria, C.Nombre as 'NombreCategoria', A.Precio, A.Stock, a.Puntaje, A.Estado
+	from Favoritos F 
+	INNER JOIN Articulos A On F.IDArticulo= A.IDArticulo
+	INNER JOIN Colecciones CO On CO.IDColeccion= A.IDColeccion
+	INNER JOIN Categorias C On C.IDCategoria= A.IDCategoria
+	where IDUsuario=@IDUsuario and A.Estado= 1
 end
 go
 

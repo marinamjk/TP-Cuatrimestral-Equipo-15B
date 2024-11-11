@@ -19,20 +19,22 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="card-body">
-                                        <h5 class="card-title">Teclado mecanico dragon</h5>
-                                        <p class="card-text font-weight-bold">$465.025</p>
-                                        <p class="card-text">Mismo precio en 9 cuotas de $51.669</p>
-                                        <p class="card-text text-success">Envío gratis</p>
-                                        <a href="#" class="btn btn-primary">Agregar a lista</a>
-                                        <a href="#" class="btn btn-danger">Eliminar</a>
+                                        <h5 class="card-title"><%# Eval("Nombre") %></h5>
+                                        <p class="card-text font-weight-bold"><%# Eval("Precio", "{0:F2}") %></p>
+                                        <p class="card-text"><%# Eval("Coleccion") %></p>
+                                        <p class="card-text text-success"><%# Eval("Puntaje") %></p>
+                                        <asp:Button ID="btnAgregarAlCarrito" CssClass="btn btn-primary" runat="server" Text="Agregar al carrito"  CommandName="AgregarAlCarrito" CommandArgument='<%# Eval("IDArticulo") %>' OnCommand="btnAgregarAlCarrito_Command"/>
+                                        <asp:Button ID="btnEliminarDeFavoritos" CssClass="btn btn-danger" runat="server" Text="Eliminar"  CommandName="Eliminar" CommandArgument='<%# Eval("IDArticulo") %>' OnCommand="btnEliminarDeFavoritos_Command"/>                                     
+                                
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    
                 </ItemTemplate>
             </asp:Repeater>
+            <asp:Label ID="lblConfirmacion" runat="server"></asp:Label>
         </div>
     </div>
 </asp:Content>
