@@ -12,6 +12,7 @@ namespace AccesoADatos
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;
+        private SqlTransaction transaccion; // Se agrega la propiedad de transacción
         public SqlDataReader Lector
         {
             get { return lector; }
@@ -27,9 +28,7 @@ namespace AccesoADatos
         {
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
-
         }
-
         public void setearProcedimiento(string sp)
         {
             comando.CommandType = System.Data.CommandType.StoredProcedure;
@@ -64,6 +63,7 @@ namespace AccesoADatos
             {
                 throw ex;
             }
+
         }
         public void setearParametros(string nombre, object valor)
         {
@@ -86,11 +86,18 @@ namespace AccesoADatos
                 conexion.Close();
             }
         }
+
         public void cerrarConexion()
         {
             if (Lector != null)
                 Lector.Close();
             conexion.Close();
         }
+
+        public void limpiarParametros()
+        {
+            comando.Parameters.Clear();
+        }
+
     }
 }

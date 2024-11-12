@@ -3,6 +3,46 @@ Collate Latin1_General_CI_AI
 Go
 Use ECOMMERCE_EQUIPO15B
 
+CREATE TABLE MetodoPago(
+	IdMetodoPago INT PRIMARY KEY IDENTITY,
+	Nombre NVARCHAR(50) NOT NULL,
+	Descripcion NVARCHAR(100),
+	Activo BIT NOT NULL DEFAULT 1
+);
+go
+
+CREATE TABLE Pedido(
+	IdPedido INT PRIMARY KEY IDENTITY,
+    FechaPedido DATETIME NOT NULL DEFAULT GETDATE(),
+	TipoEntrega VARCHAR(10),
+    NombreCliente NVARCHAR(50) NOT NULL,
+    ApellidoCliente NVARCHAR(50) NOT NULL,
+    Email NVARCHAR(100) NOT NULL,
+    Telefono NVARCHAR(20) NOT NULL,
+	DNI NVARCHAR(20) NOT NULL,
+    Calle NVARCHAR(100) NULL,
+    Numero NVARCHAR(10) NULL,
+    CodigoPostal NVARCHAR(10) NULL,
+    Provincia NVARCHAR(50) NULL,
+    IdMetodoPago INT NOT NULL,
+    Total DECIMAL(10, 2) NOT NULL,
+    
+    FOREIGN KEY (IdMetodoPago) REFERENCES MetodoPago(IdMetodoPago)
+);
+go
+
+CREATE TABLE PedidoDetalle (
+    IdDetalle INT PRIMARY KEY IDENTITY,
+    IdPedido INT NOT NULL,
+    IdArticulo INT NOT NULL,
+    Cantidad INT NOT NULL,
+    PrecioUnitario DECIMAL(18, 2) NOT NULL,
+    Subtotal AS (Cantidad * PrecioUnitario) PERSISTED,
+    FOREIGN KEY (IdPedido) REFERENCES Pedido(IdPedido),
+    FOREIGN KEY (IDArticulo) REFERENCES Articulos (IDArticulo)
+);
+
+
 CREATE TABLE Provincia (
     Id TINYINT NOT NULL primary key IDENTITY(1,1),  
     Nombre NVARCHAR(50) NOT NULL,
@@ -349,7 +389,7 @@ begin try
 	Update Articulos set Puntaje= @Puntaje where IDArticulo= (Select IDArticulo from inserted)
 end try
 begin catch
-	raiserror('No se pudo calcular el promedio de la puntuación', 16, 2)
+	raiserror('No se pudo calcular el promedio de la puntuaciï¿½n', 16, 2)
 end catch
 end
 go

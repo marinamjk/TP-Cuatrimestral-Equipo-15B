@@ -11,16 +11,7 @@ namespace Presentacion
 {
 
 
-    public partial class CheckOut
+    public partial class ConfirmacionCompra
     {
-
-        /// <summary>
-        /// Control btnFinalizarCompra.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFinalizarCompra;
     }
 }

@@ -17,7 +17,7 @@ namespace Negocio
         {
             
             //carrito = new Carrito();
-            // Recuperar el carrito desde la sesión, o crear uno nuevo si no existe
+            // Recupero el carrito desde la sesión, o creo uno nuevo si no existe
             carrito = (Carrito)System.Web.HttpContext.Current.Session[SESSION_KEY] ?? new Carrito();
         }
         private void GuardarCarrito()//  se guardan los cambios en la sesión para evitar perder los cambios al agregar un articulo al carrito

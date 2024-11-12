@@ -77,7 +77,7 @@
     <Content Include="AdministrarPedido.aspx" />
     <Content Include="AltaModArticulo.aspx" />
     <Content Include="Carrito.aspx" />
-    <Content Include="CheckOut.aspx" />
+    <Content Include="ConfirmacionCompra.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -101,6 +101,7 @@
     <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Historial.aspx" />
+    <Content Include="MetodosPago.aspx" />
     <Content Include="MiPerfil.aspx" />
     <Content Include="Recursos\usuario.png.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -158,12 +159,12 @@
     <Compile Include="Carrito.aspx.designer.cs">
       <DependentUpon>Carrito.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CheckOut.aspx.cs">
-      <DependentUpon>CheckOut.aspx</DependentUpon>
+    <Compile Include="ConfirmacionCompra.aspx.cs">
+      <DependentUpon>ConfirmacionCompra.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CheckOut.aspx.designer.cs">
-      <DependentUpon>CheckOut.aspx</DependentUpon>
+    <Compile Include="ConfirmacionCompra.aspx.designer.cs">
+      <DependentUpon>ConfirmacionCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="DatosContacto.aspx.cs">
       <DependentUpon>DatosContacto.aspx</DependentUpon>
@@ -209,6 +210,13 @@
     </Compile>
     <Compile Include="Historial.aspx.designer.cs">
       <DependentUpon>Historial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MetodosPago.aspx.cs">
+      <DependentUpon>MetodosPago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MetodosPago.aspx.designer.cs">
+      <DependentUpon>MetodosPago.aspx</DependentUpon>
     </Compile>
     <Compile Include="MiPerfil.aspx.cs">
       <DependentUpon>MiPerfil.aspx</DependentUpon>

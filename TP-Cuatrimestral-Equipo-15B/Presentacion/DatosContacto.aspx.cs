@@ -20,9 +20,7 @@ namespace Presentacion
 
             if (!IsPostBack)
             {
-                //// Inicializa los valores si es la primera carga
-                //DatosDestinatario.Visible = false;
-                //DatosFacturacion.Visible = false;
+                //// Inicializa los valores si es la primera carga               
                 CargarResumenCompra();
                 CargarProvincias();
             }
@@ -60,20 +58,78 @@ namespace Presentacion
 
         protected void btnMediosDePago_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/CheckOut.aspx");
+            if (!rbEnvio.Checked && !rbRetiro.Checked)
+            {
+                lblAdvertencia.Text = "Seleccione Envio o Retiro";
+                lblAdvertencia.Visible = true;
+            }
+            else if (rbEnvio.Checked)
+            {
+                lblAdvertencia.Visible = false;
+
+                if (string.IsNullOrWhiteSpace(TextEmail.Text) || string.IsNullOrWhiteSpace(TextNombre.Text) ||
+                    string.IsNullOrWhiteSpace(TextApellido.Text) || string.IsNullOrWhiteSpace(TextTelefono.Text) ||
+                    string.IsNullOrWhiteSpace(TextCalle.Text) || string.IsNullOrWhiteSpace(TextNumero.Text) ||
+                    string.IsNullOrWhiteSpace(TextCodigoPostal.Text)||string.IsNullOrWhiteSpace(TextDNI.Text))
+                {
+                    lblAdvertencia.Text = "Complete los datos de Contacto";
+                    lblAdvertencia.Visible = true;
+                }
+                else
+                {                   
+                    Session["NombreCliente"] = TextNombre.Text;
+                    Session["ApellidoCliente"] = TextApellido.Text;
+                    Session["Email"] = TextEmail.Text;
+                    Session["Telefono"] = TextTelefono.Text;
+                    Session["Calle"] = TextCalle.Text;
+                    Session["Numero"] = TextNumero.Text;
+                    Session["CodigoPostal"] = TextCodigoPostal.Text;
+                    Session["Provincia"] = DropDownListProvincia.SelectedItem.Text;
+                    Session["DNI"] = TextDNI.Text;
+
+                    Response.Redirect("~/MetodosPago.aspx");
+                }
+            }
+            else if (rbRetiro.Checked)
+            {
+                lblAdvertencia.Visible = false;
+
+                if ((string.IsNullOrWhiteSpace(TextEmail.Text) || string.IsNullOrWhiteSpace(TextNombre.Text) ||
+                    string.IsNullOrWhiteSpace(TextApellido.Text) || string.IsNullOrWhiteSpace(TextTelefono.Text) || 
+                    string.IsNullOrWhiteSpace(TextDNI.Text)))                   
+                {
+                    lblAdvertencia.Text = "Complete los datos de Contacto";
+                    lblAdvertencia.Visible = true;
+                }
+                else
+                {
+                    Session["NombreCliente"] = TextNombre.Text;
+                    Session["ApellidoCliente"] = TextApellido.Text;
+                    Session["Email"] = TextEmail.Text;
+                    Session["Telefono"] = TextTelefono.Text;
+                    Session["DNI"] = TextDNI.Text;
+                                       
+                    Response.Redirect("~/MetodosPago.aspx");
+                }
+            }
         }
+
 
         protected void RadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (rbEnvio.Checked)
             {
                 DatosDestinatario.Visible = true;
-                DatosFacturacion.Visible = false;
+                DatosFacturacion.Visible = true;
+                DireccionContacto.Visible = true;
+                Session["TipoEntrega"] = "Envio";
             }
             else if (rbRetiro.Checked)
             {
+                DatosDestinatario.Visible = true;
                 DatosFacturacion.Visible = true;
-                DatosDestinatario.Visible = false;
+                DireccionContacto.Visible = false;
+                Session["TipoEntrega"] = "Retiro";
             }
         }
 
@@ -81,7 +137,7 @@ namespace Presentacion
         {
             int codogpPostal;
 
-            if (int.TryParse(txtCodigoPostal.Text, out codogpPostal))
+            if (int.TryParse(TextCodigoPostal.Text, out codogpPostal))
             {
                 bool esValido = provinciaNegocio.ValidarCodigoPostal(codogpPostal);
 
@@ -107,47 +163,13 @@ namespace Presentacion
 
         protected void DropDownListProvincia_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (int.TryParse(DropDownListProvincia.SelectedValue, out int provinciaId))
-            //{
-            //    int codigoPostal;
-
-
-            //    if (int.TryParse(txtCodigoPostal.Text, out codigoPostal))
-            //    {
-
-            //        bool esValido = provinciaNegocio.ValidarCodigoPostalPorProvincia(codigoPostal, provinciaId);
-
-            //        if (esValido)
-            //        {
-            //            lblCPValidacion.Text = "Código Postal válido para la provincia seleccionada.";
-            //            lblCPValidacion.ForeColor = System.Drawing.Color.Green;
-            //        }
-            //        else
-            //        {
-            //            lblCPValidacion.Text = "El Código Postal no corresponde a la provincia seleccionada.";
-            //            lblCPValidacion.ForeColor = System.Drawing.Color.Red;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        lblCPValidacion.Text = "El Código Postal ingresado es inválido.";
-            //        lblCPValidacion.ForeColor = System.Drawing.Color.Red;
-            //    }
-            //}
-            //else
-            //{
-            //    lblCPValidacion.Text = "Seleccione una provincia valida";
-            //    lblCPValidacion.ForeColor = System.Drawing.Color.Red;
-            //}
-            // Verificar si la provincia está seleccionada correctamente
+            // si la provincia esta seleccionada correctamente
             if (int.TryParse(DropDownListProvincia.SelectedValue, out int provinciaId))
             {
-                // Verificar si el Código Postal es un número válido
-                if (int.TryParse(txtCodigoPostal.Text, out int codigoPostal))
-                {
-                    // Validar si el Código Postal corresponde a la provincia seleccionada
+                // si el CP es un numero valido
+                if (int.TryParse(TextCodigoPostal.Text, out int codigoPostal))
+                {                   
                     bool esValido = provinciaNegocio.ValidarCodigoPostalPorProvincia(codigoPostal, provinciaId);
-
                     // Mensajes de validación
                     if (esValido)
                     {
@@ -170,11 +192,7 @@ namespace Presentacion
             {
                 lblCPValidacion.Text = "Seleccione una provincia válida.";
                 lblCPValidacion.ForeColor = System.Drawing.Color.Red;
-            }
-
-            // Para depurar, podrías agregar estos registros para verificar el flujo:
-            System.Diagnostics.Debug.WriteLine($"Provincia seleccionada ID: {DropDownListProvincia.SelectedValue}");
-            System.Diagnostics.Debug.WriteLine($"Código Postal ingresado: {txtCodigoPostal.Text}");
+            }         
         }
     }
 }

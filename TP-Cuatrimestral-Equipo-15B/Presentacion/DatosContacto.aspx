@@ -14,7 +14,7 @@
 
                 <!-- Se pide el mail de contacto -->
                 <div class="form-group">
-                    <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control  form-control-lg" placeholder="Ingrese su correo" />
+                    <asp:TextBox ID="TextEmail" runat="server" CssClass="form-control  form-control-lg" placeholder="Ingrese su correo" />
                 </div>
 
                 <div class="form-group  ">              
@@ -49,67 +49,74 @@
                      <!-- Se piden los datos de la persona que va a pagar el pedido -->
                                               
                     <div class="form-group mt-3">                        
-                        <asp:TextBox ID="TextBox5" runat="server" CssClass="form-control form-control-lg" placeholder="Nombre" />
+                        <asp:TextBox ID="TextNombre" runat="server" CssClass="form-control form-control-lg" placeholder="Nombre" />
                     </div>
                     <div class="form-group mt-3">
-                        <asp:TextBox ID="TextBox6" runat="server" CssClass="form-control form-control-lg" placeholder="Apellido" />
+                        <asp:TextBox ID="TextApellido" runat="server" CssClass="form-control form-control-lg" placeholder="Apellido" />
                     </div>
                     <div class="form-group  mt-3">
-                        <asp:TextBox ID="TextBox7" runat="server" CssClass="form-control form-control-lg" placeholder="Teléfono" />
-                    </div>
-                         
-                     <div class="row">
+                        <asp:TextBox ID="TextTelefono" runat="server" CssClass="form-control form-control-lg" placeholder="Teléfono" />
+                    </div>                   
+                                             
+                </div><%--fin datos contacto--%>
+                
+                <div id="DireccionContacto" runat="server" visible="false">
+                    <div class="row">
                         <div class="form-group col-md-6  mt-3">
-                            <asp:TextBox ID="TextBox8" runat="server" CssClass="form-control form-control-lg" placeholder="Calle" />
+                            <asp:TextBox ID="TextCalle" runat="server" CssClass="form-control form-control-lg" placeholder="Calle" />
                         </div>
                         <div class="form-group col-md-6 mt-3">
-                            <asp:TextBox ID="TextBox9" runat="server" CssClass="form-control form-control-lg" placeholder="Número" />
+                            <asp:TextBox ID="TextNumero" runat="server" CssClass="form-control form-control-lg" placeholder="Número" />
                         </div>                        
-                     </div>
+                    </div>
 
                     <div class="form-group mt-3">
-                        <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control  form-control-lg" placeholder="Código Postal" OnTextChanged="txtCodigoPostal_TextChanged" AutoPostBack="true" />
-                        <asp:Label ID="lblCPValidacion" runat="server" CssClass="alert alert-dange mt-3"></asp:Label>
-                     </div>
-                    <div class="form-group mt-3">
-                        <asp:TextBox ID="TextBox12" runat="server" CssClass="form-control form-control-lg" placeholder="Localidad" />
+                        <asp:TextBox ID="TextCodigoPostal" runat="server" CssClass="form-control  form-control-lg" placeholder="Código Postal" OnTextChanged="txtCodigoPostal_TextChanged" AutoPostBack="true" />
+                        <asp:Label ID="lblCPValidacion" runat="server" CssClass="alert alert-dange mt-3"></asp:Label>    
+                    </div>
+                    <div class="form-group">
+                        <asp:TextBox ID="TextLocalidad" runat="server" CssClass="form-control form-control-lg" placeholder="Localidad" />
                     </div>
                     <%--Va a sacar las provincias de la base de datos--%>
-                    <div class="form-group mt-3">
+                    <div id="Provincias" class="form-group mt-3" runat="server">
                         <asp:DropDownList ID="DropDownListProvincia" runat="server" CssClass="form-select form-select-lg" placeholder="Provincia" OnSelectedIndexChanged="DropDownListProvincia_SelectedIndexChanged" AutoPostBack="true">
                                                 
                         </asp:DropDownList>
-                     </div>
-                     
-                                             
-                </div>
+                    </div>
+                </div><%--fin direccion contacto--%>
 
+                <%--Se piden los datos para la facturacion--%>
                 <div id="DatosFacturacion" runat="server" visible="false">
-                    <!-- Se piden los datos de la persona que va a retirar el pedido -->
                     <h4 class="mt-4 text-center">Datos de facturación</h4>
       
                     <div class="form-group mt-3 ">                              
-                        <asp:TextBox ID="TextBox14" runat="server" CssClass="form-control form-control-lg" placeholder="DNI o CUIT" />
+                        <asp:TextBox ID="TextDNI" runat="server" CssClass="form-control form-control-lg" placeholder="DNI o CUIT" />
                     </div>
+                </div>
 
-                    <h5 class="mt-4 fw-bold">Persona que pagara el Pedido</h5>
+                <%-- <!-- Se piden los datos de la persona que va a retirar el pedido -->
+                <div id="ResponsableDePago" runat="server" visible="false" >
+                     <h5 class="mt-4 fw-bold">Persona que pagara el Pedido</h5>
 
                      <div class="form-group mt-3">                        
-                         <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control form-control-lg" placeholder="Nombre" />
+                         <asp:TextBox ID="TextNombreRetiraPedido" runat="server" CssClass="form-control form-control-lg" placeholder="Nombre" />
                      </div>
                      <div class="form-group mt-3">
-                         <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control form-control-lg" placeholder="Apellido" />
+                         <asp:TextBox ID="TextApellidoRetiraPedido" runat="server" CssClass="form-control form-control-lg" placeholder="Apellido" />
                      </div>
                      <div class="form-group  mt-3">
-                         <asp:TextBox ID="TextBox3" runat="server" CssClass="form-control form-control-lg" placeholder="Teléfono" />
+                         <asp:TextBox ID="TextTelefonoRetiraPedido" runat="server" CssClass="form-control form-control-lg" placeholder="Teléfono" />
                      </div>
 
-                </div>
+                </div>--%>
                 
                 <!-- Botón para redirigir a los medios de pago -->
                 <div class="text-end mt-4">
                     <asp:Button ID="btnMediosDePago" runat="server" Text="Medios de Pago" CssClass="btn btn-primary btn-lg px-4 py-2" OnClick="btnMediosDePago_Click" />
                 </div>
+                 <div class ="mt-3">
+                     <asp:Label ID="lblAdvertencia" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+                 </div> 
             </div>
 
             <!-- Columna para el resumen de la compra -->
@@ -134,7 +141,7 @@
                         
                         <div class="d-flex justify-content-between">
                             <strong>Total</strong>
-                            <asp:Label ID="lblTotal" runat="server"></asp:Label> <!-- Cambiar a cálculo dinámico -->
+                            <asp:Label ID="lblTotal" runat="server"></asp:Label> 
                         </div>
 
                        
