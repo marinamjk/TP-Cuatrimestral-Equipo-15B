@@ -14,7 +14,7 @@ namespace Presentacion
         public string Inicio { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Seguridad.sesionActiva(Session["usuario"]) == true) 
+            if (!Seguridad.sesionActiva(Session["usuario"])) 
             {
                 Inicio = "Iniciar Sesión";
             }
