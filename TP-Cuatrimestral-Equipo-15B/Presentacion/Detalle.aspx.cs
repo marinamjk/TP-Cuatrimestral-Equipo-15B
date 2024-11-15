@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.Services;
 using System.Web.UI.WebControls;
 using Negocio;
+using System.Web.UI.WebControls.WebParts;
 
 namespace Presentacion
 {
@@ -17,15 +19,16 @@ namespace Presentacion
         protected string descripcionArt;
         protected string CategoriaArt;
         protected int idArticulo;
+        protected bool esFavorito;
 
-        //public bool ConfirmarEliminacion { get; set; }
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             try
-            {
-                //ConfirmarEliminacion = false;
+            {                
                 if (!IsPostBack)
                 {
+               
                     string idQuery = Request.QueryString["id"];
                    
                     if (!string.IsNullOrEmpty(idQuery) && int.TryParse(idQuery, out idArticulo))
@@ -41,7 +44,7 @@ namespace Presentacion
                             {
                                 btnDeshabilitar.Text = "Habilitar";
                             }
-
+                            actualizarEstadoFavorito();
                         }
                         else
                         {
@@ -59,20 +62,10 @@ namespace Presentacion
                 else
                 {
                     articulo = (Articulo)Session["ArticuloSeleccionado"];
+                    actualizarEstadoFavorito();
                 }
+                
 
-
-
-
-                //if (!string.IsNullOrEmpty(idQuery))
-                //{
-                //    idArticulo = int.Parse(idQuery);
-                //    cargarArticulo(idArticulo);
-
-
-                //    CargarImagenes();
-                //}
-            
             }
             catch (Exception ex)
             {
@@ -130,30 +123,7 @@ namespace Presentacion
             }
            
         }
-        //protected void btnEliminarArticulo_Click(object sender, EventArgs e)
-        //{
-        //    ConfirmarEliminacion = true;
-        //}
-        //protected void btnConfirmarEliminacion_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (chkConfirmarEliminacion.Checked)
-        //        {
-        //            ArticuloNegocio artNegocio = new ArticuloNegocio();
-        //            //artNegocio.eliminarArticuloFisicamente(articulo.IdArticulo);
-        //            Response.Redirect("~/Default.aspx", false);
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Session.Add("error", ex.ToString());
-        //        Response.Redirect("Error.aspx",false);
-        //    }
-
-        //}
-
+       
         protected void Modificar_Click(object sender, EventArgs e)
         {
             Response.Redirect("AltaModArticulo.aspx?idArt="+ articulo.IdArticulo);
@@ -255,21 +225,35 @@ namespace Presentacion
 
         protected void btnFavorito_Click(object sender, EventArgs e)
         {
-            try 
+            try
             {
-                Usuario user = (Usuario)Session["usuario"];
-                if (user != null && Request.QueryString["id"] != null) {
-                   
-                    int idUser = user.IdUsuario;
-                    int idArt = int.Parse(Request.QueryString["id"]);
-                    
-                    AgregadosNegocio ag = new AgregadosNegocio();
-                    
-                    bool esFavorito= ag.agregarAFavoritos(idUser, idArt);
-                    if (esFavorito)
+                if (Seguridad.sesionActiva(Session["usuario"]))
+                {
+                    Usuario user = (Usuario)Session["usuario"];
+                    if (user != null && Request.QueryString["id"] != null)
                     {
-                        ScriptManager.RegisterStartupScript(this, GetType(), "setIcon", $"var esFavorito = {esFavorito.ToString().ToLower()};", true);
+                        int idUser = user.IdUsuario;
+                        int idArt = int.Parse(Request.QueryString["id"]);
+
+                        AgregadosNegocio ag = new AgregadosNegocio();
+                                              
+                        if (!esFavorito)
+                        {
+                            ag.agregarAFavoritos(idUser, idArt);
+                            esFavorito = true;
+                        }
+                        else
+                        {
+                            ag.eliminarDeFavoritos(idUser, idArt);
+                            esFavorito = false;
+                        }                     
+                        
                     }
+                }
+                else
+                {
+                    Session.Add("error", "Debes loguearte para añadir a Favoritos");
+                    Response.Redirect("Error.aspx", false);
                 }
             }
             catch (Exception ex)
@@ -277,6 +261,21 @@ namespace Presentacion
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
+        }
+
+        protected void actualizarEstadoFavorito()
+        {
+            AgregadosNegocio ag = new AgregadosNegocio();
+            if (Session["usuario"] != null)
+            {
+                int idUsuario = ((Usuario)Session["usuario"]).IdUsuario;
+                if ((ag.listarFavoritos(idUsuario).Any(c => c.IdArticulo == articulo.IdArticulo)))
+                    esFavorito = true;
+                else
+                    esFavorito = false;
+                
+            }
+
         }
     }
 }

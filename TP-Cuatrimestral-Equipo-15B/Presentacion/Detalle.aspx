@@ -13,28 +13,6 @@
             touch: false
         })
 
-        function toggleIcon(button) {
-            var icon = document.getElementById('icon');
-
-            
-            if (icon.classList.contains('bi-heart')) {
-                icon.classList.remove('bi-heart');
-                icon.classList.add('bi-heart-fill');
-            } else {
-                icon.classList.remove('bi-heart-fill');
-                icon.classList.add('bi-heart');
-            }
-            
-            return false;
-        }
-
-        window.onload = function () {
-            var icon = document.getElementById('icon');
-            if (typeof esFavorito !== 'undefined' && esFavorito) {
-                icon.classList.remove('bi-heart');
-                icon.classList.add('bi-heart-fill');
-            }
-        }
     </script>
 
 </asp:Content>
@@ -43,8 +21,7 @@
     <div class="row">
         <div class="col-6">
             <div class="mb-3">
-                       <asp:Label ID="lblCategoria" runat="server"></asp:Label>
-        
+                <asp:Label ID="lblCategoria" runat="server"></asp:Label>
             </div>
             <div id="caruselArticulo" class="carousel slide">
                 <div class="carousel-indicators">
@@ -69,7 +46,9 @@
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
+
                 </div>
+
                 <button class="carousel-control-prev" type="button" data-bs-target="#caruselArticulo" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
@@ -78,20 +57,17 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
+
+            </div>
+
+            <div class="mb-3">
+                <h1><strong><%= nombreArt %></strong></h1>
             </div>
             <div class="mb-3">
-                <h1><strong><%= nombreArt %>
-                </strong>
-                </h1>
+                <h1 class="fs-4"><%= marcaArt %></h1>
             </div>
             <div class="mb-3">
-                <h1 class="fs-4"><%= marcaArt %>
-                </h1>
-            </div>
-            <div class="mb-3">
-                <p class="fs-4 lh-sm">
-                    <%= descripcionArt %>
-                </p>
+                <p class="fs-4 lh-sm"><%= descripcionArt %></p>
             </div>
         </div>
 
@@ -100,7 +76,7 @@
             <br />
             <br />
             <div class="mb-3">
-                <asp:Label ID="lblPuntaje"  CssClass="fs-1" runat="server"></asp:Label>
+                <asp:Label ID="lblPuntaje" CssClass="fs-1" runat="server"></asp:Label>
             </div>
             <div class="mb-3">
                 <asp:Label ID="lblPrecio" CssClass="fs-1" runat="server"></asp:Label>
@@ -116,33 +92,30 @@
             <div class="mb-3">
                 <asp:Label ID="lblConfirmacion" runat="server" Text=""></asp:Label>
             </div>
-            <div class="mb-3">                
+            <div class="mb-3">
                 <asp:Button ID="btnIrAlCarrito" class="ms-auto" runat="server" Text="Ir al carrito" OnClick="btnIrAlCarrito_Click" />
             </div>
+
             <hr />
-            <div class="mb-3">
-                <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClientClick="toggleIcon(this); return false" OnClick="btnFavorito_Click" />
-                <i id="icon" class="bi bi-heart"></i>
-            </div>
-            <% if(Negocio.Seguridad.esAdministrador(Session["usuario"]))
-                { %>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
+                    <div class="mb-3">
+                        <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClick="btnFavorito_Click" />
+                        <i id="icon" class="bi <%= esFavorito ? "bi-heart-fill" : "bi-heart" %>"></i>
+                    </div>
+
+
+                    <% if (Negocio.Seguridad.esAdministrador(Session["usuario"]))
+                        { %>
+
                     <div>
                         <asp:Button ID="Modificar" runat="server" Text="Modificar" CssClass="btn btn-primary" OnClick="Modificar_Click" />
-                        <asp:Button ID="btnDeshabilitar" runat="server" Text="Deshabilitar"  cssClass="btn btn-warning" OnClick="btnDeshabilitar_Click"/>
-                        <%--<asp:Button ID="btnEliminarArticulo" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminarArticulo_Click" />--%>
+                        <asp:Button ID="btnDeshabilitar" runat="server" Text="Deshabilitar" CssClass="btn btn-warning" OnClick="btnDeshabilitar_Click" />
                     </div>
-             <%--       <%if (ConfirmarEliminacion)
-                        { %>
-                    <div class="m-3">
-                        <asp:CheckBox ID="chkConfirmarEliminacion" Text="Confirmar eliminación" runat="server" />
-                        <asp:Button ID="btnConfirmarEliminacion" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnConfirmarEliminacion_Click" />
-                    </div>
-                    <%} %>--%>
+                    <%} %>
                 </ContentTemplate>
             </asp:UpdatePanel>
-            <%} %>
+
         </div>
     </div>
 

@@ -87,7 +87,7 @@ namespace Negocio
 
         }
 
-        public bool agregarAFavoritos(int IDUsuario, int IDArticulo)
+        public void agregarAFavoritos(int IDUsuario, int IDArticulo)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -96,18 +96,17 @@ namespace Negocio
                 datos.setearProcedimiento("sp_AgregarAFavoritos");
                 datos.setearParametros("@IDUsuario", IDUsuario);
                 datos.setearParametros("IDArticulo", IDArticulo);
-                int result = datos.ejecutarEscalar();
-
-                return result > 0;               
+                datos.ejecutarAccion();                         
             }
             catch (Exception ex)
-            {
-                throw ex;
+            {             
+                throw ex;                
             }
             finally
             {
                 datos.cerrarConexion();
             }
+           
         }
 
         public void eliminarDeFavoritos(int IDUsuario, int IDArticulo)
@@ -131,10 +130,6 @@ namespace Negocio
             }
         }
 
-        public void buscarFavorito()
-        {
-
-        }
 
     }
 }
