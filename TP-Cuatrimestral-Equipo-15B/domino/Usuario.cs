@@ -13,6 +13,10 @@ namespace dominio
     }
     public class Usuario
     {
+        public Usuario()
+        {
+            modificar = false;
+        }
         public int IdUsuario { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -23,7 +27,7 @@ namespace dominio
         public tipoUsuario tipoUsuario{ get; set; }
         public Direccion Direccion { get; set; }
         public string Foto {  get; set; }       
-
+        public bool modificar {  get; set; }
         public bool esAdministrador()
         {
             return tipoUsuario== tipoUsuario.ADMIN? true : false;
