@@ -31,17 +31,6 @@ CREATE TABLE Pedido(
 );
 go
 
-CREATE TABLE PedidoDetalle (
-    IdDetalle INT PRIMARY KEY IDENTITY,
-    IdPedido INT NOT NULL,
-    IdArticulo INT NOT NULL,
-    Cantidad INT NOT NULL,
-    PrecioUnitario DECIMAL(18, 2) NOT NULL,
-    Subtotal AS (Cantidad * PrecioUnitario) PERSISTED,
-    FOREIGN KEY (IdPedido) REFERENCES Pedido(IdPedido),
-    FOREIGN KEY (IDArticulo) REFERENCES Articulos (IDArticulo)
-);
-
 
 CREATE TABLE Provincia (
     Id TINYINT NOT NULL primary key IDENTITY(1,1),  
@@ -91,6 +80,8 @@ IDDatosPersonales int null foreign key references DatosPersonales(IDDatosPersona
 go
 
 
+
+
 Create Table Categorias(
 IDCategoria int not null primary key identity(1,1),
 Nombre varchar(50) not null,
@@ -119,6 +110,18 @@ Puntaje decimal(3,1) null,
 Estado bit not null
 )
 go
+
+CREATE TABLE PedidoDetalle (
+    IdDetalle INT PRIMARY KEY IDENTITY,
+    IdPedido INT NOT NULL,
+    IdArticulo INT NOT NULL,
+    Cantidad INT NOT NULL,
+    PrecioUnitario DECIMAL(18, 2) NOT NULL,
+    Subtotal AS (Cantidad * PrecioUnitario) PERSISTED,
+    FOREIGN KEY (IdPedido) REFERENCES Pedido(IdPedido),
+    FOREIGN KEY (IDArticulo) REFERENCES Articulos (IDArticulo)
+);
+
 
 Create Table Imagenes(
 IDImagen int not null primary key identity(1,1),
