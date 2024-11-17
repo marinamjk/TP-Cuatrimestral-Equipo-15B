@@ -14,7 +14,7 @@
 
                 <!-- Se pide el mail de contacto -->
                 <div class="form-group">
-                    <asp:TextBox ID="TextEmail" runat="server" CssClass="form-control  form-control-lg" placeholder="Ingrese su correo" />
+                    <asp:TextBox ID="TextEmail" runat="server" CssClass="form-control  form-control-lg" placeholder="Ingrese su correo"  OnTextChanged="TextEmail_TextChanged" />
                 </div>
 
                 <div class="form-group  ">              

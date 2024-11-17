@@ -23,6 +23,7 @@ namespace Presentacion
                 //// Inicializa los valores si es la primera carga               
                 CargarResumenCompra();
                 CargarProvincias();
+                CargarDatosDeUsuario();
             }
         }
 
@@ -193,6 +194,31 @@ namespace Presentacion
                 lblCPValidacion.Text = "Seleccione una provincia válida.";
                 lblCPValidacion.ForeColor = System.Drawing.Color.Red;
             }         
+        }
+
+        protected void TextEmail_TextChanged(object sender, EventArgs e)
+        {
+            if (!Seguridad.sesionActiva(Session["usuario"]))
+            {
+                UsuarioManager um = new UsuarioManager();
+                if (um.listarUsuarios().Any(c => c.Mail == TextEmail.Text))
+                {
+                    Session.Add("error", "Ya existe un usuario con ese email, por favor inicie sesion para poder cargar sus datos");
+                    Response.Redirect("Error.aspx", false);
+                }
+            }
+
+        }
+
+        protected void CargarDatosDeUsuario()
+        {
+            if (Seguridad.sesionActiva(Session["usuario"]))
+            {
+                Usuario usuario = (Usuario)Session["usuario"];
+                UsuarioManager um = new UsuarioManager();
+                TextEmail.Text = usuario.Mail;
+                TextEmail.Enabled = false;
+            }
         }
     }
 }

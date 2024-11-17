@@ -28,6 +28,7 @@ namespace dominio
         public Direccion Direccion { get; set; }
         public string Foto {  get; set; }       
         public bool modificar {  get; set; }
+        public bool Estado { get; set; }
         public bool esAdministrador()
         {
             return tipoUsuario== tipoUsuario.ADMIN? true : false;

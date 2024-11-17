@@ -11,25 +11,25 @@ CREATE TABLE MetodoPago(
 );
 go
 
-CREATE TABLE Pedido(
-	IdPedido INT PRIMARY KEY IDENTITY,
-    FechaPedido DATETIME NOT NULL DEFAULT GETDATE(),
-	TipoEntrega VARCHAR(10),
-    NombreCliente NVARCHAR(50) NOT NULL,
-    ApellidoCliente NVARCHAR(50) NOT NULL,
-    Email NVARCHAR(100) NOT NULL,
-    Telefono NVARCHAR(20) NOT NULL,
-	DNI NVARCHAR(20) NOT NULL,
-    Calle NVARCHAR(100) NULL,
-    Numero NVARCHAR(10) NULL,
-    CodigoPostal NVARCHAR(10) NULL,
-    Provincia NVARCHAR(50) NULL,
-    IdMetodoPago INT NOT NULL,
-    Total DECIMAL(10, 2) NOT NULL,
+--CREATE TABLE Pedido(
+--	IdPedido INT PRIMARY KEY IDENTITY,
+--    FechaPedido DATETIME NOT NULL DEFAULT GETDATE(),
+--	TipoEntrega VARCHAR(10),
+--    NombreCliente NVARCHAR(50) NOT NULL,
+--    ApellidoCliente NVARCHAR(50) NOT NULL,
+--    Email NVARCHAR(100) NOT NULL,
+--    Telefono NVARCHAR(20) NOT NULL,
+--	DNI NVARCHAR(20) NOT NULL,
+--    Calle NVARCHAR(100) NULL,
+--    Numero NVARCHAR(10) NULL,
+--    CodigoPostal NVARCHAR(10) NULL,
+--    Provincia NVARCHAR(50) NULL,
+--    IdMetodoPago INT NOT NULL,
+--    Total DECIMAL(10, 2) NOT NULL,
     
-    FOREIGN KEY (IdMetodoPago) REFERENCES MetodoPago(IdMetodoPago)
-);
-go
+--    FOREIGN KEY (IdMetodoPago) REFERENCES MetodoPago(IdMetodoPago)
+--);
+--go
 
 
 CREATE TABLE Provincia (
@@ -65,7 +65,6 @@ Nombre varchar(50) not null,
 Apellido varchar(50) not null,
 DNI varchar(10) not null,
 Telefono varchar(50) null,
-IDDireccion int null foreign key references Direccion(IdDireccion),
 UrlFotoPerfil varchar(500) null
 )
 go
@@ -75,12 +74,11 @@ IDUsuario int not null primary key identity(1,1),
 Email varchar(250) not null unique,
 Contrasenia varchar(50) not null,
 IDTipoUsuario int not null,
-IDDatosPersonales int null foreign key references DatosPersonales(IDDatosPersonales)
+IDDatosPersonales int null foreign key references DatosPersonales(IDDatosPersonales),
+IDDireccion int null foreign key references Direccion(IdDireccion),
+Estado bit not null
 )
 go
-
-
-
 
 Create Table Categorias(
 IDCategoria int not null primary key identity(1,1),
@@ -109,6 +107,17 @@ Stock int not null,
 Puntaje decimal(3,1) null,
 Estado bit not null
 )
+go
+
+CREATE TABLE Pedido(
+	IdPedido INT PRIMARY KEY IDENTITY,
+	IDUsuario int foreign key references Usuarios(IDUsuario),
+    FechaPedido DATETIME NOT NULL DEFAULT GETDATE(),
+	TipoEntrega VARCHAR(10),
+    IdMetodoPago INT NOT NULL foreign key references MetodoPago(IdMetodoPago),
+	EstadoPedido int not null,
+    Total DECIMAL(10, 2) NOT NULL
+);
 go
 
 CREATE TABLE PedidoDetalle (
@@ -151,17 +160,131 @@ Create procedure sp_InciarSesion(
 @Contrasenia varchar(50)
 )as
 begin
-	Select IDUsuario, IDTipoUsuario from Usuarios where Email=@Email and Contrasenia=@Contrasenia
+	Select IDUsuario, Email, Contrasenia, IDTipoUsuario, IDDatosPersonales, IDDireccion, Estado from Usuarios where Email=@Email and Contrasenia=@Contrasenia and Estado= 1
 end
 go
 
 Create procedure sp_AgregarUsuario(
 @Email varchar(250),
-@Contrasenia varchar(50)
+@Contrasenia varchar(50),
+@Estado bit
 )as
 begin
-	Insert into Usuarios (Email, Contrasenia, IDTipoUsuario) output inserted.IDUsuario values 
-	(@Email, @Contrasenia, 2)
+	Insert into Usuarios (Email, Contrasenia, IDTipoUsuario, Estado) output inserted.IDUsuario values 
+	(@Email, @Contrasenia, 2, @Estado)
+end
+go
+
+
+
+Create Procedure sp_ListarUsuarios
+as
+begin
+ Select IDUsuario, Email, Contrasenia, IDDatosPersonales, IDDireccion from Usuarios where IDTipoUsuario=2 and Estado=1
+end
+go
+
+Create Procedure sp_AgregarDatosPersonales(
+@IDUsuario int,
+@Nombre varchar(50),
+@Apellido varchar(50),
+@DNI varchar(10),
+@Telefono varchar(50),
+@UrlFotoPerfil varchar(500)
+) as
+begin
+ begin try
+ begin transaction
+ declare @IDDatos int;
+ Insert into DatosPersonales(Nombre, Apellido, Dni, Telefono, UrlFotoPerfil) values
+ (@Nombre, @Apellido, @Dni, @Telefono, @UrlFotoPerfil)
+ set @IDDatos= SCOPE_IDENTITY();
+ Update Usuarios set IDDatosPersonales= @IDDatos where IDUsuario=@IDUsuario
+ commit transaction
+ end try
+ begin catch
+ rollback transaction
+ end catch
+end
+go
+
+Create Procedure sp_ModificarDatosPersonales(
+@IDUsuario int,
+@Nombre varchar(50),
+@Apellido varchar(50),
+@DNI varchar(10),
+@Telefono varchar(50),
+@UrlFotoPerfil varchar(500)
+) as
+begin
+ Update DP Set DP.Nombre=@Nombre, DP.Apellido=@Apellido, DP.DNI=@Dni, DP.Telefono=@Telefono, DP.UrlFotoPerfil=@UrlFotoPerfil
+ from DatosPersonales DP
+ inner join Usuarios U on U.IDDatosPersonales= DP.IDDatosPersonales
+ where U.IDUsuario= @IDUsuario
+end
+go
+
+
+Create Procedure sp_BuscarDatosPersonales(
+@IDUsuario int
+)
+as
+begin
+ Select Nombre, Apellido, Dni, Telefono, UrlFotoPerfil
+ from DatosPersonales DP
+ Inner join Usuarios U on U.IDDatosPersonales= DP.IDDatosPersonales
+ where U.IDUsuario= @IDUsuario
+end
+go
+
+Create Procedure sp_AgregarDireccion(
+@IDUsuario int,
+@Calle varchar(100),
+@Numero INT,                     
+@IdProvincia TINYINT,            
+@IdLocalidad INT
+) as
+begin
+	begin try
+	begin transaction
+	Declare @IDDireccion int;
+	Insert into Direccion (Calle, Numero, IdProvincia, IdLocalidad) values
+	(@Calle, @Numero, @IdProvincia, @IdLocalidad)
+	Set @IDDireccion= SCOPE_IDENTITY();
+	Update Usuarios set IDDireccion= @IDDireccion where IDUsuario=@IDUsuario
+	commit transaction
+	end try
+	begin catch
+	rollback transaction
+	end catch
+end
+go
+
+Create Procedure sp_ModificarDireccion(
+@IDUsuario int,
+@Calle varchar(100),
+@Numero INT,                     
+@IdProvincia TINYINT,            
+@IdLocalidad INT
+) as
+begin
+	Update D set Calle=@Calle, Numero=@Numero, IdProvincia=@IdProvincia, IdLocalidad=@IdLocalidad
+	from Direccion D 
+	inner join Usuarios U on U.IDDireccion= D.IdDireccion
+	where U.IDUsuario= @IDUsuario
+end
+go
+
+
+Create Procedure sp_BuscarDireccion(
+@IDUsuario int
+) as
+begin
+	Select D.Calle, D.Numero, D.IdProvincia, P.Nombre as 'NombreProvincia', P.Codigo31662, D.IdLocalidad, L.Nombre as 'NombreLocalidad', L.CodigoPostal, L.ProvinciaId from Direccion D
+	inner join Usuarios U on U.IDDireccion= D.IdDireccion
+	Inner join Provincia P on P.Id= D.IdProvincia
+	INNER JOIN Localidad L on L.Id= D.IdLocalidad
+	where U.IDUsuario= @IDUsuario
 end
 go
 

@@ -33,7 +33,7 @@ namespace Presentacion
             }
             //si hay un usuario ingresado cambiar Inicio a nombre de usuario
 
-            if(!(Page is Login || Page is Default || Page is Error || Page is Registrarse || Page is Detalle || Page is Carrito))
+            if(!(Page is Login || Page is Default || Page is Error || Page is Registrarse || Page is Detalle || Page is Carrito || Page is MetodosPago || Page is DatosContacto || Page is ConfirmacionCompra))
             {
                 if (!Seguridad.sesionActiva(Session["usuario"]))
                 {
