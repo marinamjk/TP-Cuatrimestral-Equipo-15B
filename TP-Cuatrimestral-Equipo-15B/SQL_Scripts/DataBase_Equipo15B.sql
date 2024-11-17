@@ -180,7 +180,7 @@ go
 Create Procedure sp_ListarUsuarios
 as
 begin
- Select IDUsuario, Email, Contrasenia, IDDatosPersonales, IDDireccion from Usuarios where IDTipoUsuario=2 and Estado=1
+ Select IDUsuario, Email, Contrasenia, IDDatosPersonales, IDDireccion, Estado from Usuarios where IDTipoUsuario=2 and Estado=1
 end
 go
 

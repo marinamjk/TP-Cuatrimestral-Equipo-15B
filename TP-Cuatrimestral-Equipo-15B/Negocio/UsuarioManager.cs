@@ -265,19 +265,19 @@ namespace Negocio
                     direccion.Calle = (string)datos.Lector["Calle"];
                     direccion.Numero = (int)datos.Lector["Numero"];
 
-                    usuario.Direccion.IdProvincia = (byte)datos.Lector["IdProvincia"];
+                    //usuario.Direccion.IdProvincia = (byte)datos.Lector["IdProvincia"];
                     Provincia provincia= new Provincia();
                     provincia.Id = (byte)datos.Lector["IdProvincia"];                    
                     provincia.Nombre = (string)datos.Lector["NombreProvincia"];
                     provincia.Codigo31662 = (string)datos.Lector["Codigo31662"];
                     direccion.Provincia = provincia;
 
-                    usuario.Direccion.IdLocalidad = (int)datos.Lector["IdLocalidad"];
+                    //usuario.Direccion.IdLocalidad = (int)datos.Lector["IdLocalidad"];
                     Localidad localidad = new Localidad();
-                    localidad.Id= (byte)datos.Lector["IdLocalidad"];                    
+                    localidad.Id= (int)datos.Lector["IdLocalidad"];                    
                     localidad.Nombre = (string)datos.Lector["NombreLocalidad"];
-                    localidad.CodigoPostal = (int)datos.Lector["CodigoPostal"];
-                    localidad.ProvinciaId = (int)datos.Lector["ProvinciaId"];
+                    localidad.CodigoPostal = Convert.ToInt32(datos.Lector["CodigoPostal"]);
+                    localidad.ProvinciaId = Convert.ToInt32(datos.Lector["ProvinciaId"]);
                     direccion.Localidad = localidad;
 
                     usuario.Direccion = direccion;
