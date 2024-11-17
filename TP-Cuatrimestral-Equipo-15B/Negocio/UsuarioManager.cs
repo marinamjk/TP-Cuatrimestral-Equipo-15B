@@ -34,7 +34,9 @@ namespace Negocio
                         buscarDireccion(aux);
 
                     aux.Estado = (bool)datos.Lector["Estado"];
+                    usuarios.Add(aux);
                 }
+                return usuarios;
             }
             catch (Exception ex)
             {

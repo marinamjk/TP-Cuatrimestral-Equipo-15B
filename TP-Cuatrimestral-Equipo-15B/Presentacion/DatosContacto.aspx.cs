@@ -204,7 +204,7 @@ namespace Presentacion
                 if (um.listarUsuarios().Any(c => c.Mail == TextEmail.Text))
                 {
                     Session.Add("error", "Ya existe un usuario con ese email, por favor inicie sesion para poder cargar sus datos");
-                    Response.Redirect("Error.aspx", false);
+                    Response.Redirect("Error.aspx", false);                   
                 }
             }
 
