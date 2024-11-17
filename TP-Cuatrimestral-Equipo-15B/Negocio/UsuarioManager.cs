@@ -43,8 +43,12 @@ namespace Negocio
 
                 throw ex;
             }
+            finally
+            {
+                datos.cerrarConexion();
+            }
 
-            return usuarios;
+
         }
 
         public int agregarUsuario(Usuario usuario)
@@ -169,7 +173,7 @@ namespace Negocio
             }
         }
 
-        public void buscarDatosPersonales(Usuario usuario)
+        public bool buscarDatosPersonales(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -187,8 +191,10 @@ namespace Negocio
                     usuario.telefono = (string)datos.Lector["Telefono"];
                     if (!(datos.Lector["UrlFotoPerfil"] is DBNull))
                         usuario.Foto = (string)datos.Lector["UrlFotoPerfil"];
-                }     
+                    return true;
+                }
 
+                return false;
             }
             catch (Exception ex)
             {
@@ -252,7 +258,7 @@ namespace Negocio
             }
         }
 
-        public void buscarDireccion(Usuario usuario)
+        public bool buscarDireccion(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -283,8 +289,11 @@ namespace Negocio
                     direccion.Localidad = localidad;
 
                     usuario.Direccion = direccion;
+
+                    return true;
               
                 }
+                return false;
             }
             catch (Exception ex)
             {

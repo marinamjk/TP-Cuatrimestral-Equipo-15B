@@ -22,8 +22,7 @@ namespace Presentacion
             {
                 //// Inicializa los valores si es la primera carga               
                 CargarResumenCompra();
-                CargarProvincias();
-                CargarDatosDeUsuario();
+                CargarProvincias();                
             }
         }
 
@@ -77,7 +76,28 @@ namespace Presentacion
                     lblAdvertencia.Visible = true;
                 }
                 else
-                {                   
+                {
+                    if (Seguridad.sesionActiva(Session["usuario"]))
+                    {
+                        UsuarioManager um = new UsuarioManager();
+                        Usuario usuario = (Usuario)Session["usuario"];
+                        if (um.buscarDatosPersonales(usuario))
+                        {
+                            TextNombre.Text = usuario.Nombre;
+                            TextApellido.Text = usuario.Apellido;
+                            TextEmail.Text = usuario.Mail;
+                            TextTelefono.Text = usuario.telefono;
+                            TextDNI.Text = usuario.Dni.ToString();
+                        }
+                        if (um.buscarDireccion(usuario))
+                        {
+                            TextCalle.Text = usuario.Direccion.Calle;
+                            TextNumero.Text = usuario.Direccion.Numero.ToString();
+                            TextCodigoPostal.Text = usuario.Direccion.Localidad.CodigoPostal.ToString();
+                            DropDownListProvincia.SelectedValue = usuario.Direccion.Provincia.Id.ToString();                           
+                        }
+                        
+                    }
                     Session["NombreCliente"] = TextNombre.Text;
                     Session["ApellidoCliente"] = TextApellido.Text;
                     Session["Email"] = TextEmail.Text;
@@ -210,15 +230,5 @@ namespace Presentacion
 
         }
 
-        protected void CargarDatosDeUsuario()
-        {
-            if (Seguridad.sesionActiva(Session["usuario"]))
-            {
-                Usuario usuario = (Usuario)Session["usuario"];
-                UsuarioManager um = new UsuarioManager();
-                TextEmail.Text = usuario.Mail;
-                TextEmail.Enabled = false;
-            }
-        }
     }
 }
