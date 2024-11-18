@@ -17,7 +17,9 @@
                     <asp:Button ID="btnPagoMercadoPago" runat="server" Text="Pago con Mercado Pago" CssClass="btn btn-outline-primary" OnClick="btnPagoMercadoPago_Click" />
                    
                 </div>
-
+                <div>
+                    <asp:CheckBox ID="chkRegistrarse" runat="server" Text="Guardar datos y registrame." OnCheckedChanged="chkRegistrarse_CheckedChanged" />
+                </div>
                 <div class="text-center mt-4">
                     <asp:Button ID="btnFinalizarCompra" runat="server" Text="Finalizar Compra" CssClass="btn btn-primary" OnClick="btnFinalizarCompra_Click" />
                 </div>

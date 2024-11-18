@@ -58,6 +58,7 @@ namespace Negocio
                 datos.setearProcedimiento("sp_AgregarUsuario");
                 datos.setearParametros("@Email", usuario.Mail);             
                 datos.setearParametros("@Contrasenia", usuario.Contraseña);
+                datos.setearParametros("@Estado", usuario.Estado);
                 return datos.ejecutarEscalar();
             }
             catch (Exception ex)
@@ -316,6 +317,27 @@ namespace Negocio
                 datos.setearParametros("@Numero", usuario.Direccion.Numero);
                 datos.setearParametros("@IdProvincia", usuario.Direccion.IdProvincia);
                 datos.setearParametros("@IdLocalidad", usuario.Direccion.IdLocalidad);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void ModificarEstadoUsuario(int idUsuario, bool activo = false)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("sp_ModificarEstadoUsuario");
+                datos.setearParametros("@IDUsuario", idUsuario);
+                datos.setearParametros("@Estado", activo);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)

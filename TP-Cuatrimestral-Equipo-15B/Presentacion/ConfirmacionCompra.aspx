@@ -8,6 +8,6 @@
 
     <div class="text-center mt-4">
             <h1>Compra realizada con exito</h1>                    
-    </div>
+    </div> 
 
 </asp:Content>

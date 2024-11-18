@@ -13,63 +13,88 @@ namespace Negocio
 {
     public class PedidoNegocio
     {
-        public int GuardarPedido(Pedido pedido)
+        //public int GuardarPedido(Pedido pedido)
+        //{
+        //    AccesoDatos accesoDatos = new AccesoDatos();
+        //    int idPedido;
+        //    try
+        //    {
+        //        if (pedido.FechaPedido < new DateTime(1753, 1, 1))
+        //        {
+        //            pedido.FechaPedido = DateTime.Now;
+        //        }
+
+
+        //        accesoDatos.setearConsulta("INSERT INTO Pedido (FechaPedido, NombreCliente, ApellidoCliente, Email, Telefono, Calle, Numero, CodigoPostal, Provincia, DNI, IdMetodoPago, Total, TipoEntrega) " +
+        //               "OUTPUT INSERTED.IdPedido " +
+        //               "VALUES (@FechaPedido, @NombreCliente, @ApellidoCliente, @Email, @Telefono, @Calle, @Numero, @CodigoPostal, @Provincia, @DNI, @IdMetodoPago, @Total, @TipoEntrega)");
+
+
+        //        accesoDatos.setearParametros("@FechaPedido", pedido.FechaPedido);
+        //        accesoDatos.setearParametros("@TipoEntrega", pedido.TipoEntrega);
+        //        accesoDatos.setearParametros("@NombreCliente", pedido.NombreCliente);
+        //        accesoDatos.setearParametros("@ApellidoCliente", pedido.ApellidoCliente);
+        //        accesoDatos.setearParametros("@Email", pedido.Email);
+        //        accesoDatos.setearParametros("@Telefono", pedido.Telefono);
+        //        accesoDatos.setearParametros("@DNI", pedido.DNI);
+        //        accesoDatos.setearParametros("@IdMetodoPago", pedido.IdMetodoPago);
+        //        accesoDatos.setearParametros("@Total", pedido.Total);
+
+        //        if (pedido.TipoEntrega == "Retiro")
+        //        {
+        //            // Si es retiro, los campos de dirección serán nulos
+        //            accesoDatos.setearParametros("@Calle", DBNull.Value);
+        //            accesoDatos.setearParametros("@Numero", DBNull.Value);
+        //            accesoDatos.setearParametros("@CodigoPostal", DBNull.Value);
+        //            accesoDatos.setearParametros("@Provincia", DBNull.Value);
+        //        }
+        //        else
+        //        {
+        //            // Si es envío, se asignan los valores correspondientes
+        //            accesoDatos.setearParametros("@Calle", pedido.Calle);
+        //            accesoDatos.setearParametros("@Numero", pedido.Numero);
+        //            accesoDatos.setearParametros("@CodigoPostal", pedido.CodigoPostal);
+        //            accesoDatos.setearParametros("@Provincia", pedido.Provincia);
+        //        }
+
+        //        idPedido = accesoDatos.ejecutarEscalar();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Error al guardar el pedido: " + ex.Message, ex);
+        //    }
+        //    finally
+        //    {
+        //        accesoDatos.cerrarConexion();
+        //    }
+        //    return idPedido;
+
+        //}
+
+        public int agregarPedido(Pedido pedido, int idUsuario)
         {
-            AccesoDatos accesoDatos = new AccesoDatos();
-            int idPedido;
+           AccesoDatos datos= new AccesoDatos();
+         
             try
             {
-                if (pedido.FechaPedido < new DateTime(1753, 1, 1))
-                {
-                    pedido.FechaPedido = DateTime.Now;
-                }
-
-
-                accesoDatos.setearConsulta("INSERT INTO Pedido (FechaPedido, NombreCliente, ApellidoCliente, Email, Telefono, Calle, Numero, CodigoPostal, Provincia, DNI, IdMetodoPago, Total, TipoEntrega) " +
-                       "OUTPUT INSERTED.IdPedido " +
-                       "VALUES (@FechaPedido, @NombreCliente, @ApellidoCliente, @Email, @Telefono, @Calle, @Numero, @CodigoPostal, @Provincia, @DNI, @IdMetodoPago, @Total, @TipoEntrega)");
-
-
-                accesoDatos.setearParametros("@FechaPedido", pedido.FechaPedido);
-                accesoDatos.setearParametros("@TipoEntrega", pedido.TipoEntrega);
-                accesoDatos.setearParametros("@NombreCliente", pedido.NombreCliente);
-                accesoDatos.setearParametros("@ApellidoCliente", pedido.ApellidoCliente);
-                accesoDatos.setearParametros("@Email", pedido.Email);
-                accesoDatos.setearParametros("@Telefono", pedido.Telefono);
-                accesoDatos.setearParametros("@DNI", pedido.DNI);
-                accesoDatos.setearParametros("@IdMetodoPago", pedido.IdMetodoPago);
-                accesoDatos.setearParametros("@Total", pedido.Total);
-
-                if (pedido.TipoEntrega == "Retiro")
-                {
-                    // Si es retiro, los campos de dirección serán nulos
-                    accesoDatos.setearParametros("@Calle", DBNull.Value);
-                    accesoDatos.setearParametros("@Numero", DBNull.Value);
-                    accesoDatos.setearParametros("@CodigoPostal", DBNull.Value);
-                    accesoDatos.setearParametros("@Provincia", DBNull.Value);
-                }
-                else
-                {
-                    // Si es envío, se asignan los valores correspondientes
-                    accesoDatos.setearParametros("@Calle", pedido.Calle);
-                    accesoDatos.setearParametros("@Numero", pedido.Numero);
-                    accesoDatos.setearParametros("@CodigoPostal", pedido.CodigoPostal);
-                    accesoDatos.setearParametros("@Provincia", pedido.Provincia);
-                }
-
-                idPedido = accesoDatos.ejecutarEscalar();
+                datos.setearProcedimiento("sp_AgregarPedido");
+                datos.setearParametros("@IDUsuario", idUsuario);
+                datos.setearParametros("@TipoEntrega", pedido.TipoEntrega);
+                datos.setearParametros("@IdMetodoPago", pedido.IdMetodoPago);
+                datos.setearParametros("@Total", pedido.Total);
+                
+                return datos.ejecutarEscalar();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                throw new Exception("Error al guardar el pedido: " + ex.Message, ex);
+                throw ex;
             }
             finally
             {
-                accesoDatos.cerrarConexion();
+                datos.cerrarConexion();
             }
-            return idPedido;
-
         }
+     
 
         public void GuardarDetallesPedido(int idPedido, List<ArticuloEnCarrito> articulos)
         {

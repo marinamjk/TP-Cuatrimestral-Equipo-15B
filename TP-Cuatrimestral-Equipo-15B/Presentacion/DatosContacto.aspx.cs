@@ -22,7 +22,13 @@ namespace Presentacion
             {
                 //// Inicializa los valores si es la primera carga               
                 CargarResumenCompra();
-                CargarProvincias();                
+                CargarProvincias();
+
+                if (Seguridad.sesionActiva(Session["usuario"]))
+                {
+                    TextEmail.Text = ((Usuario)Session["usuario"]).Mail.ToString();
+                    TextEmail.Enabled = false;
+                }
             }
         }
 
@@ -76,28 +82,7 @@ namespace Presentacion
                     lblAdvertencia.Visible = true;
                 }
                 else
-                {
-                    if (Seguridad.sesionActiva(Session["usuario"]))
-                    {
-                        UsuarioManager um = new UsuarioManager();
-                        Usuario usuario = (Usuario)Session["usuario"];
-                        if (um.buscarDatosPersonales(usuario))
-                        {
-                            TextNombre.Text = usuario.Nombre;
-                            TextApellido.Text = usuario.Apellido;
-                            TextEmail.Text = usuario.Mail;
-                            TextTelefono.Text = usuario.telefono;
-                            TextDNI.Text = usuario.Dni.ToString();
-                        }
-                        if (um.buscarDireccion(usuario))
-                        {
-                            TextCalle.Text = usuario.Direccion.Calle;
-                            TextNumero.Text = usuario.Direccion.Numero.ToString();
-                            TextCodigoPostal.Text = usuario.Direccion.Localidad.CodigoPostal.ToString();
-                            DropDownListProvincia.SelectedValue = usuario.Direccion.Provincia.Id.ToString();                           
-                        }
-                        
-                    }
+                {                  
                     Session["NombreCliente"] = TextNombre.Text;
                     Session["ApellidoCliente"] = TextApellido.Text;
                     Session["Email"] = TextEmail.Text;
@@ -151,6 +136,41 @@ namespace Presentacion
                 DatosFacturacion.Visible = true;
                 DireccionContacto.Visible = false;
                 Session["TipoEntrega"] = "Retiro";
+            }
+
+            if (Seguridad.sesionActiva(Session["usuario"]))
+            {
+                UsuarioManager um = new UsuarioManager();
+                Usuario usuario = (Usuario)Session["usuario"];
+                if (um.buscarDatosPersonales(usuario))
+                {
+                    TextNombre.Text = usuario.Nombre;
+                    TextApellido.Text = usuario.Apellido;
+                    TextEmail.Text = usuario.Mail;
+                    TextTelefono.Text = usuario.telefono;
+                    TextDNI.Text = usuario.Dni.ToString();
+
+                    TextNombre.Enabled = false;
+                    TextApellido.Enabled = false;
+                    TextEmail.Enabled = false;
+                    TextTelefono.Enabled = false;
+                    TextDNI.Enabled = false;
+                }
+                if (um.buscarDireccion(usuario))
+                {
+                    TextCalle.Text = usuario.Direccion.Calle;
+                    TextNumero.Text = usuario.Direccion.Numero.ToString();
+                    TextCodigoPostal.Text = usuario.Direccion.Localidad.CodigoPostal.ToString();
+                    TextLocalidad.Text = usuario.Direccion.Localidad.Nombre.ToString();
+                    DropDownListProvincia.SelectedValue = usuario.Direccion.Provincia.Id.ToString();
+                    
+                    TextCalle.Enabled = false;
+                    TextNumero.Enabled = false;
+                    TextCodigoPostal.Enabled = false;
+                    TextLocalidad.Enabled = false;
+                    DropDownListProvincia.Enabled = false;
+
+                }
             }
         }
 
@@ -218,16 +238,38 @@ namespace Presentacion
 
         protected void TextEmail_TextChanged(object sender, EventArgs e)
         {
+            UsuarioManager um = new UsuarioManager();
             if (!Seguridad.sesionActiva(Session["usuario"]))
-            {
-                UsuarioManager um = new UsuarioManager();
+            {            
                 if (um.listarUsuarios().Any(c => c.Mail == TextEmail.Text))
                 {
                     Session.Add("error", "Ya existe un usuario con ese email, por favor inicie sesion para poder cargar sus datos");
                     Response.Redirect("Error.aspx", false);                   
                 }
+            } 
+            else
+            {
+                Usuario nuevo= new Usuario();
+                nuevo.Mail= TextEmail.Text;
+                nuevo.Contraseña = GenerarContraseña(6);
+                nuevo.Estado = false;
+                um.agregarUsuario(nuevo);
+                Session.Add("usuario", nuevo);
+            }
+        }
+
+        protected string GenerarContraseña(int longitud)
+        {
+            const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            char[] contraseña = new char[longitud];
+
+            for (int i = 0; i < longitud; i++)
+            {
+                contraseña[i] = caracteres[random.Next(caracteres.Length)];
             }
 
+            return new string(contraseña);
         }
 
     }

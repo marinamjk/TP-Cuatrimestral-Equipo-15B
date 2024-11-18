@@ -16,15 +16,15 @@ namespace dominio
         public int IdMetodoPago {  get; set; }
         public decimal Total {  get; set; }
         //datos que pueden ser de usuario o persona u otro tipo de clase
-        public string NombreCliente {  get; set; }  
-	    public string ApellidoCliente {  get; set; }
-        public string DNI { get; set; }
-	    public string Email {  get; set; }
-        public string Telefono {  get; set; }
-        //datos que tambien pueden ser heredados de direccion 
-	    public string Calle {  get; set; }
-        public string Numero {  get; set; }
-        public string CodigoPostal {  get; set; }
-        public string Provincia {  get; set; }
+     //   public string NombreCliente {  get; set; }  
+	    //public string ApellidoCliente {  get; set; }
+     //   public string DNI { get; set; }
+	    //public string Email {  get; set; }
+     //   public string Telefono {  get; set; }
+     //   //datos que tambien pueden ser heredados de direccion 
+	    //public string Calle {  get; set; }
+     //   public string Numero {  get; set; }
+     //   public string CodigoPostal {  get; set; }
+     //   public string Provincia {  get; set; }
     }
 }

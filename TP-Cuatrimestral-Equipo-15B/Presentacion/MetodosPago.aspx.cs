@@ -13,6 +13,7 @@ namespace Presentacion
     {
         private CarritoNegocio carritoNegocio;
         private PedidoNegocio pedidoNegocio;
+        protected bool registrarse;
         protected void Page_Load(object sender, EventArgs e)
         {
             carritoNegocio = new CarritoNegocio();
@@ -20,6 +21,7 @@ namespace Presentacion
             if (!IsPostBack)
             {
                 CargarResumenCompra();
+                registrarse= false;
             }
         }
         private void CargarResumenCompra()
@@ -90,30 +92,68 @@ namespace Presentacion
                 return;
             }
 
+            Usuario usuario = (Usuario)Session["usuario"];
+            UsuarioManager um = new UsuarioManager();
+
+            if (!um.buscarDatosPersonales(usuario))
+            {
+                usuario.Nombre = (string)Session["NombreCliente"];
+                usuario.Apellido= (string)Session["ApellidoCliente"];
+                usuario.telefono = (string)Session["Telefono"];
+                usuario.Dni = (string)Session["DNI"];
+                um.agregarDatosPersonales(usuario);
+
+            }
+            if (!um.buscarDireccion(usuario) && tipoEntrega=="Envio")
+            {
+                Direccion direccion = new Direccion();
+                direccion.Calle = (string)Session["Calle"];
+                direccion.Numero = (int)Session["Numero"];
+                direccion.Provincia = (Provincia)Session["Provincia"];
+                direccion.Localidad.CodigoPostal = (int)Session["CodigoPostal"];
+
+                um.agregarDireccion(usuario);
+            }
+            
             // Crear objeto Pedido con los datos del cliente
             var pedido = new Pedido
             {
-                NombreCliente = (string)Session["NombreCliente"],
-                ApellidoCliente = (string)Session["ApellidoCliente"],
-                Email = (string)Session["Email"],
-                Telefono = (string)Session["Telefono"],
-                Calle = tipoEntrega == "Envio" ? (string)Session["Calle"] : null,
-                Numero = tipoEntrega == "Envio" ? (string)Session["Numero"] : null,
-                CodigoPostal = tipoEntrega == "Envio" ? (string)Session["CodigoPostal"] : null,
-                Provincia = tipoEntrega == "Envio" ? (string)Session["Provincia"] : null, 
-                DNI = (string)Session["DNI"],
+                //NombreCliente = (string)Session["NombreCliente"],
+                //ApellidoCliente = (string)Session["ApellidoCliente"],
+                //Email = (string)Session["Email"],
+                //Telefono = (string)Session["Telefono"],
+                //Calle = tipoEntrega == "Envio" ? (string)Session["Calle"] : null,
+                //Numero = tipoEntrega == "Envio" ? (string)Session["Numero"] : null,
+                //CodigoPostal = tipoEntrega == "Envio" ? (string)Session["CodigoPostal"] : null,
+                //Provincia = tipoEntrega == "Envio" ? (string)Session["Provincia"] : null, 
+                //DNI = (string)Session["DNI"],
+
                 IdMetodoPago = (int)metodoPagoSeleccionado,
                 Total = carritoNegocio.ObtenerTotal(),
                 TipoEntrega = (string)Session["TipoEntrega"]
+
             };
 
             List<ArticuloEnCarrito> articulos = carritoNegocio.ObtenerAticulos();
-            int idNuevoPedido = pedidoNegocio.GuardarPedido(pedido);
-                                    
+            //int idNuevoPedido = pedidoNegocio.GuardarPedido(pedido);
+            
+            int idNuevoPedido = pedidoNegocio.agregarPedido(pedido, usuario.IdUsuario);                                    
             pedidoNegocio.GuardarDetallesPedido(idNuevoPedido,articulos);
+
+            if (registrarse)
+            {
+                um.ModificarEstadoUsuario(usuario.IdUsuario, true);
+            }
+
             Response.Redirect("~/ConfirmacionCompra.aspx");
         }
 
-
+        protected void chkRegistrarse_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkRegistrarse.Checked)
+            {
+                registrarse = true;
+            }
+        }
     }//fin metodos pago
 }//fin presentacion

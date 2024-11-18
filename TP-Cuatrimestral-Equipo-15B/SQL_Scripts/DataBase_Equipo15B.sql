@@ -120,6 +120,7 @@ CREATE TABLE Pedido(
 );
 go
 
+
 CREATE TABLE PedidoDetalle (
     IdDetalle INT PRIMARY KEY IDENTITY,
     IdPedido INT NOT NULL,
@@ -175,12 +176,20 @@ begin
 end
 go
 
-
-
 Create Procedure sp_ListarUsuarios
 as
 begin
  Select IDUsuario, Email, Contrasenia, IDDatosPersonales, IDDireccion, Estado from Usuarios where IDTipoUsuario=2 and Estado=1
+end
+go
+
+Create Procedure sp_ModificarEstadoUsuario(
+@IDUsuario int,
+@Estado bit
+)
+as
+begin
+	Update Usuarios set Estado=@Estado where IDUsuario=@IDUsuario
 end
 go
 
@@ -233,7 +242,7 @@ begin
  Select Nombre, Apellido, Dni, Telefono, UrlFotoPerfil
  from DatosPersonales DP
  Inner join Usuarios U on U.IDDatosPersonales= DP.IDDatosPersonales
- where U.IDUsuario= @IDUsuario
+ where U.IDUsuario= @IDUsuario and Estado=1
 end
 go
 
@@ -284,7 +293,7 @@ begin
 	inner join Usuarios U on U.IDDireccion= D.IdDireccion
 	Inner join Provincia P on P.Id= D.IdProvincia
 	INNER JOIN Localidad L on L.Id= D.IdLocalidad
-	where U.IDUsuario= @IDUsuario
+	where U.IDUsuario= @IDUsuario and Estado=1
 end
 go
 
@@ -517,5 +526,18 @@ end try
 begin catch
 	raiserror('No se pudo calcular el promedio de la puntuaci�n', 16, 2)
 end catch
+end
+go
+
+Create Procedure sp_AgregarPedido(
+@IDUsuario int,
+@TipoEntrega varchar(50),
+@IdMetodoPago int,
+@Total decimal
+) 
+as
+begin
+	Insert into Pedido(IDUsuario, FechaPedido, TipoEntrega, IdMetodoPago, EstadoPedido, Total) output inserted.IdPedido
+	values (@IDUsuario, GETDATE(), @TipoEntrega, @IdMetodoPago, 1, @Total)
 end
 go
