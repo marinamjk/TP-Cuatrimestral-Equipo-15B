@@ -21,7 +21,8 @@ namespace Presentacion
             if (!IsPostBack)
             {
                 CargarResumenCompra();
-                registrarse= false;
+                registrarse= false;                
+                
             }
         }
         private void CargarResumenCompra()
@@ -48,104 +49,133 @@ namespace Presentacion
 
         protected void btnFinalizarCompra_Click(object sender, EventArgs e)
         {
-           
-            var metodoPagoSeleccionado = Session["MetodoPago"];
-
-            if (metodoPagoSeleccionado == null)
+            try
             {
-                lblError.Text = "Por favor, seleccione un método de pago antes de continuar.";
-                lblError.Visible = true;  
+                var metodoPagoSeleccionado = Session["MetodoPago"];
 
-                return;
-            }
-
-            // Verificar si se seleccionó envío o retiro
-            string tipoEntrega = (string)Session["TipoEntrega"];
-
-            if (tipoEntrega == "Envio")
-            {
-                if (Session["NombreCliente"] == null || Session["ApellidoCliente"] == null ||
-                    Session["Email"] == null || Session["Telefono"] == null ||
-                    Session["Calle"] == null || Session["Numero"] == null ||
-                    Session["CodigoPostal"] == null || Session["Provincia"] == null || Session["DNI"] == null)
+                if (metodoPagoSeleccionado == null)
                 {
-                    lblError.Text = "Por favor, complete todos los datos de contacto y dirección para el envío.";
+                    lblError.Text = "Por favor, seleccione un método de pago antes de continuar.";
+                    lblError.Visible = true;
+
+                    return;
+                }
+
+                // Verificar si se seleccionó envío o retiro
+                string tipoEntrega = (string)Session["TipoEntrega"];
+
+                if (tipoEntrega == "Envio")
+                {
+                    if (Session["NombreCliente"] == null || Session["ApellidoCliente"] == null ||
+                        Session["Email"] == null || Session["Telefono"] == null ||
+                        Session["Calle"] == null || Session["Numero"] == null ||
+                        Session["CodigoPostal"] == null || Session["Provincia"] == null || Session["DNI"] == null)
+                    {
+                        lblError.Text = "Por favor, complete todos los datos de contacto y dirección para el envío.";
+                        lblError.Visible = true;
+                        return;
+                    }
+                }
+                else if (tipoEntrega == "Retiro")
+                {
+                    if (Session["NombreCliente"] == null || Session["ApellidoCliente"] == null ||
+                        Session["Email"] == null || Session["Telefono"] == null ||
+                        Session["DNI"] == null)
+                    {
+                        lblError.Text = "Por favor, complete los datos de facturación y la persona que retirará el pedido.";
+                        lblError.Visible = true;
+                        return;
+                    }
+                }
+                else
+                {
+                    lblError.Text = "Por favor, seleccione un método de entrega válido.";
                     lblError.Visible = true;
                     return;
                 }
-            }
-            else if (tipoEntrega == "Retiro")
-            {
-                if (Session["NombreCliente"] == null || Session["ApellidoCliente"] == null ||
-                    Session["Email"] == null || Session["Telefono"] == null ||
-                    Session["DNI"] == null)
-                {
-                    lblError.Text = "Por favor, complete los datos de facturación y la persona que retirará el pedido.";
-                    lblError.Visible = true;
-                    return;
-                }
-            }
-            else
-            {
-                lblError.Text = "Por favor, seleccione un método de entrega válido.";
-                lblError.Visible = true;
-                return;
-            }
 
-            Usuario usuario = (Usuario)Session["usuario"];
-            UsuarioManager um = new UsuarioManager();
+                Usuario usuario = (Usuario)Session["usuario"];
+                UsuarioManager um = new UsuarioManager();
 
-            if (!um.buscarDatosPersonales(usuario))
-            {
+                usuario.IdUsuario= um.agregarUsuario(usuario);
                 usuario.Nombre = (string)Session["NombreCliente"];
-                usuario.Apellido= (string)Session["ApellidoCliente"];
+                usuario.Apellido = (string)Session["ApellidoCliente"];
                 usuario.telefono = (string)Session["Telefono"];
                 usuario.Dni = (string)Session["DNI"];
-                um.agregarDatosPersonales(usuario);
 
+                Direccion direccion = new Direccion(); ;
+                if (tipoEntrega == "Envio")
+                {
+                    direccion.Calle = Session["Calle"].ToString();
+                    direccion.Numero = int.Parse(Session["Numero"].ToString());
+
+                    ListItem provinciaSeleccionada = (ListItem)Session["Provincia"];
+                    string NombreProvinciaSeleccionada = provinciaSeleccionada.Text;   // Obtiene el texto.
+                    byte IdProvinciaSeleccionada = byte.Parse(provinciaSeleccionada.Value); // Obtiene el valor.
+                    Provincia p = new Provincia();
+                    p.Id = IdProvinciaSeleccionada;
+                    direccion.Provincia = p;
+                    Localidad l = new Localidad();
+                    l.CodigoPostal = int.Parse(Session["CodigoPostal"].ToString());
+                    direccion.Localidad = l;
+                }
+
+                if (!um.buscarDatosPersonales(usuario))
+                {                    
+                    um.agregarDatosPersonales(usuario);
+                }
+                else
+                {
+                    um.ModificarDatosPersonales(usuario);
+                }
+
+                if (!um.buscarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio")
+                {                   
+                    um.agregarDireccion(direccion, usuario.IdUsuario);
+                }
+                else if(um.buscarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio")
+                {
+                    um.ModificarDireccion(usuario);
+                }
+
+                // Crear objeto Pedido con los datos del cliente
+                var pedido = new Pedido
+                {
+                    //NombreCliente = (string)Session["NombreCliente"],
+                    //ApellidoCliente = (string)Session["ApellidoCliente"],
+                    //Email = (string)Session["Email"],
+                    //Telefono = (string)Session["Telefono"],
+                    //Calle = tipoEntrega == "Envio" ? (string)Session["Calle"] : null,
+                    //Numero = tipoEntrega == "Envio" ? (string)Session["Numero"] : null,
+                    //CodigoPostal = tipoEntrega == "Envio" ? (string)Session["CodigoPostal"] : null,
+                    //Provincia = tipoEntrega == "Envio" ? (string)Session["Provincia"] : null, 
+                    //DNI = (string)Session["DNI"],
+
+                    IdMetodoPago = (int)metodoPagoSeleccionado,
+                    Total = carritoNegocio.ObtenerTotal(),
+                    TipoEntrega = (string)Session["TipoEntrega"]
+
+                };
+
+                List<ArticuloEnCarrito> articulos = carritoNegocio.ObtenerAticulos();
+                //int idNuevoPedido = pedidoNegocio.GuardarPedido(pedido);
+
+                int idNuevoPedido = pedidoNegocio.agregarPedido(pedido, usuario.IdUsuario);
+                pedidoNegocio.GuardarDetallesPedido(idNuevoPedido, articulos);
+
+                if (registrarse)
+                {
+                    um.ModificarEstadoUsuario(usuario.IdUsuario, true);
+                }
+
+                Response.Redirect("~/ConfirmacionCompra.aspx");
             }
-            if (!um.buscarDireccion(usuario) && tipoEntrega=="Envio")
+            catch (Exception ex)
             {
-                Direccion direccion = new Direccion();
-                direccion.Calle = (string)Session["Calle"];
-                direccion.Numero = (int)Session["Numero"];
-                direccion.Provincia = (Provincia)Session["Provincia"];
-                direccion.Localidad.CodigoPostal = (int)Session["CodigoPostal"];
-
-                um.agregarDireccion(usuario);
-            }
-            
-            // Crear objeto Pedido con los datos del cliente
-            var pedido = new Pedido
-            {
-                //NombreCliente = (string)Session["NombreCliente"],
-                //ApellidoCliente = (string)Session["ApellidoCliente"],
-                //Email = (string)Session["Email"],
-                //Telefono = (string)Session["Telefono"],
-                //Calle = tipoEntrega == "Envio" ? (string)Session["Calle"] : null,
-                //Numero = tipoEntrega == "Envio" ? (string)Session["Numero"] : null,
-                //CodigoPostal = tipoEntrega == "Envio" ? (string)Session["CodigoPostal"] : null,
-                //Provincia = tipoEntrega == "Envio" ? (string)Session["Provincia"] : null, 
-                //DNI = (string)Session["DNI"],
-
-                IdMetodoPago = (int)metodoPagoSeleccionado,
-                Total = carritoNegocio.ObtenerTotal(),
-                TipoEntrega = (string)Session["TipoEntrega"]
-
-            };
-
-            List<ArticuloEnCarrito> articulos = carritoNegocio.ObtenerAticulos();
-            //int idNuevoPedido = pedidoNegocio.GuardarPedido(pedido);
-            
-            int idNuevoPedido = pedidoNegocio.agregarPedido(pedido, usuario.IdUsuario);                                    
-            pedidoNegocio.GuardarDetallesPedido(idNuevoPedido,articulos);
-
-            if (registrarse)
-            {
-                um.ModificarEstadoUsuario(usuario.IdUsuario, true);
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
             }
 
-            Response.Redirect("~/ConfirmacionCompra.aspx");
         }
 
         protected void chkRegistrarse_CheckedChanged(object sender, EventArgs e)

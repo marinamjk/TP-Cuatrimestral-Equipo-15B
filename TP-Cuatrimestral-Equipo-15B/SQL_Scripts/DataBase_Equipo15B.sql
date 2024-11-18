@@ -242,7 +242,7 @@ begin
  Select Nombre, Apellido, Dni, Telefono, UrlFotoPerfil
  from DatosPersonales DP
  Inner join Usuarios U on U.IDDatosPersonales= DP.IDDatosPersonales
- where U.IDUsuario= @IDUsuario and Estado=1
+ where U.IDUsuario= @IDUsuario
 end
 go
 
@@ -293,7 +293,7 @@ begin
 	inner join Usuarios U on U.IDDireccion= D.IdDireccion
 	Inner join Provincia P on P.Id= D.IdProvincia
 	INNER JOIN Localidad L on L.Id= D.IdLocalidad
-	where U.IDUsuario= @IDUsuario and Estado=1
+	where U.IDUsuario= @IDUsuario
 end
 go
 

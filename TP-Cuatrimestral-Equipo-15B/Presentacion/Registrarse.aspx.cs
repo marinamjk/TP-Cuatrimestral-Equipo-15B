@@ -58,7 +58,18 @@ namespace Presentacion
                     usuario.Contraseña = txtContraseña.Text;
                 }
                 usuario.Estado = true;
-                usuario.IdUsuario = um.agregarUsuario(usuario);
+
+                var usuarioExistente = um.listarUsuarios().FirstOrDefault(u => u.Mail == usuario.Mail && u.Estado == false);
+
+                if (usuarioExistente != null)
+                {
+                    um.ModificarEstadoUsuario(usuarioExistente.IdUsuario, true);
+                }
+                else
+                {
+                    usuario.IdUsuario = um.agregarUsuario(usuario);
+                }
+               
                 Session.Add("usuario", usuario);
                 //enviar email de bienvenida
 

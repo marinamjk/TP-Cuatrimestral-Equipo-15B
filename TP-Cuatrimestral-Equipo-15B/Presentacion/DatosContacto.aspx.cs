@@ -90,7 +90,7 @@ namespace Presentacion
                     Session["Calle"] = TextCalle.Text;
                     Session["Numero"] = TextNumero.Text;
                     Session["CodigoPostal"] = TextCodigoPostal.Text;
-                    Session["Provincia"] = DropDownListProvincia.SelectedItem.Text;
+                    Session["Provincia"] = DropDownListProvincia.SelectedItem;
                     Session["DNI"] = TextDNI.Text;
 
                     Response.Redirect("~/MetodosPago.aspx");
@@ -142,6 +142,7 @@ namespace Presentacion
             {
                 UsuarioManager um = new UsuarioManager();
                 Usuario usuario = (Usuario)Session["usuario"];
+
                 if (um.buscarDatosPersonales(usuario))
                 {
                     TextNombre.Text = usuario.Nombre;
@@ -241,21 +242,21 @@ namespace Presentacion
             UsuarioManager um = new UsuarioManager();
             if (!Seguridad.sesionActiva(Session["usuario"]))
             {            
-                if (um.listarUsuarios().Any(c => c.Mail == TextEmail.Text))
+                if (um.listarUsuarios().Any(c => c.Mail == TextEmail.Text && c.Estado==true))
                 {
                     Session.Add("error", "Ya existe un usuario con ese email, por favor inicie sesion para poder cargar sus datos");
-                    Response.Redirect("Error.aspx", false);                   
+                    Response.Redirect("Error.aspx", false);
+                }
+                else
+                {
+                    Usuario nuevo = new Usuario();
+                    nuevo.Mail = TextEmail.Text;
+                    nuevo.Contraseña = GenerarContraseña(6);
+                    nuevo.Estado = false;                   
+                    Session.Add("usuario", nuevo);
                 }
             } 
-            else
-            {
-                Usuario nuevo= new Usuario();
-                nuevo.Mail= TextEmail.Text;
-                nuevo.Contraseña = GenerarContraseña(6);
-                nuevo.Estado = false;
-                um.agregarUsuario(nuevo);
-                Session.Add("usuario", nuevo);
-            }
+           
         }
 
         protected string GenerarContraseña(int longitud)

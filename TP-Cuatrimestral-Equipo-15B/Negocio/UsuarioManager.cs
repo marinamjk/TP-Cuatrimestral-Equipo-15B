@@ -160,7 +160,7 @@ namespace Negocio
                 datos.setearParametros("@Apellido", usuario.Apellido);
                 datos.setearParametros("@DNI", usuario.Dni);
                 datos.setearParametros("@Telefono", usuario.telefono);
-                datos.setearParametros("@UrlFotoPerfil", usuario.Foto);
+                datos.setearParametros("@UrlFotoPerfil", string.IsNullOrEmpty(usuario.Foto) ? (object)DBNull.Value : usuario.Foto);
                 datos.ejecutarAccion();
 
             }
@@ -235,17 +235,17 @@ namespace Negocio
             }
         }
 
-        public void agregarDireccion(Usuario usuario)
+        public void agregarDireccion(Direccion direccion, int idUsuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearProcedimiento("sp_AgregarDireccion");
-                datos.setearParametros("@IDUsuario", usuario.IdUsuario);
-                datos.setearParametros("@Calle", usuario.Direccion.Calle);
-                datos.setearParametros("@Numero", usuario.Direccion.Numero);
-                datos.setearParametros("@IdProvincia", usuario.Direccion.IdProvincia);
-                datos.setearParametros("@IdLocalidad", usuario.Direccion.IdLocalidad);
+                datos.setearParametros("@IDUsuario", idUsuario);
+                datos.setearParametros("@Calle", direccion.Calle);
+                datos.setearParametros("@Numero", direccion.Numero);
+                datos.setearParametros("@IdProvincia", direccion.IdProvincia);
+                datos.setearParametros("@IdLocalidad", direccion.IdLocalidad);
                 datos.ejecutarAccion();
 
             }
@@ -259,13 +259,13 @@ namespace Negocio
             }
         }
 
-        public bool buscarDireccion(Usuario usuario)
+        public bool buscarDireccion(int idUsuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearProcedimiento("sp_BuscarDireccion");
-                datos.setearParametros("@IDUsuario", usuario.IdUsuario);
+                datos.setearParametros("@IDUsuario", idUsuario);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -288,9 +288,7 @@ namespace Negocio
                     localidad.CodigoPostal = Convert.ToInt32(datos.Lector["CodigoPostal"]);
                     localidad.ProvinciaId = Convert.ToInt32(datos.Lector["ProvinciaId"]);
                     direccion.Localidad = localidad;
-
-                    usuario.Direccion = direccion;
-
+                              
                     return true;
               
                 }
