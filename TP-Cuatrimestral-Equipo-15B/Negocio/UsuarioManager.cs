@@ -31,7 +31,7 @@ namespace Negocio
                     }
 
                     if (!(datos.Lector["IDDireccion"] is DBNull))
-                        buscarDireccion(aux);
+                        buscarDireccion(aux.IdUsuario);
 
                     aux.Estado = (bool)datos.Lector["Estado"];
                     usuarios.Add(aux);
@@ -130,7 +130,7 @@ namespace Negocio
 
                     if (!(datos.Lector["IDDireccion"] is DBNull))
                     {
-                        buscarDireccion(usuario);
+                        buscarDireccion(usuario.IdUsuario);
                     }
 
                     usuario.Estado = (bool)datos.Lector["Estado"];

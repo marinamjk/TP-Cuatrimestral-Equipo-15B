@@ -157,7 +157,7 @@ namespace Presentacion
                     TextTelefono.Enabled = false;
                     TextDNI.Enabled = false;
                 }
-                if (um.buscarDireccion(usuario))
+                if (um.buscarDireccion(usuario.IdUsuario))
                 {
                     TextCalle.Text = usuario.Direccion.Calle;
                     TextNumero.Text = usuario.Direccion.Numero.ToString();
