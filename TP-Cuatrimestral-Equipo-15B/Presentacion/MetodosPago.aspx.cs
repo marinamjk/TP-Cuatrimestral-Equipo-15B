@@ -168,7 +168,7 @@ namespace Presentacion
                     um.ModificarEstadoUsuario(usuario.IdUsuario, true);
                 }
 
-                Response.Redirect("~/ConfirmacionCompra.aspx");
+                Response.Redirect("~/ConfirmacionCompra.aspx", false);
             }
             catch (Exception ex)
             {
