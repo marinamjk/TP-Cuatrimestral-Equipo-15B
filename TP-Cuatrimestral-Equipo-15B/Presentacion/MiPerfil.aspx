@@ -68,7 +68,7 @@
             <asp:Button ID="BtModificar" runat="server" Text="Modificar" CssClass="btn btn-primary form-group col-md-2" OnClick="BtModificar_click"/>
             <%if (((dominio.Usuario)Session["usuario"]).modificar)
               {%>
-                <asp:Button ID="BtAceptar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Aceptar" />
+            <asp:Button ID="BtAceptar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Aceptar" OnClick="BtAceptar_Click" />
             <%} %>
         </div>
     </div>

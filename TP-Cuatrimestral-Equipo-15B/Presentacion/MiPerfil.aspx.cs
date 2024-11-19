@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
 using Negocio;
+using static System.Net.WebRequestMethods;
 
 namespace Presentacion
 {
@@ -17,6 +18,7 @@ namespace Presentacion
             if (Seguridad.sesionActiva(Session["usuario"])){            
                 Usuario us = (Usuario)Session["usuario"];
                 titulo = us.Nombre;
+                TbNombre.Text = us.Nombre;
             }
             TbNombre.Enabled = false;
             TbApellido.Enabled = false;
@@ -54,6 +56,26 @@ namespace Presentacion
             txtCodigoPostal.Enabled = true;
             txtLocalidad.Enabled = true;
             txtNumero.Enabled = true;
+        }
+
+        protected void BtAceptar_Click(object sender, EventArgs e)
+        {
+            Usuario usuario = ((Usuario)Session["usuario"]);
+            UsuarioManager Usuarios = new UsuarioManager();
+            usuario.Nombre = TbNombre.Text;
+            usuario.Apellido = TbApellido.Text;
+            usuario.Dni = TbDocumento.Text;
+            usuario.telefono = TbTelefono.Text;
+            usuario.Foto = "https://imgs.search.brave.com/-BtlJWfCZK6-fD12f_E5yeLNpr21GR9F3GZBvDPuKdY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZW5lc2Jvbml0YXMu/Ym9zcXVlZGVmYW50/YXNpYXMuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE1LzA5/L2ZvdG9zLWRlLWdv/a3UtNDAweDI4NC5q/cGc";
+            Usuarios.ModificarDatosPersonales(usuario);
+            if(usuario.IdDatosPersonales == null)
+            {
+                Usuarios.agregarDatosPersonales(usuario);
+            }
+            else
+            {
+                Usuarios.ModificarDatosPersonales(usuario);
+            }
         }
     }
 }

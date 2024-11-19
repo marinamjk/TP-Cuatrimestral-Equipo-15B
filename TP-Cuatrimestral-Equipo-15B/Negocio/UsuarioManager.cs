@@ -121,6 +121,7 @@ namespace Negocio
                     usuario.IdUsuario = (int)(datos.Lector["IDUsuario"]);
                     usuario.Mail = (string)datos.Lector["Email"];
                     usuario.Contraseña = (string)datos.Lector["Contrasenia"];
+                    usuario.IdDatosPersonales = (int)datos.Lector["IDDatosPersonales"];
                     usuario.tipoUsuario = (int)datos.Lector["IDTipoUsuario"] == 2 ? tipoUsuario.NORMAL : tipoUsuario.ADMIN;
                     
                     if (!(datos.Lector["IDDatosPersonales"] is DBNull))
@@ -212,18 +213,14 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearProcedimiento("sp_ModificarDatosPersonales");   
-                
+                datos.setearProcedimiento("sp_ModificarDatosPersonales");                   
                 datos.setearParametros("@IDUsuario", usuario.IdUsuario);
                 datos.setearParametros("@Nombre", usuario.Nombre);
                 datos.setearParametros("@Apellido", usuario.Apellido);
                 datos.setearParametros("@DNI", usuario.Dni);
                 datos.setearParametros("@Telefono", usuario.telefono);
                 datos.setearParametros("@UrlFotoPerfil", usuario.Foto);
-
                 datos.ejecutarAccion();
-       
-
             }
             catch (Exception ex)
             {
