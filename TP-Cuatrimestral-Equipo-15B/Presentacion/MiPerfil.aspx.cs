@@ -19,6 +19,7 @@ namespace Presentacion
                 Usuario us = (Usuario)Session["usuario"];
                 titulo = us.Nombre;
                 TbNombre.Text = us.Nombre;
+                TbApellido.Text = us.Apellido;
             }
             TbNombre.Enabled = false;
             TbApellido.Enabled = false;
@@ -62,19 +63,22 @@ namespace Presentacion
         {
             Usuario usuario = ((Usuario)Session["usuario"]);
             UsuarioManager Usuarios = new UsuarioManager();
-            usuario.Nombre = TbNombre.Text;
-            usuario.Apellido = TbApellido.Text;
+            usuario.Nombre = "hola";
+            usuario.Apellido = TbApellido.ToString();
             usuario.Dni = TbDocumento.Text;
             usuario.telefono = TbTelefono.Text;
             usuario.Foto = "https://imgs.search.brave.com/-BtlJWfCZK6-fD12f_E5yeLNpr21GR9F3GZBvDPuKdY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZW5lc2Jvbml0YXMu/Ym9zcXVlZGVmYW50/YXNpYXMuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE1LzA5/L2ZvdG9zLWRlLWdv/a3UtNDAweDI4NC5q/cGc";
-            Usuarios.ModificarDatosPersonales(usuario);
             if(usuario.IdDatosPersonales == null)
             {
                 Usuarios.agregarDatosPersonales(usuario);
+                Session["usuario"] = usuario;
+                Response.Redirect("MiPerfil.aspx", false);
             }
             else
             {
                 Usuarios.ModificarDatosPersonales(usuario);
+                Session["usuario"] = usuario;
+                Response.Redirect("MiPerfil.aspx", false);
             }
         }
     }
