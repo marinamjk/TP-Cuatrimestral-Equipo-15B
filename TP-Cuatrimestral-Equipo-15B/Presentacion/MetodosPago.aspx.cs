@@ -97,34 +97,40 @@ namespace Presentacion
                 Usuario usuario = (Usuario)Session["usuario"];
                 UsuarioManager um = new UsuarioManager();
 
-                usuario.IdUsuario= um.agregarUsuario(usuario);
+                if (!(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
+                {
+                    usuario.IdUsuario = um.agregarUsuario(usuario);
+                }
+                
                 usuario.Nombre = (string)Session["NombreCliente"];
                 usuario.Apellido = (string)Session["ApellidoCliente"];
                 usuario.telefono = (string)Session["Telefono"];
                 usuario.Dni = (string)Session["DNI"];
+                usuario.Foto = null;
 
+                ProvinciaNegocio pn= new ProvinciaNegocio();
                 Direccion direccion = new Direccion(); ;
                 if (tipoEntrega == "Envio")
                 {
                     direccion.Calle = Session["Calle"].ToString();
                     direccion.Numero = int.Parse(Session["Numero"].ToString());
 
-                    ListItem provinciaSeleccionada = (ListItem)Session["Provincia"];
-                    string NombreProvinciaSeleccionada = provinciaSeleccionada.Text;   // Obtiene el texto.
-                    byte IdProvinciaSeleccionada = byte.Parse(provinciaSeleccionada.Value); // Obtiene el valor.
+               
                     Provincia p = new Provincia();
-                    p.Id = IdProvinciaSeleccionada;
-                    direccion.Provincia = p;
+                    p.Id = byte.Parse(Session["Provincia"].ToString());
+                    direccion.IdProvincia = p.Id;
                     Localidad l = new Localidad();
                     l.CodigoPostal = int.Parse(Session["CodigoPostal"].ToString());
-                    direccion.Localidad = l;
+                    l.Id= pn.obtenerIdLocalidadPorCP(l.CodigoPostal);
+                    direccion.IdLocalidad= l.Id;
+                    
                 }
 
                 if (!um.buscarDatosPersonales(usuario))
                 {                    
                     um.agregarDatosPersonales(usuario);
                 }
-                else
+                else if(!(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
                 {
                     um.ModificarDatosPersonales(usuario);
                 }
@@ -133,7 +139,7 @@ namespace Presentacion
                 {                   
                     um.agregarDireccion(direccion, usuario.IdUsuario);
                 }
-                else if(um.buscarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio")
+                else if(um.buscarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio" && !(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
                 {
                     um.ModificarDireccion(usuario);
                 }

@@ -90,7 +90,7 @@ namespace Presentacion
                     Session["Calle"] = TextCalle.Text;
                     Session["Numero"] = TextNumero.Text;
                     Session["CodigoPostal"] = TextCodigoPostal.Text;
-                    Session["Provincia"] = DropDownListProvincia.SelectedItem;
+                    Session["Provincia"] = DropDownListProvincia.SelectedValue;
                     Session["DNI"] = TextDNI.Text;
 
                     Response.Redirect("~/MetodosPago.aspx");

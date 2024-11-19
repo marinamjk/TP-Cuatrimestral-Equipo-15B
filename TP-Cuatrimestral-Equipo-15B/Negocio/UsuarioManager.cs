@@ -219,7 +219,7 @@ namespace Negocio
                 datos.setearParametros("@Apellido", usuario.Apellido);
                 datos.setearParametros("@DNI", usuario.Dni);
                 datos.setearParametros("@Telefono", usuario.telefono);
-                datos.setearParametros("@UrlFotoPerfil", usuario.Foto);
+                datos.setearParametros("@UrlFotoPerfil", string.IsNullOrEmpty(usuario.Foto) ? (object)DBNull.Value : usuario.Foto);
 
                 datos.ejecutarAccion();
        

@@ -98,5 +98,25 @@ namespace Negocio
             }
         }
 
+        public int obtenerIdLocalidadPorCP(int codPostal)
+        {
+            AccesoDatos datos = new AccesoDatos();
+          
+            try
+            {
+                datos.setearConsulta("Select Id from Localidad where CodigoPostal=@codPostal");
+                datos.setearParametros("@codPostal", codPostal);
+                                             
+                return datos.ejecutarEscalar();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
