@@ -24,14 +24,19 @@ namespace Negocio
                     Usuario aux = new Usuario();
                     aux.IdUsuario = (int)datos.Lector["IDUsuario"];
                     aux.Mail = (string)datos.Lector["Email"];
-                    aux.Contraseña = (string)datos.Lector["Contrasenia"];
+                    aux.Contraseña = (string)datos.Lector["Contrasenia"];                    
+                    
                     if (!(datos.Lector["IDDatosPersonales"] is DBNull))
-                    {                        
+                    {
+                        aux.IdDatosPersonales = (int)datos.Lector["IDDatosPersonales"];
                         buscarDatosPersonales(aux);
                     }
 
                     if (!(datos.Lector["IDDireccion"] is DBNull))
-                        buscarDireccion(aux.IdUsuario);
+                    {
+                        aux.IdDireccion = (int)datos.Lector["IDDireccion"];
+                        buscarDireccion(aux);
+                    }
 
                     aux.Estado = (bool)datos.Lector["Estado"];
                     usuarios.Add(aux);
@@ -40,7 +45,6 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -59,7 +63,7 @@ namespace Negocio
                 datos.setearParametros("@Email", usuario.Mail);             
                 datos.setearParametros("@Contrasenia", usuario.Contraseña);
                 datos.setearParametros("@Estado", usuario.Estado);
-                return datos.ejecutarEscalar();
+                return datos.ejecutarEscalar();               
             }
             catch (Exception ex)
             {
@@ -120,18 +124,19 @@ namespace Negocio
                 {
                     usuario.IdUsuario = (int)(datos.Lector["IDUsuario"]);
                     usuario.Mail = (string)datos.Lector["Email"];
-                    usuario.Contraseña = (string)datos.Lector["Contrasenia"];
-                    usuario.IdDatosPersonales = (int)datos.Lector["IDDatosPersonales"];
+                    usuario.Contraseña = (string)datos.Lector["Contrasenia"];                                        
                     usuario.tipoUsuario = (int)datos.Lector["IDTipoUsuario"] == 2 ? tipoUsuario.NORMAL : tipoUsuario.ADMIN;
                     
                     if (!(datos.Lector["IDDatosPersonales"] is DBNull))
                     {
+                        usuario.IdDatosPersonales = (int)datos.Lector["IDDatosPersonales"];
                         buscarDatosPersonales(usuario);
                     }
 
                     if (!(datos.Lector["IDDireccion"] is DBNull))
                     {
-                        buscarDireccion(usuario.IdUsuario);
+                        usuario.IdDireccion = (int)datos.Lector["IDDireccion"];
+                        buscarDireccion(usuario);
                     }
 
                     usuario.Estado = (bool)datos.Lector["Estado"];
@@ -259,13 +264,13 @@ namespace Negocio
             }
         }
 
-        public bool buscarDireccion(int idUsuario)
+        public bool buscarDireccion(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearProcedimiento("sp_BuscarDireccion");
-                datos.setearParametros("@IDUsuario", idUsuario);
+                datos.setearParametros("@IDUsuario", usuario.IdUsuario);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -288,7 +293,9 @@ namespace Negocio
                     localidad.CodigoPostal = Convert.ToInt32(datos.Lector["CodigoPostal"]);
                     localidad.ProvinciaId = Convert.ToInt32(datos.Lector["ProvinciaId"]);
                     direccion.Localidad = localidad;
-                              
+                        
+                    usuario.Direccion = direccion;
+
                     return true;
               
                 }
@@ -304,17 +311,17 @@ namespace Negocio
             }
         }
 
-        public void ModificarDireccion(Usuario usuario)
+        public void ModificarDireccion(Direccion direccion, int idUsuario)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearProcedimiento("sp_ModificarDireccion");
-                datos.setearParametros("@IDUsuario", usuario.IdUsuario);
-                datos.setearParametros("@Calle", usuario.Direccion.Calle);
-                datos.setearParametros("@Numero", usuario.Direccion.Numero);
-                datos.setearParametros("@IdProvincia", usuario.Direccion.IdProvincia);
-                datos.setearParametros("@IdLocalidad", usuario.Direccion.IdLocalidad);
+                datos.setearParametros("@IDUsuario", idUsuario);
+                datos.setearParametros("@Calle", direccion.Calle);
+                datos.setearParametros("@Numero", direccion.Numero);
+                datos.setearParametros("@IdProvincia", direccion.IdProvincia);
+                datos.setearParametros("@IdLocalidad", direccion.IdLocalidad);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)

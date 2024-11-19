@@ -17,7 +17,7 @@
                     <asp:Button ID="btnPagoMercadoPago" runat="server" Text="Pago con Mercado Pago" CssClass="btn btn-outline-primary" OnClick="btnPagoMercadoPago_Click" />
                    
                 </div>     
-                <%if (Session["usuario"]!= null && ((dominio.Usuario)Session["usuario"]).Estado == false)
+                <%if (Session["usuarioSinSesion"]!= null && ((dominio.Usuario)Session["usuarioSinSesion"]).Estado == false)
                     {  %>
                 <div>
                     <asp:CheckBox ID="chkRegistrarse" runat="server" Text="Guardar datos y registrame." OnCheckedChanged="chkRegistrarse_CheckedChanged" />

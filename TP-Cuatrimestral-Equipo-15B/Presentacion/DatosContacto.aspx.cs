@@ -157,7 +157,7 @@ namespace Presentacion
                     TextTelefono.Enabled = false;
                     TextDNI.Enabled = false;
                 }
-                if (um.buscarDireccion(usuario.IdUsuario))
+                if (um.buscarDireccion(usuario))
                 {
                     TextCalle.Text = usuario.Direccion.Calle;
                     TextNumero.Text = usuario.Direccion.Numero.ToString();
@@ -240,21 +240,29 @@ namespace Presentacion
         protected void TextEmail_TextChanged(object sender, EventArgs e)
         {
             UsuarioManager um = new UsuarioManager();
+            var usuarioEncontrado = um.listarUsuarios().FirstOrDefault(c => c.Mail == TextEmail.Text);
+            Usuario nuevo = new Usuario();
             if (!Seguridad.sesionActiva(Session["usuario"]))
             {            
-                if (um.listarUsuarios().Any(c => c.Mail == TextEmail.Text && c.Estado==true))
+                if (usuarioEncontrado!=null && usuarioEncontrado.Estado==true)
                 {
                     Session.Add("error", "Ya existe un usuario con ese email, por favor inicie sesion para poder cargar sus datos");
                     Response.Redirect("Error.aspx", false);
+                }              
+                else if(usuarioEncontrado!=null && usuarioEncontrado.Estado==false)
+                {
+                    nuevo = usuarioEncontrado;
+                    Session.Add("usuarioSinSesion", nuevo);
                 }
                 else
                 {
-                    Usuario nuevo = new Usuario();
                     nuevo.Mail = TextEmail.Text;
                     nuevo.Contraseña = GenerarContraseña(6);
-                    nuevo.Estado = false;                   
-                    Session.Add("usuario", nuevo);
+                    nuevo.Estado = false;
+                    nuevo.IdUsuario = um.agregarUsuario(nuevo);
+                    Session.Add("usuarioSinSesion", nuevo);
                 }
+                
             } 
            
         }

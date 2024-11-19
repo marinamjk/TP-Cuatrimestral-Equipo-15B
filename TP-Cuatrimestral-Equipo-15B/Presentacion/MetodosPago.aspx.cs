@@ -94,14 +94,21 @@ namespace Presentacion
                     return;
                 }
 
-                Usuario usuario = (Usuario)Session["usuario"];
-                UsuarioManager um = new UsuarioManager();
 
-                if (!(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
+                Usuario usuario;
+                UsuarioManager um = new UsuarioManager();
+ ;
+
+                if (Session["usuarioSinSesion"] != null)
                 {
-                    usuario.IdUsuario = um.agregarUsuario(usuario);
+                    usuario = (Usuario)Session["usuarioSinSesion"];                    
+                  
                 }
-                
+                else 
+                {
+                    usuario = (Usuario)Session["usuario"];
+                }                           
+     
                 usuario.Nombre = (string)Session["NombreCliente"];
                 usuario.Apellido = (string)Session["ApellidoCliente"];
                 usuario.telefono = (string)Session["Telefono"];
@@ -126,7 +133,7 @@ namespace Presentacion
                     
                 }
 
-                if (!um.buscarDatosPersonales(usuario))
+                if (usuario.IdDatosPersonales==null)
                 {                    
                     um.agregarDatosPersonales(usuario);
                 }
@@ -135,13 +142,13 @@ namespace Presentacion
                     um.ModificarDatosPersonales(usuario);
                 }
 
-                if (!um.buscarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio")
+                if (usuario.Direccion==null && tipoEntrega == "Envio")
                 {                   
                     um.agregarDireccion(direccion, usuario.IdUsuario);
                 }
-                else if(um.buscarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio" && !(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
+                else if(usuario.Direccion != null && tipoEntrega == "Envio" && !(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
                 {
-                    um.ModificarDireccion(usuario);
+                    um.ModificarDireccion(direccion, usuario.IdUsuario);
                 }
 
                 // Crear objeto Pedido con los datos del cliente
@@ -156,7 +163,7 @@ namespace Presentacion
                     //CodigoPostal = tipoEntrega == "Envio" ? (string)Session["CodigoPostal"] : null,
                     //Provincia = tipoEntrega == "Envio" ? (string)Session["Provincia"] : null, 
                     //DNI = (string)Session["DNI"],
-
+                    
                     IdMetodoPago = (int)metodoPagoSeleccionado,
                     Total = carritoNegocio.ObtenerTotal(),
                     TipoEntrega = (string)Session["TipoEntrega"]

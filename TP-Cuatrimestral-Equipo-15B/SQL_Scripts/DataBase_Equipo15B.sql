@@ -110,7 +110,7 @@ Estado bit not null
 go
 
 CREATE TABLE Pedido(
-	IdPedido INT PRIMARY KEY IDENTITY,
+	IdPedido INT PRIMARY KEY IDENTITY(1,1),
 	IDUsuario int foreign key references Usuarios(IDUsuario),
     FechaPedido DATETIME NOT NULL DEFAULT GETDATE(),
 	TipoEntrega VARCHAR(10),
@@ -122,7 +122,7 @@ go
 
 
 CREATE TABLE PedidoDetalle (
-    IdDetalle INT PRIMARY KEY IDENTITY,
+    IdDetalle INT PRIMARY KEY IDENTITY(1,1),
     IdPedido INT NOT NULL,
     IdArticulo INT NOT NULL,
     Cantidad INT NOT NULL,
@@ -179,7 +179,7 @@ go
 Create Procedure sp_ListarUsuarios
 as
 begin
- Select IDUsuario, Email, Contrasenia, IDDatosPersonales, IDDireccion, Estado from Usuarios where IDTipoUsuario=2 and Estado=1
+ Select IDUsuario, Email, Contrasenia, IDDatosPersonales, IDDireccion, Estado from Usuarios where IDTipoUsuario=2 
 end
 go
 
