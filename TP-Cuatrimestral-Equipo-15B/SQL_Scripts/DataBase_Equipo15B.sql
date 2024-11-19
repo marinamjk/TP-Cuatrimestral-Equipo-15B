@@ -111,9 +111,9 @@ go
 
 CREATE TABLE Pedido(
 	IdPedido INT PRIMARY KEY IDENTITY(1,1),
-	IDUsuario int foreign key references Usuarios(IDUsuario),
+	IDUsuario int not null foreign key references Usuarios(IDUsuario),
     FechaPedido DATETIME NOT NULL DEFAULT GETDATE(),
-	TipoEntrega VARCHAR(10),
+	TipoEntrega VARCHAR(10) not null,
     IdMetodoPago INT NOT NULL foreign key references MetodoPago(IdMetodoPago),
 	EstadoPedido int not null,
     Total DECIMAL(10, 2) NOT NULL
@@ -539,5 +539,15 @@ as
 begin
 	Insert into Pedido(IDUsuario, FechaPedido, TipoEntrega, IdMetodoPago, EstadoPedido, Total) output inserted.IdPedido
 	values (@IDUsuario, GETDATE(), @TipoEntrega, @IdMetodoPago, 1, @Total)
+end
+go
+
+Create Procedure sp_listarPedidosPorUsuario(
+@IDUsuario int
+)
+as
+begin
+	Select IdPedido, IDUsuario, FechaPedido, TipoEntrega, IdMetodoPago, EstadoPedido, Total from Pedido
+	where IDUsuario= @IDUsuario
 end
 go

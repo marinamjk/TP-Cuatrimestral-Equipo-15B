@@ -129,5 +129,39 @@ namespace Negocio
            
         }
 
+        public List<Pedido> listarPedidosPorUsuario(int idUsuario)
+        {
+            AccesoDatos datos= new AccesoDatos();
+            List<Pedido> pedidos= new List<Pedido>();
+            try
+            {
+                datos.setearProcedimiento("sp_listarPedidosPorUsuario");
+                datos.setearParametros("@IdUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Pedido aux= new Pedido();
+                    aux.IdPedido = int.Parse(datos.Lector["IdPedido"].ToString());
+                    aux.FechaPedido = DateTime.Parse(datos.Lector["FechaPedido"].ToString());
+                    aux.TipoEntrega = datos.Lector["TipoEntrega"].ToString();
+                    aux.IdMetodoPago= int.Parse(datos.Lector["metodoPago"].ToString());
+                    aux.EstadoPedido = int.Parse(datos.Lector["EstadoPedido"].ToString());
+                    aux.Total = decimal.Parse(datos.Lector["Total"].ToString());
+                    pedidos.Add(aux);
+                }
+
+                return pedidos;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }

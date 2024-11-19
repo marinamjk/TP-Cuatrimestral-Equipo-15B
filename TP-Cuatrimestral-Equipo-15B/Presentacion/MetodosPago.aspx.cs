@@ -176,6 +176,9 @@ namespace Presentacion
                 int idNuevoPedido = pedidoNegocio.agregarPedido(pedido, usuario.IdUsuario);
                 pedidoNegocio.GuardarDetallesPedido(idNuevoPedido, articulos);
 
+                CarritoNegocio cn= new CarritoNegocio();
+                cn.VaciarCarrito();
+
                 if (registrarse)
                 {
                     um.ModificarEstadoUsuario(usuario.IdUsuario, true);

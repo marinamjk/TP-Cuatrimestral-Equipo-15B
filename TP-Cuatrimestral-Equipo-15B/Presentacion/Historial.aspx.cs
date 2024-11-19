@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Negocio;
+using dominio;
 
 namespace Presentacion
 {
@@ -11,7 +13,17 @@ namespace Presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                PedidoNegocio pn = new PedidoNegocio();
+                Usuario usuario = (Usuario)Session["usuario"];
+                if (Seguridad.sesionActiva(Session["usuario"]))
+                {
+                    repHistorial.DataSource = pn.listarPedidosPorUsuario(usuario.IdUsuario);
+                    repHistorial.DataBind();
+                }
+               
+            }
         }
     }
 }
