@@ -133,7 +133,7 @@ namespace Presentacion
                     
                 }
 
-                if (usuario.IdDatosPersonales==null)
+                if (!um.verificarDatosPersonales(usuario.IdUsuario))
                 {                    
                     um.agregarDatosPersonales(usuario);
                 }
@@ -142,11 +142,11 @@ namespace Presentacion
                     um.ModificarDatosPersonales(usuario);
                 }
 
-                if (usuario.Direccion==null && tipoEntrega == "Envio")
+                if (!um.verificarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio")
                 {                   
                     um.agregarDireccion(direccion, usuario.IdUsuario);
                 }
-                else if(usuario.Direccion != null && tipoEntrega == "Envio" && !(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
+                else if(um.verificarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio" && !(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
                 {
                     um.ModificarDireccion(direccion, usuario.IdUsuario);
                 }

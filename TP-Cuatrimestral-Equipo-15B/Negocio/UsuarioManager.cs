@@ -51,8 +51,6 @@ namespace Negocio
             {
                 datos.cerrarConexion();
             }
-
-
         }
 
         public int agregarUsuario(Usuario usuario)
@@ -344,6 +342,60 @@ namespace Negocio
                 datos.setearParametros("@IDUsuario", idUsuario);
                 datos.setearParametros("@Estado", activo);
                 datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        
+        public bool verificarDatosPersonales(int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            
+            try
+            {
+                datos.setearConsulta("Select IdDatosPersonales from Usuarios where IDUsuario= @IdUsuario");
+                datos.setearParametros("@IdUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {                                        
+                     return datos.Lector["IdDatosPersonales"] != DBNull.Value;
+
+                }
+                return false;
+
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool verificarDireccion(int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            
+            try
+            {
+                datos.setearConsulta("Select IDDireccion from Usuarios where IDUsuario= @IdUsuario");
+                datos.setearParametros("@IdUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return datos.Lector["IDDireccion"] != DBNull.Value;
+                }
+
+                return false;
             }
             catch (Exception ex)
             {
