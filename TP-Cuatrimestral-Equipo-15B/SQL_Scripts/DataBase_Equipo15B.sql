@@ -551,3 +551,13 @@ begin
 	where IDUsuario= @IDUsuario
 end
 go
+
+Create Procedure sp_listarDetallePorPedido(
+@IdPedido int
+)
+as
+begin
+	Select IdDetalle, IdArticulo, Cantidad, PrecioUnitario, Subtotal from PedidoDetalle
+	where IdPedido=@IdPedido
+end
+go

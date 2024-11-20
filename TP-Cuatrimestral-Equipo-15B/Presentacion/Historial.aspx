@@ -17,12 +17,11 @@
                     <div class="row no-gutters">                      
                         <div class="col-md-9">
                             <div class="card-body">
-                                <h5 class="card-title">Teclado mecanico dragon</h5>
-                                <p class="card-text font-weight-bold">$465.025</p>
-                                <p class="card-text">Mismo precio en 9 cuotas de $51.669</p>
-                                <p class="card-text text-success">Envío gratis</p>
-                                <a href="VerCompra.aspx" class="btn btn-primary">Ver Compra</a>
-                                
+                                <h5 class="card-title"><%# Eval("FechaPedido", "{0:dd/MM/yyyy}") %></h5>
+                                <p class="card-text"><%# Eval("TipoEntrega") %></p>
+                                <p class="card-text font-weight-bold"><%# Eval("Total") %></p>                                
+                                <p class="card-text text-success"> <%# Convert.ToInt32(Eval("EstadoPedido")) == 5 ? "Entregado" : "" %>                            
+                                <a href="VerCompra.aspx?id=<%# Eval("IdPedido") %> &estadoPedido= <%#Eval("EstadoPedido")%>" class="btn btn-primary">Ver Detalle</a>
                             </div>
                         </div>
                     </div>

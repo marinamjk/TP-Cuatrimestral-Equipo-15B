@@ -145,7 +145,7 @@ namespace Negocio
                     aux.IdPedido = int.Parse(datos.Lector["IdPedido"].ToString());
                     aux.FechaPedido = DateTime.Parse(datos.Lector["FechaPedido"].ToString());
                     aux.TipoEntrega = datos.Lector["TipoEntrega"].ToString();
-                    aux.IdMetodoPago= int.Parse(datos.Lector["metodoPago"].ToString());
+                    aux.IdMetodoPago= int.Parse(datos.Lector["IdMetodoPago"].ToString());
                     aux.EstadoPedido = int.Parse(datos.Lector["EstadoPedido"].ToString());
                     aux.Total = decimal.Parse(datos.Lector["Total"].ToString());
                     pedidos.Add(aux);
@@ -154,6 +154,43 @@ namespace Negocio
                 return pedidos;
             }
             catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<PedidoDetalle> listarDetallePorPedido(int IdPedido)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            List<PedidoDetalle> items= new List<PedidoDetalle>();
+            ArticuloNegocio an= new ArticuloNegocio();
+            try
+            {
+                datos.setearProcedimiento("sp_listarDetallePorPedido");
+                datos.setearParametros("@IdPedido", IdPedido);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    PedidoDetalle aux = new PedidoDetalle();
+                    aux.idDetalle = int.Parse(datos.Lector["IdDetalle"].ToString());
+                    int idArt= int.Parse(datos.Lector["IdArticulo"].ToString());
+                    aux.articulo = an.buscarArticuloXId(idArt);
+                    aux.Cantidad = int.Parse(datos.Lector["Cantidad"].ToString());
+                    aux.PrecioUnitario = decimal.Parse(datos.Lector["PrecioUnitario"].ToString());
+                    if (!(datos.Lector["Subtotal"] is DBNull))
+                    aux.Subtotal = decimal.Parse(datos.Lector["Subtotal"].ToString());
+
+                    items.Add(aux);
+                }
+
+                return items;
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
