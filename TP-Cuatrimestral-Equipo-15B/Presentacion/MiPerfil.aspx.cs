@@ -23,6 +23,9 @@ namespace Presentacion
                     titulo = us.Nombre;
                     TbNombre.Text = us.Nombre;
                     TbApellido.Text = us.Apellido;
+                    TbDocumento.Text = us.Dni;
+                    TbTelefono.Text = us.telefono;
+                    txtCalle.Text = us.Direccion.Calle;
                 }
 
                 TbNombre.Enabled = false;
@@ -35,21 +38,6 @@ namespace Presentacion
                 txtNumero.Enabled = false;
             }
         }
-
-        //if (Seguridad.sesionActiva(Session["usuario"])){            
-        //    Usuario us = (Usuario)Session["usuario"];
-        //    titulo = us.Nombre;
-        //    TbNombre.Text = us.Nombre;
-        //    TbApellido.Text = us.Apellido;
-        //}
-        //TbNombre.Enabled = false;
-        //TbApellido.Enabled = false;
-        //TbDocumento.Enabled = false;
-        //TbTelefono.Enabled = false;
-        //txtCalle.Enabled = false;
-        //txtCodigoPostal.Enabled = false;
-        //txtLocalidad.Enabled = false;
-        //txtNumero.Enabled = false;
         protected void btnAgregarDireccion_Click(object sender, EventArgs e)
         {
 
@@ -77,22 +65,21 @@ namespace Presentacion
             txtLocalidad.Enabled = true;
             txtNumero.Enabled = true;
         }
-
         protected void BtAceptar_Click(object sender, EventArgs e)
         {
             Usuario usuario = ((Usuario)Session["usuario"]);
             UsuarioManager Usuarios = new UsuarioManager();
-            string apellido = TbApellido.Text;
-            usuario.Nombre = "hola";
+            usuario.Nombre = TbNombre.Text;
             usuario.Apellido = TbApellido.Text;
             usuario.Dni = TbDocumento.Text;
             usuario.telefono = TbTelefono.Text;
             usuario.Foto = "https://imgs.search.brave.com/-BtlJWfCZK6-fD12f_E5yeLNpr21GR9F3GZBvDPuKdY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZW5lc2Jvbml0YXMu/Ym9zcXVlZGVmYW50/YXNpYXMuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE1LzA5/L2ZvdG9zLWRlLWdv/a3UtNDAweDI4NC5q/cGc";
+            Direccion direccion = new Direccion();
+            direccion.Calle = txtCalle.Text;
+            direccion.Numero = int.Parse(txtNumero.Text);
             if(usuario.IdDatosPersonales == null)
             {
                 Usuarios.agregarDatosPersonales(usuario);
-                Session["usuario"] = usuario;
-                Response.Redirect("MiPerfil.aspx", false);
             }
             else
             {
@@ -100,6 +87,16 @@ namespace Presentacion
                 Session["usuario"] = usuario;
                 Response.Redirect("MiPerfil.aspx", false);
             }
+            if (usuario.IdDireccion == null) 
+            { 
+                Usuarios.ModificarDireccion(direccion,usuario.IdUsuario);
+            }
+            else
+            {
+                Usuarios.agregarDireccion(direccion, usuario.IdUsuario);
+            }
+            Session["usuario"] = usuario;
+            Response.Redirect("MiPerfil.aspx", false);
         }
     }
 }

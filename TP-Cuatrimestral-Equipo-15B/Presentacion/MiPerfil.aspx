@@ -37,18 +37,18 @@
                 <container id="cDireccion">
 
                     <div class="m-3">
-                        <asp:TextBox ID="txtCalle" runat="server" CssClass="form-control form-control-lg" placeholder="Calle" />
+                        <asp:TextBox ID="txtCalle" runat="server" CssClass="form-control form-control-lg" placeholder="Calle" type="text"/>
                     </div>
                     <div class="m-3">
-                        <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control form-control-lg" placeholder="Número" />
+                        <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control form-control-lg" placeholder="Número" type="text"/>
                     </div>
 
                     <div class="m-3">
-                        <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control  form-control-lg" placeholder="Código Postal" OnTextChanged="txtCodigoPostal_TextChanged" AutoPostBack="true" />
+                        <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control  form-control-lg" placeholder="Código Postal" OnTextChanged="txtCodigoPostal_TextChanged" AutoPostBack="true" type="text"/>
                         <asp:Label ID="lblCPValidacion" runat="server" CssClass="alert alert-dange mt-3"></asp:Label>
                     </div>
                     <div class="m-3">
-                        <asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control form-control-lg" placeholder="Localidad" />
+                        <asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control form-control-lg" placeholder="Localidad" type="text"/>
                     </div>
 
                     <div class="m-3">
