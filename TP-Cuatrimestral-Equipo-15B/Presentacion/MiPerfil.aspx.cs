@@ -15,22 +15,41 @@ namespace Presentacion
         public string titulo;
 		protected void Page_Load(object sender, EventArgs e)
 		{
-            if (Seguridad.sesionActiva(Session["usuario"])){            
-                Usuario us = (Usuario)Session["usuario"];
-                titulo = us.Nombre;
-                TbNombre.Text = us.Nombre;
-                TbApellido.Text = us.Apellido;
-            }
-            TbNombre.Enabled = false;
-            TbApellido.Enabled = false;
-            TbDocumento.Enabled = false;
-            TbTelefono.Enabled = false;
-            txtCalle.Enabled = false;
-            txtCodigoPostal.Enabled = false;
-            txtLocalidad.Enabled = false;
-            txtNumero.Enabled = false;
-		}
+            if (!IsPostBack)
+            {
+                if (Seguridad.sesionActiva(Session["usuario"]))
+                {
+                    Usuario us = (Usuario)Session["usuario"];
+                    titulo = us.Nombre;
+                    TbNombre.Text = us.Nombre;
+                    TbApellido.Text = us.Apellido;
+                }
 
+                TbNombre.Enabled = false;
+                TbApellido.Enabled = false;
+                TbDocumento.Enabled = false;
+                TbTelefono.Enabled = false;
+                txtCalle.Enabled = false;
+                txtCodigoPostal.Enabled = false;
+                txtLocalidad.Enabled = false;
+                txtNumero.Enabled = false;
+            }
+        }
+
+        //if (Seguridad.sesionActiva(Session["usuario"])){            
+        //    Usuario us = (Usuario)Session["usuario"];
+        //    titulo = us.Nombre;
+        //    TbNombre.Text = us.Nombre;
+        //    TbApellido.Text = us.Apellido;
+        //}
+        //TbNombre.Enabled = false;
+        //TbApellido.Enabled = false;
+        //TbDocumento.Enabled = false;
+        //TbTelefono.Enabled = false;
+        //txtCalle.Enabled = false;
+        //txtCodigoPostal.Enabled = false;
+        //txtLocalidad.Enabled = false;
+        //txtNumero.Enabled = false;
         protected void btnAgregarDireccion_Click(object sender, EventArgs e)
         {
 
@@ -63,8 +82,9 @@ namespace Presentacion
         {
             Usuario usuario = ((Usuario)Session["usuario"]);
             UsuarioManager Usuarios = new UsuarioManager();
+            string apellido = TbApellido.Text;
             usuario.Nombre = "hola";
-            usuario.Apellido = TbApellido.ToString();
+            usuario.Apellido = TbApellido.Text;
             usuario.Dni = TbDocumento.Text;
             usuario.telefono = TbTelefono.Text;
             usuario.Foto = "https://imgs.search.brave.com/-BtlJWfCZK6-fD12f_E5yeLNpr21GR9F3GZBvDPuKdY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZW5lc2Jvbml0YXMu/Ym9zcXVlZGVmYW50/YXNpYXMuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE1LzA5/L2ZvdG9zLWRlLWdv/a3UtNDAweDI4NC5q/cGc";
