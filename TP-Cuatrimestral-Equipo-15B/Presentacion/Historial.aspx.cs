@@ -16,9 +16,10 @@ namespace Presentacion
             if (!IsPostBack)
             {
                 PedidoNegocio pn = new PedidoNegocio();
-                Usuario usuario = (Usuario)Session["usuario"];
+               
                 if (Seguridad.sesionActiva(Session["usuario"]))
                 {
+                    Usuario usuario = (Usuario)Session["usuario"];
                     repHistorial.DataSource = pn.listarPedidosPorUsuario(usuario.IdUsuario);
                     repHistorial.DataBind();
                 }

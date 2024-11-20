@@ -9,6 +9,7 @@ namespace dominio
     public class PedidoDetalle
     {
         public int idDetalle { get; set; }
+        public int idArticulo { get; set; }
         public Articulo articulo { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }

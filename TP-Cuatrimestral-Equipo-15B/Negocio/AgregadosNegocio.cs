@@ -31,6 +31,34 @@ namespace Negocio
             }
         }
 
+        public int BuscarPuntaje(int IDPedido, int IDArticulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_BuscarPuntaje");
+                datos.setearParametros("@IDPedido", IDPedido);
+                datos.setearParametros("@IDArticulo", IDArticulo);      
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return int.Parse(datos.Lector["Puntuacion"].ToString());
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
         public List<Articulo> listarFavoritos(int idUsuario)
         {
             AccesoDatos datos = new AccesoDatos();

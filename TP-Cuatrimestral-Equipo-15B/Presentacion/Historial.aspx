@@ -21,7 +21,7 @@
                                 <p class="card-text"><%# Eval("TipoEntrega") %></p>
                                 <p class="card-text font-weight-bold"><%# Eval("Total") %></p>                                
                                 <p class="card-text text-success"> <%# Convert.ToInt32(Eval("EstadoPedido")) == 5 ? "Entregado" : "" %>                            
-                                <a href="VerCompra.aspx?id=<%# Eval("IdPedido") %> &estadoPedido= <%#Eval("EstadoPedido")%>" class="btn btn-primary">Ver Detalle</a>
+                                <a href="VerCompra.aspx?id=<%# Eval("IdPedido") %>" class="btn btn-primary">Ver Detalle</a>
                             </div>
                         </div>
                     </div>
