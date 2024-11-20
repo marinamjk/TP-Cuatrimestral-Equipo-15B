@@ -542,16 +542,6 @@ begin
 end
 go
 
-Create Procedure sp_listarPedidosPorUsuario(
-@IDUsuario int
-)
-as
-begin
-	Select IdPedido, IDUsuario, FechaPedido, TipoEntrega, IdMetodoPago, EstadoPedido, Total from Pedido
-	where IDUsuario= @IDUsuario
-end
-go
-
 Create Procedure sp_listarDetallePorPedido(
 @IdPedido int
 )

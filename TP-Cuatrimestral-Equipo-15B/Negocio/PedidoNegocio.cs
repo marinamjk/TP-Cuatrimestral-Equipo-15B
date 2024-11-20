@@ -129,14 +129,17 @@ namespace Negocio
            
         }
 
-        public List<Pedido> listarPedidosPorUsuario(int idUsuario)
+        public List<Pedido> listarPedidosPorUsuario(int idUsuario=0)
         {
             AccesoDatos datos= new AccesoDatos();
             List<Pedido> pedidos= new List<Pedido>();
             try
             {
-                datos.setearProcedimiento("sp_listarPedidosPorUsuario");
-                datos.setearParametros("@IdUsuario", idUsuario);
+                string consulta="Select IdPedido, IDUsuario, FechaPedido, TipoEntrega, IdMetodoPago, EstadoPedido, Total from Pedido";
+                if (idUsuario != 0) {
+                    consulta+=(" where IDUsuario = " + idUsuario );
+                }
+                datos.setearConsulta(consulta);    
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -146,6 +149,8 @@ namespace Negocio
                     aux.FechaPedido = DateTime.Parse(datos.Lector["FechaPedido"].ToString());
                     aux.TipoEntrega = datos.Lector["TipoEntrega"].ToString();
                     aux.IdMetodoPago= int.Parse(datos.Lector["IdMetodoPago"].ToString());
+                    MetodoPago metodo= buscarMetodoPago(aux.IdMetodoPago);
+                    aux.MetodoPago= metodo;
                     aux.EstadoPedido = int.Parse(datos.Lector["EstadoPedido"].ToString());
                     aux.Total = decimal.Parse(datos.Lector["Total"].ToString());
                     pedidos.Add(aux);
@@ -162,6 +167,37 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public MetodoPago buscarMetodoPago(int idMetodo)
+        {
+            AccesoDatos datos= new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Select Nombre, Descripcion, Activo from MetodoPago where IdMetodoPago = @IdMetodo");
+                datos.setearParametros("@IdMetodo", idMetodo);
+                datos.ejecutarLectura();
+
+                MetodoPago metodoPago = new MetodoPago();
+                if (datos.Lector.Read())
+                {                    
+                    metodoPago.Nombre = datos.Lector["Nombre"].ToString();
+                    if (!(datos.Lector["Descripcion"] is DBNull))
+                        metodoPago.Descrípcion = datos.Lector["Descripcion"].ToString();
+                    metodoPago.Activo = (bool)datos.Lector["Activo"];
+                    
+                }
+                return metodoPago;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
         public List<PedidoDetalle> listarDetallePorPedido(int IdPedido)
         {

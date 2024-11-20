@@ -13,7 +13,9 @@ namespace dominio
         public int IdPedido { get; set; }
         public string TipoEntrega { get; set; }
         public DateTime FechaPedido { get; set; }
-        public int IdMetodoPago {  get; set; }
+
+        public int IdMetodoPago { get; set; }
+        public MetodoPago MetodoPago {  get; set; }
         public int EstadoPedido { get; set; }   
         public decimal Total {  get; set; }
         //datos que pueden ser de usuario o persona u otro tipo de clase
