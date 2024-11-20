@@ -516,6 +516,16 @@ begin
 end
 go
 
+Create Procedure sp_BuscarPuntaje(
+@IDArticulo int,
+@IDPedido int
+)
+as
+begin
+	Select Puntuacion from Puntajes where IDArticulo=@IDArticulo and IDPedido=@IDPedido
+end
+go
+
 Create or alter Trigger TR_CalcularPuntaje on Puntajes
 after insert
 as
@@ -551,5 +561,13 @@ as
 begin
 	Select IdDetalle, IdArticulo, Cantidad, PrecioUnitario, Subtotal from PedidoDetalle
 	where IdPedido=@IdPedido
+end
+go
+
+Create Procedure sp_CancelarPedido(
+@IdPedido int
+)as
+begin
+Update Pedido set Cancelado=1, EstadoPedido=6 where IdPedido= @IdPedido
 end
 go

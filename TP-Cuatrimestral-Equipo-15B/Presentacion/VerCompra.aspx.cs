@@ -122,7 +122,17 @@ namespace Presentacion
             {
                 if (chkConfirmarCancelacion.Checked)
                 {
-                    //Eliminar
+                    PedidoNegocio pn = new PedidoNegocio();
+                    Pedido pedAct = (Pedido)Session["Pedido"];
+                    if (pedAct.EstadoPedido < 5) {
+                        pn.CancelarPedido(pedAct.IdPedido);
+                        Response.Redirect("Historial.aspx", false);
+                    }
+                    else
+                    {
+                        Session.Add("error", "El pedido no se puede cancelar porque ya ha sido entregado. Consulte devolución");
+                        Response.Redirect("Error.aspx");
+                    }
                 }
             }
             catch (Exception ex)

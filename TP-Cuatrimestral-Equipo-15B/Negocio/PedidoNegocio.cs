@@ -168,6 +168,26 @@ namespace Negocio
             }
         }
 
+        public void CancelarPedido(int IdPedido)
+        {
+            AccesoDatos datos= new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_CancelarPedido");
+                datos.setearParametros("@IdPedido", IdPedido);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
         public MetodoPago buscarMetodoPago(int idMetodo)
         {
             AccesoDatos datos= new AccesoDatos();

@@ -81,12 +81,13 @@
                           <div class="m-3">
                          <asp:Label ID = "lblCalificar" runat="server" class="form-label"></asp:Label>
                          </div>
-                         <%} %>
-
-
+                         <%}
+                             if (valorEstado < 5)
+                             { %>
                     <div class="m-3">
                         <asp:Button ID="btnCancelarCompra" runat="server" Text="Cancelar compra" CssClass="btn btn-danger" OnClick="btnCancelarCompra_Click" />
                     </div>
+             <%}%>
                     <%if (ConfirmarCancelacion)
                         { %>
                     <div class="m-3">
