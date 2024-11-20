@@ -13,19 +13,35 @@ namespace Presentacion
 	public partial class MiPerfil : System.Web.UI.Page
 	{
         public string titulo;
-		protected void Page_Load(object sender, EventArgs e)
+        ProvinciaNegocio provinciaNegocio = new ProvinciaNegocio();
+        protected void Page_Load(object sender, EventArgs e)
 		{
             if (!IsPostBack)
             {
+                CargarProvincias();
                 if (Seguridad.sesionActiva(Session["usuario"]))
                 {
+
                     Usuario us = (Usuario)Session["usuario"];
-                    titulo = us.Nombre;
-                    TbNombre.Text = us.Nombre;
-                    TbApellido.Text = us.Apellido;
-                    TbDocumento.Text = us.Dni;
-                    TbTelefono.Text = us.telefono;
-                    txtCalle.Text = us.Direccion.Calle;
+                    UsuarioManager um= new UsuarioManager();
+                    if (um.buscarDatosPersonales(us))
+                    {
+                        titulo = us.Nombre;
+                        TbNombre.Text = us.Nombre;
+                        TbApellido.Text = us.Apellido;
+                        TbDocumento.Text = us.Dni;
+                        TbTelefono.Text = us.telefono;
+                    }
+                    if (um.buscarDireccion(us))
+                    {
+                        txtCalle.Text = us.Direccion.Calle;
+                        txtCalle.Text = us.Direccion.Calle;
+                        txtCodigoPostal.Text = us.Direccion.Localidad.CodigoPostal.ToString();
+                        txtNumero.Text = us.Direccion.Numero.ToString();
+                        txtLocalidad.Text = us.Direccion.Localidad.Nombre;
+                        DropDownListProvincia.SelectedValue = us.Direccion.Provincia.Id.ToString();
+                    }
+                    
                 }
 
                 TbNombre.Enabled = false;
@@ -38,19 +54,75 @@ namespace Presentacion
                 txtNumero.Enabled = false;
             }
         }
-        protected void btnAgregarDireccion_Click(object sender, EventArgs e)
+
+        private void CargarProvincias()
         {
-
+            List<Provincia> provincias = provinciaNegocio.ObtenerProvincias();
+            DropDownListProvincia.DataSource = provincias;
+            DropDownListProvincia.DataTextField = "Nombre";
+            DropDownListProvincia.DataValueField = "Id";
+            DropDownListProvincia.DataBind();
+            DropDownListProvincia.Items.Insert(0, new ListItem("Seleccione Provincia", ""));
         }
-
         protected void txtCodigoPostal_TextChanged(object sender, EventArgs e)
         {
+            int codogpPostal;
+          
+            if (int.TryParse(txtCodigoPostal.Text, out codogpPostal))
+            {
+                bool esValido = provinciaNegocio.ValidarCodigoPostal(codogpPostal);
 
+                if (esValido)
+                {
+                    lblCPValidacion.Text = "Codigo Postal Valido";
+                    lblCPValidacion.ForeColor = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    lblCPValidacion.Text = "Codigo Postal Invalido ";
+                    lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+                }
+
+            }
+            else
+            {
+                lblCPValidacion.Text = "El Código Postal es invalido";
+                lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+            }
         }
 
         protected void DropDownListProvincia_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            // si la provincia esta seleccionada correctamente
+            if (int.TryParse(DropDownListProvincia.SelectedValue, out int provinciaId))
+            {
+                // si el CP es un numero valido
+                if (int.TryParse(txtCodigoPostal.Text, out int codigoPostal))
+                {
+                    bool esValido = provinciaNegocio.ValidarCodigoPostalPorProvincia(codigoPostal, provinciaId);
+                    // Mensajes de validación
+                    if (esValido)
+                    {
+                        lblCPValidacion.Text = "Código Postal válido para la provincia seleccionada.";
+                        lblCPValidacion.ForeColor = System.Drawing.Color.Green;
+                    }
+                    else
+                    {
+                        lblCPValidacion.Text = "El Código Postal no corresponde a la provincia seleccionada.";
+                        lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+                    }
+                }
+                else
+                {
+                    lblCPValidacion.Text = "El Código Postal ingresado es inválido.";
+                    lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            else
+            {
+                lblCPValidacion.Text = "Seleccione una provincia válida.";
+                lblCPValidacion.ForeColor = System.Drawing.Color.Red;
+            }
         }
 
         protected void BtModificar_click(object sender, EventArgs e)

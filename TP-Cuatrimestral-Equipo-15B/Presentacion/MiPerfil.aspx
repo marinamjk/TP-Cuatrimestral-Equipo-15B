@@ -29,9 +29,7 @@
                     <div class="m-3">
                         <asp:TextBox ID="TbTelefono" runat="server" CssClass="form-control" placeholder="Teléfono" type="text"></asp:TextBox>
                     </div>
-                    <div class="m-3">
-                        <asp:Button ID="btnAgregarDireccion" runat="server" Text="Agregar Direccion" OnClick="btnAgregarDireccion_Click" />
-                    </div>
+               
                 </div>
 
                 <container id="cDireccion">
