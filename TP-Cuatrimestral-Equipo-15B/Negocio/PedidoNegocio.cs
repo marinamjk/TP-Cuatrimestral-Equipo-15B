@@ -168,6 +168,41 @@ namespace Negocio
             }
         }
 
+        public Pedido buscarPedidoPorID(int idPedido)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            Pedido aux = new Pedido();
+            try
+            {
+                datos.setearConsulta("Select IdPedido, IDUsuario, FechaPedido, TipoEntrega, IdMetodoPago, EstadoPedido, Total from Pedido where IdPedido=@IdPedido");
+                datos.setearParametros("@IdPedido", idPedido);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    aux.IdPedido = int.Parse(datos.Lector["IdPedido"].ToString());
+                    aux.IdUsuario = int.Parse(datos.Lector["IDUsuario"].ToString());
+                    aux.FechaPedido = DateTime.Parse(datos.Lector["FechaPedido"].ToString());
+                    aux.TipoEntrega = datos.Lector["TipoEntrega"].ToString();
+                    aux.IdMetodoPago = int.Parse(datos.Lector["IdMetodoPago"].ToString());
+                    MetodoPago metodo = buscarMetodoPago(aux.IdMetodoPago);
+                    aux.MetodoPago = metodo;
+                    aux.EstadoPedido = int.Parse(datos.Lector["EstadoPedido"].ToString());
+                    aux.Total = decimal.Parse(datos.Lector["Total"].ToString());
+                }
+                return aux;
+            
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void CancelarPedido(int IdPedido)
         {
             AccesoDatos datos= new AccesoDatos();
@@ -186,6 +221,25 @@ namespace Negocio
                 datos.cerrarConexion();
             }
 
+        }
+
+        public void cambiarEstadoPedido(Pedido pedido)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Update Pedido set EstadoPedido= EstadoPedido+1 where IdPedido=@IdPedido");
+                datos.setearParametros("@IdPedido", pedido.IdPedido);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
 
         public MetodoPago buscarMetodoPago(int idMetodo)

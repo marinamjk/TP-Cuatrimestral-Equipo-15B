@@ -11,6 +11,7 @@ namespace dominio
     {
         //datos propios del pedido
         public int IdPedido { get; set; }
+        public int IdUsuario { get; set; }
         public string TipoEntrega { get; set; }
         public DateTime FechaPedido { get; set; }
 

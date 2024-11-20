@@ -4,52 +4,106 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
 using Negocio;
 
 namespace Presentacion
 {
     public partial class AdministrarPedido : System.Web.UI.Page
     {
-        ArticuloNegocio artNegocio = new ArticuloNegocio();
+       
         public bool ConfirmaCancelacion { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            gvItemsComprados.DataSource = artNegocio.listarConSP();
-            gvItemsComprados.DataBind();
-
-            ConfirmaCancelacion = false;
             if (!IsPostBack)
             {
-                List<ListItem> items = new List<ListItem>
+                cargarListaDeEstado();
+
+                string idPedido = Request.QueryString["id"];
+
+                Pedido pedActual;
+                PedidoNegocio pn = new PedidoNegocio();
+
+                Usuario usuario = new Usuario();
+                UsuarioManager um = new UsuarioManager();
+
+                if (idPedido != null)
                 {
-                    new ListItem("Pedido Recibido", "1"),
-                    new ListItem("Pago recibido", "2"),
-                    new ListItem("Pedido en preparación", "3"),
-                    new ListItem("Listo para Retirar", "4"),
-                    new ListItem("Pedido retirado", "5"),
-                    //si el pedido es enviado se agregarán los siguientes items en lugar de los dos anteriores
-                    new ListItem("Pedido enviado", "6"),
-                    new ListItem("Pedido entregado", "7"),
-
-                };
-
-                cblEstadoPedido.DataSource = items;
-                cblEstadoPedido.DataTextField = "Text";
-                cblEstadoPedido.DataValueField = "Value";
-                cblEstadoPedido.DataBind();
-
-                cblEstadoPedido.Items[0].Enabled = true;
-
-                // Deshabilitar los demás CheckBoxes
-                for (int i = 1; i < cblEstadoPedido.Items.Count; i++)
-                {
-                    cblEstadoPedido.Items[i].Enabled = false;
+                    gvItemsComprados.DataSource = pn.listarDetallePorPedido(int.Parse(idPedido));
+                    gvItemsComprados.DataBind();
                 }
+                if (!string.IsNullOrEmpty(idPedido))
+                {
+                    int id = int.Parse(idPedido);
+                    pedActual = pn.buscarPedidoPorID(id);
+                   
+
+                    int idUser= pedActual.IdUsuario;
+                    usuario = um.listarUsuarios().FirstOrDefault(u => u.IdUsuario == idUser);
+
+                    lblIDPedido.Text = "ID del Pedido: " + pedActual.IdPedido.ToString();
+                    lblFecha.Text= "Fecha del Pedido: " + pedActual.FechaPedido.ToString("d");
+                    lblTotalCompra.Text = "Total: $" + pedActual.Total;
+                    lblNombre.Text = "Nombre y Apellido: "+ usuario.Nombre +  ", "+ usuario.Apellido;
+                    lblTelefono.Text = "Teléfono: "+usuario.telefono;
+                    lblDireccion.Text= usuario.Direccion.Calle + " "+ usuario.Direccion.Numero.ToString() + " CP: " +usuario.Direccion.Localidad.CodigoPostal.ToString() + " Pcia: " + usuario.Direccion.Provincia.Nombre.ToString();
+
+                }
+
+                ConfirmaCancelacion = false;
+                
             }
 
         }
 
+        protected void cargarListaDeEstado()
+        {
+            string idPedido = Request.QueryString["id"];
+            Pedido pedActual= new Pedido();
+            if (idPedido != null)
+            {
+                int id = int.Parse(idPedido);
+                PedidoNegocio pn = new PedidoNegocio();
+                pedActual = pn.buscarPedidoPorID(id);
+                
+            }
+
+            List<ListItem> items = new List<ListItem>
+            {                
+                new ListItem("Pedido recibido", "1"),
+                new ListItem("Pago recibido", "2"),
+                new ListItem("Pedido en preparación", "3"),
+            };
+
+            if (pedActual.TipoEntrega == "Envio")
+            {
+                items.Add(new ListItem("Pedido enviado", "4"));
+                items.Add(new ListItem("Pedido entregado", "5"));
+            }
+            else
+            {
+                items.Add(new ListItem("Listo para Retirar", "4"));
+                items.Add(new ListItem("Pedido retirado", "5"));
+            }
+
+            cblEstadoPedido.DataSource = items;
+            cblEstadoPedido.DataTextField = "Text";
+            cblEstadoPedido.DataValueField = "Value";
+            cblEstadoPedido.DataBind();
+            
+            for(int i=0; i<pedActual.EstadoPedido; i++)
+            {
+                cblEstadoPedido.Items[i].Selected = true; // Para seleccionarlo
+                cblEstadoPedido.Items[i].Attributes["checked"] = "checked"; // Para marcarlo como "checked"
+                cblEstadoPedido.Items[i].Enabled = false;
+            }
+           
+            // Deshabilitar los demás CheckBoxes
+            for (int i = pedActual.EstadoPedido+1; i < cblEstadoPedido.Items.Count; i++)
+            {
+                cblEstadoPedido.Items[i].Enabled = false;
+            }
+        }
         protected void cblEstadoPedido_SelectedIndexChanged(object sender, EventArgs e)
         {
             for (int i = 0; i < cblEstadoPedido.Items.Count; i++)
@@ -72,6 +126,18 @@ namespace Presentacion
                     break;
                 }
             }
+
+            string idPedido = Request.QueryString["id"];
+            Pedido pedActual = new Pedido();
+            PedidoNegocio pn = new PedidoNegocio();
+
+            if (idPedido != null)
+            {
+                int id = int.Parse(idPedido);                
+                pedActual = pn.buscarPedidoPorID(id);
+                pn.cambiarEstadoPedido(pedActual);
+
+            }
         }
 
         protected void btnCancelarVenta_Click(object sender, EventArgs e)
@@ -85,7 +151,27 @@ namespace Presentacion
             {
                 if (chkConfirmarCancelacion.Checked)
                 {
-                    //cambiar el estado del pedido a cancelado
+                    string idPedido = Request.QueryString["id"];
+                    Pedido pedActual = new Pedido();
+                    PedidoNegocio pn = new PedidoNegocio();
+
+                    if (idPedido != null)
+                    {
+                        int id = int.Parse(idPedido);
+                        pedActual = pn.buscarPedidoPorID(id);  
+                    }
+
+                    if (pedActual.EstadoPedido < 5)
+                    {
+                        pn.CancelarPedido(pedActual.IdPedido);
+                        Response.Redirect("ListaPedidos.aspx", false);
+                    }
+                    else
+                    {
+                        Session.Add("error", "El pedido no se puede cancelar porque ya ha sido entregado");
+                        Response.Redirect("Error.aspx", false);
+                    }
+                    
                 }
 
             }
