@@ -20,7 +20,11 @@
                                 <h5 class="card-title"><%# Eval("FechaPedido", "{0:dd/MM/yyyy}") %></h5>
                                 <p class="card-text"><%# Eval("TipoEntrega") %></p>
                                 <p class="card-text font-weight-bold"><%# Eval("Total") %></p>                                
-                                <p class="card-text text-success"> <%# Convert.ToInt32(Eval("EstadoPedido")) == 5 ? "Entregado" : "" %>                            
+                                     <p class="card-text <%# Convert.ToInt32(Eval("EstadoPedido")) == 5 ? "text-success" : 
+                                                                Convert.ToInt32(Eval("EstadoPedido")) == 6 ? "text-danger" : "" %>">
+                                                             <%# Convert.ToInt32(Eval("EstadoPedido")) == 5 ? "Entregado" : 
+                                                                  Convert.ToInt32(Eval("EstadoPedido")) == 6 ? "Cancelado" : "" %>
+                                      </p>
                                 <a href="VerCompra.aspx?id=<%# Eval("IdPedido") %>" class="btn btn-primary">Ver Detalle</a>
                             </div>
                         </div>

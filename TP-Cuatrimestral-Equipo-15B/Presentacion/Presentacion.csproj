@@ -101,6 +101,7 @@
     <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Historial.aspx" />
+    <Content Include="ListaPedidos.aspx" />
     <Content Include="MetodosPago.aspx" />
     <Content Include="MiPerfil.aspx" />
     <Content Include="Recursos\usuario.png.png" />
@@ -210,6 +211,13 @@
     </Compile>
     <Compile Include="Historial.aspx.designer.cs">
       <DependentUpon>Historial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaPedidos.aspx.cs">
+      <DependentUpon>ListaPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaPedidos.aspx.designer.cs">
+      <DependentUpon>ListaPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="MetodosPago.aspx.cs">
       <DependentUpon>MetodosPago.aspx</DependentUpon>

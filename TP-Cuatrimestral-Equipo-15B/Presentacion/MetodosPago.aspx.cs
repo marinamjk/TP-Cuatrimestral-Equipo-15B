@@ -46,7 +46,7 @@ namespace Presentacion
         {            
             Session["MetodoPago"] = 2; // 2 sería el ID de MercadoPago.
         }
-
+          
         protected void btnFinalizarCompra_Click(object sender, EventArgs e)
         {
             try

@@ -73,6 +73,8 @@
 
 
         <div class="col-6">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+               <ContentTemplate>
             <br />
             <br />
             <div class="mb-3">
@@ -97,8 +99,7 @@
             </div>
 
             <hr />
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <ContentTemplate>
+ 
                     <div class="mb-3">
                         <asp:Button ID="btnFavorito" runat="server" Text="Añadir a Favoritos" OnClick="btnFavorito_Click" />
                         <i id="icon" class="bi <%= esFavorito ? "bi-heart-fill" : "bi-heart" %>"></i>

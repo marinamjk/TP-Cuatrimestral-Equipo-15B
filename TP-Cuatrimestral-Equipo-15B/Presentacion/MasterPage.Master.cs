@@ -40,7 +40,7 @@ namespace Presentacion
                     Response.Redirect("login.aspx", false);
                 }
 
-                if (Page is AdministrarArticulos || Page is AdministrarCategoria || Page is AdministrarColeccion || Page is AltaModArticulo || Page is AdministrarPedido)
+                if (Page is AdministrarArticulos || Page is AdministrarCategoria || Page is AdministrarColeccion || Page is AltaModArticulo || Page is AdministrarPedido || Page is ListaPedidos)
                 {
                     if (!Seguridad.esAdministrador(Session["usuario"]))
                     {

@@ -70,7 +70,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item disabled">Ventas</a></li>
-                                <li><a class="dropdown-item" href=#>Administrar Pedidos</a></li>
+                                <li><a class="dropdown-item" href="ListaPedidos.aspx">Administrar Pedidos</a></li>
                                 <li><a class="dropdown-item" href="AltaModArticulo.aspx">Agregar Artículo</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
