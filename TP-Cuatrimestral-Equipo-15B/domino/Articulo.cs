@@ -22,6 +22,11 @@ namespace dominio
         public int Stock { get; set; }
         public List<Imagen> Imagenes { get; set; }
         public decimal Puntaje { get; set; }
-        public bool Estado {  get; set; }   
+        public bool Estado {  get; set; }
+
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 }

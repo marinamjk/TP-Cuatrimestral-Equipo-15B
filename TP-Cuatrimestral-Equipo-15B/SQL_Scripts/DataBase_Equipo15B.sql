@@ -116,6 +116,7 @@ CREATE TABLE Pedido(
 	TipoEntrega VARCHAR(10) not null,
     IdMetodoPago INT NOT NULL foreign key references MetodoPago(IdMetodoPago),
 	EstadoPedido int not null,
+	Cancelado bit not null default 0,
     Total DECIMAL(10, 2) NOT NULL
 );
 go
@@ -141,9 +142,10 @@ UrlImagen varchar(5000) not null
 go
 
 Create Table Puntajes(
-IDArticulo int,
-IDPedido int,
-Puntuacion int not null check (Puntuacion>=1 and Puntuacion <=10)
+IDArticulo int not null,
+IDPedido int not null,
+Puntuacion int not null check (Puntuacion>=1 and Puntuacion <=10),
+Primary key(IDArticulo, IDPedido)
 )
 go
 
@@ -514,6 +516,16 @@ begin
 end
 go
 
+Create Procedure sp_BuscarPuntaje(
+@IDArticulo int,
+@IDPedido int
+)
+as
+begin
+	Select Puntuacion from Puntajes where IDArticulo=@IDArticulo and IDPedido=@IDPedido
+end
+go
+
 Create or alter Trigger TR_CalcularPuntaje on Puntajes
 after insert
 as
@@ -549,5 +561,13 @@ as
 begin
 	Select IdDetalle, IdArticulo, Cantidad, PrecioUnitario, Subtotal from PedidoDetalle
 	where IdPedido=@IdPedido
+end
+go
+
+Create Procedure sp_CancelarPedido(
+@IdPedido int
+)as
+begin
+Update Pedido set Cancelado=1, EstadoPedido=6 where IdPedido= @IdPedido
 end
 go

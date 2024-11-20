@@ -168,6 +168,26 @@ namespace Negocio
             }
         }
 
+        public void CancelarPedido(int IdPedido)
+        {
+            AccesoDatos datos= new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("sp_CancelarPedido");
+                datos.setearParametros("@IdPedido", IdPedido);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
         public MetodoPago buscarMetodoPago(int idMetodo)
         {
             AccesoDatos datos= new AccesoDatos();
@@ -214,8 +234,8 @@ namespace Negocio
                 {
                     PedidoDetalle aux = new PedidoDetalle();
                     aux.idDetalle = int.Parse(datos.Lector["IdDetalle"].ToString());
-                    int idArt= int.Parse(datos.Lector["IdArticulo"].ToString());
-                    aux.articulo = an.buscarArticuloXId(idArt);
+                    aux.idArticulo= int.Parse(datos.Lector["IdArticulo"].ToString());
+                    aux.articulo = an.buscarArticuloXId(aux.idArticulo);
                     aux.Cantidad = int.Parse(datos.Lector["Cantidad"].ToString());
                     aux.PrecioUnitario = decimal.Parse(datos.Lector["PrecioUnitario"].ToString());
                     if (!(datos.Lector["Subtotal"] is DBNull))
