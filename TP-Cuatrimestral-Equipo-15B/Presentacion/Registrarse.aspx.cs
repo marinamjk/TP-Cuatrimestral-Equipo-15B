@@ -72,7 +72,7 @@ namespace Presentacion
                 }
                
                 Session.Add("usuario", usuario);
-                emailService.armarCorreo(usuario.Mail, "Bienvenida", "Hola, Te has registrado exitosamente a nuestra pagina");
+                emailService.armarCorreo(usuario.Mail, "Bienvenida", "Hola, Te has registrado exitosamente a nuestra pagina. <div>Su usuario es: "+ usuario.Mail+"</div><div>Su contraseña es: "+ usuario.Contraseña+"</div>");
                 emailService.enviarEmail();
 
                 Response.Redirect("Default.aspx", false);

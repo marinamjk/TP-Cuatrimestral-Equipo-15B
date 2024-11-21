@@ -177,11 +177,14 @@ namespace Presentacion
                 pedidoNegocio.GuardarDetallesPedido(idNuevoPedido, articulos);
 
                 CarritoNegocio cn= new CarritoNegocio();
+                EmailService emailService = new EmailService();
                 cn.VaciarCarrito();
 
                 if (registrarse)
                 {
                     um.ModificarEstadoUsuario(usuario.IdUsuario, true);
+                    emailService.armarCorreo(usuario.Mail, "Bienvenida", "Hola, Te has registrado exitosamente a nuestra pagina. <div>Su usuario es: " + usuario.Mail + "</div><div>Su contraseña es: " + usuario.Contraseña + "</div>");
+                    emailService.enviarEmail();
                 }
 
                 Response.Redirect("~/ConfirmacionCompra.aspx", false);
