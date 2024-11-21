@@ -94,23 +94,22 @@
                         <asp:DropDownList ID="DropDownListProvincia" runat="server" CssClass="form-select form-select-lg" placeholder="Provincia" OnSelectedIndexChanged="DropDownListProvincia_SelectedIndexChanged" AutoPostBack="true">
                         </asp:DropDownList>
                     </div>
-                      
-                  </fieldset>
-                  
-                    <%if (!ModificarDireccion)
-                      { %>
-                         <div class="d-flex justify-content-end m-3">
-                            <asp:Button ID="BtModificarDireccion" runat="server" Text="Modificar" CssClass="btn btn-danger" OnClick="BtModificarDireccion_Click" />
-                         </div>
-   
-                       <% }
-                       else
-                       { %>
-                         <div class="d-flex justify-content-end m-3"">           
-                           <asp:Button ID="BtGuardarDireccion" runat="server" Text="Guardar" CssClass="btn btn-primary form-group col-md-2"  OnClick="BtGuardarDireccion_Click" />
-                           </div>
-                      <% }%>
-                  </div>              
-          </div>
-     
+
+                    <div class="row">
+                        <div class="m-3">
+                            <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Guardar" />
+                        </div>
+                    </div>
+                </container>
+            </div>
+    <div class="row">
+        <div class="d-flex justify-content-end m-3">
+            <asp:Button ID="BtModificar" runat="server" Text="Modificar" CssClass="btn btn-primary form-group col-md-2" OnClick="BtModificar_click"/>
+            <%if (((dominio.Usuario)Session["usuario"]).modificar)
+              {%>
+            <asp:Button ID="BtAceptar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Aceptar" OnClick="BtAceptar_Click" />
+            <%} %>
+        </div>
+    </div>
+    </div>
 </asp:Content>
