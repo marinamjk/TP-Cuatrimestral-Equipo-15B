@@ -19,12 +19,13 @@ namespace Presentacion
                 if (!IsPostBack)
                 {
                     ArticuloNegocio negocio = new ArticuloNegocio();
-            
-                    catalogo= negocio.listarConSP().Where(a=>a.Estado==true).ToList();  
-                    
+                    CategoriaNegocio categorias = new CategoriaNegocio();
+                    catalogo= negocio.listarConSP().Where(a=>a.Estado==true).ToList();
+                    var categoria = categorias.listarCategorias();
                     repArticulos.DataSource = catalogo;
-                    repArticulos.DataBind();                    
-
+                    repArticulos.DataBind();
+                    ddlCategoria.DataSource = categoria;
+                    ddlCategoria.DataBind();
                 }
             }
             catch (Exception ex)
@@ -55,6 +56,19 @@ namespace Presentacion
                 imgArticulo.ImageUrl = "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ="; // Ruta a una imagen predeterminada
             }
             
+        }
+
+        protected void BtAceptar_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            CategoriaNegocio categorias = new CategoriaNegocio();
+            int IdCategoria = ddlCategoria.SelectedIndex+1;
+            var Articulos = negocio.listarFiltrado(IdCategoria);
+            var categoria = categorias.listarCategorias();
+            repArticulos.DataSource = Articulos;
+            repArticulos.DataBind();
+            ddlCategoria.DataSource = categoria;
+            ddlCategoria.DataBind();
         }
     }
 }

@@ -32,7 +32,8 @@
             <div class="m-3">
                 <asp:Label ID="lblCategorias" runat="server" Text="Categorias: "></asp:Label>
                 <asp:DropDownList ID="ddlCategoria" runat="server"></asp:DropDownList>
-                <asp:DropDownList ID="ddlSubCategoria" runat="server"></asp:DropDownList>
+                <asp:Button runat="server" Text="Buscar" CssClass="btn btn-primary" ID="BtAceptar" OnClick="BtAceptar_Click"></asp:Button>
+                
                 <%--  <asp:Button ID="btnQuitarFiltroCategorias" runat="server" CssClass="icon-button" Text="Quitar filtro" OnClick="btnQuitarFiltroCategorias_Click" />--%>
             </div>
             <div class="col-12">

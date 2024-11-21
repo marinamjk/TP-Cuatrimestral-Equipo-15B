@@ -157,7 +157,9 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        public void filtrar()
+        {
 
-
+        }
     }
 }
