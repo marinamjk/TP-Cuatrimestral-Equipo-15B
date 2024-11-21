@@ -63,11 +63,13 @@
             </div>
     <div class="row">
         <div class="d-flex justify-content-end m-3">
-            <asp:Button ID="BtModificar" runat="server" Text="Modificar" CssClass="btn btn-primary form-group col-md-2" OnClick="BtModificar_click"/>
             <%if (((dominio.Usuario)Session["usuario"]).modificar)
-              {%>
-            <asp:Button ID="BtAceptar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Aceptar" OnClick="BtAceptar_Click" />
-            <%} %>
+                {%>
+                <asp:Button ID="BtAceptar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Aceptar" OnClick="BtAceptar_Click" />
+            <%}
+             else {%> 
+                     <asp:Button ID="BtModificar" runat="server" Text="Modificar" CssClass="btn btn-primary form-group col-md-2" OnClick="BtModificar_click"/>
+             <%}%>
         </div>
     </div>
     </div>
