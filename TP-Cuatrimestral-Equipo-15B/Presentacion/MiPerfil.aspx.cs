@@ -210,5 +210,11 @@ namespace Presentacion
             Session["usuario"] = usuario;
             Response.Redirect("MiPerfil.aspx", false);
         }
+
+        protected void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            ModificarDatos = false;
+            Response.Redirect("MiPerfil.aspx", false);
+        }
     }
 }

@@ -26,6 +26,8 @@ namespace Presentacion
                     repArticulos.DataBind();
                     ddlCategoria.DataSource = categoria;
                     ddlCategoria.DataBind();
+                    ddlOrdenamiento.Items.Add("Menor a Mayor");
+                    ddlOrdenamiento.Items.Add("Mayor a Menor");
                 }
             }
             catch (Exception ex)
@@ -69,6 +71,23 @@ namespace Presentacion
             repArticulos.DataBind();
             ddlCategoria.DataSource = categoria;
             ddlCategoria.DataBind();
+        }
+
+        protected void Bordenar_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            catalogo = negocio.listarConSP().Where(a => a.Estado == true).ToList();
+            List<Articulo> articulo_ordenado = new List<Articulo>();
+            if (ddlOrdenamiento.Text == "Mayor a Menor")
+            {
+                articulo_ordenado = catalogo.OrderByDescending(a => a.Precio).ToList();
+            }
+            else
+            {
+                articulo_ordenado = catalogo.OrderBy(a => a.Precio).ToList();
+            }
+            repArticulos.DataSource = articulo_ordenado;
+            repArticulos.DataBind();
         }
     }
 }

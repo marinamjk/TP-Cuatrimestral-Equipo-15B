@@ -63,9 +63,8 @@
                 <% }
                     else
                     { %>
-
-                <asp:Button ID="btnGuardarDatos" runat="server" Text="Guardar" CssClass="btn btn-primary form-group col-md-2" OnClick="btnGuardarDatos_Click" />
-
+                        <asp:Button ID="btnGuardarDatos" runat="server" Text="Guardar" CssClass="btn btn-primary form-group col-md-2" OnClick="btnGuardarDatos_Click" />
+                        <asp:Button ID="BtnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-primary form-group col-md-2" OnClick="BtnCancelar_Click" />
                 <% }%>
             </div>
         </div>
@@ -103,15 +102,12 @@
                 <div class="d-flex justify-content-end m-3">
                     <%if (!ModificarDireccion)
                         { %>
-                    <asp:Button ID="btnModificarDireccion" runat="server" Text="Modificar" CssClass="btn btn-danger" OnClick="btnModificarDireccion_Click" />
-
-
+                            <asp:Button ID="btnModificarDireccion" runat="server" Text="Modificar" CssClass="btn btn-danger" OnClick="btnModificarDireccion_Click" />
                     <% }
                         else
                         { %>
-
-                    <asp:Button ID="btnGuardarDireccion" runat="server" Text="Guardar" CssClass="btn btn-primary form-group col-md-2" OnClick="btnGuardarDireccion_Click" />
-
+                            <asp:Button ID="btnGuardarDireccion" runat="server" Text="Guardar" CssClass="btn btn-primary form-group col-md-2" OnClick="btnGuardarDireccion_Click" />
+                            <asp:Button ID="BtCancelar" runat="server" Text="Cancelar" CssClass="btn btn-primary form-group col-md-2" OnClick="BtnCancelar_Click" />
                     <% }%>
                 </div>
             </div>

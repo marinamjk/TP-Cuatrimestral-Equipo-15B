@@ -69,6 +69,15 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.DropDownList ddlOrdenamiento;
 
         /// <summary>
+        /// Control Bordenar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Bordenar;
+
+        /// <summary>
         /// Control repArticulos.
         /// </summary>
         /// <remarks>

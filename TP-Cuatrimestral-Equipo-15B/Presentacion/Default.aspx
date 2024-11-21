@@ -28,8 +28,7 @@
                 <asp:TextBox ID="txtBusqueda" CssClass="form-control me-2" runat="server" PlaceHolder="Búsqueda por nombre o descripción"></asp:TextBox>
             </div>
         </div>
-        <div class="col-11">
-            <div class="m-3">
+        <div class="col-11">            <div class="m-3">
                 <asp:Label ID="lblCategorias" runat="server" Text="Categorias: "></asp:Label>
                 <asp:DropDownList ID="ddlCategoria" runat="server"></asp:DropDownList>
                 <asp:Button runat="server" Text="Buscar" CssClass="btn btn-primary" ID="BtAceptar" OnClick="BtAceptar_Click"></asp:Button>
@@ -40,8 +39,10 @@
                 <div class="text-end">
                     <asp:Label ID="lblOrdenamiento" runat="server" Text="Ordenar Por:"></asp:Label>
                     <asp:DropDownList ID="ddlOrdenamiento" runat="server"></asp:DropDownList>
+                    <asp:Button ID="Bordenar" runat="server" Text="Ordenar" CssClass="btn btn-primary" OnClick="Bordenar_Click"></asp:Button>
                 </div>
             </div>
+                    
         </div>
     </div>
     <br />

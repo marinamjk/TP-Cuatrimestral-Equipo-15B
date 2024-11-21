@@ -78,6 +78,15 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.Button btnGuardarDatos;
 
         /// <summary>
+        /// Control BtnCancelar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCancelar;
+
+        /// <summary>
         /// Control txtCalle.
         /// </summary>
         /// <remarks>
@@ -148,5 +157,14 @@ namespace Presentacion
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardarDireccion;
+
+        /// <summary>
+        /// Control BtCancelar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtCancelar;
     }
 }
