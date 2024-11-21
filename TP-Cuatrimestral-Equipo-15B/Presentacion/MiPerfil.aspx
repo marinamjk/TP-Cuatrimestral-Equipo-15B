@@ -100,7 +100,7 @@
                             <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-primary form-group col-md-2" Text="Guardar" />
                         </div>
                     </div>
-                </container>
+                </fieldset>
             </div>
     <div class="row">
         <div class="d-flex justify-content-end m-3">

@@ -132,13 +132,13 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.DropDownList DropDownListProvincia;
 
         /// <summary>
-        /// Control BtModificarDireccion.
+        /// Control btnGuardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtModificarDireccion;
+        protected global::System.Web.UI.WebControls.Button btnGuardar;
 
         /// <summary>
         /// Control BtModificar.
