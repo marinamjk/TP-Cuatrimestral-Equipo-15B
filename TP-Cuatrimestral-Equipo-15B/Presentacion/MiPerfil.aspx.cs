@@ -132,7 +132,7 @@ namespace Presentacion
         }
                        
 
-        protected void BtGuardarDireccion_Click(object sender, EventArgs e)
+        protected void btnGuardarDireccion_Click(object sender, EventArgs e)
         {
             Usuario usuario = ((Usuario)Session["usuario"]);
             UsuarioManager Usuarios = new UsuarioManager();
@@ -164,7 +164,7 @@ namespace Presentacion
             Response.Redirect("MiPerfil.aspx", false);
         }
 
-         protected void BtModificarDireccion_Click(object sender, EventArgs e)
+         protected void btnModificarDireccion_Click(object sender, EventArgs e)
         {
             txtCalle.Enabled = true;
             txtCodigoPostal.Enabled = true;
