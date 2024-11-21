@@ -186,7 +186,8 @@ namespace Presentacion
                     emailService.armarCorreo(usuario.Mail, "Bienvenida", "Hola, Te has registrado exitosamente a nuestra pagina. <div>Su usuario es: " + usuario.Mail + "</div><div>Su contraseña es: " + usuario.Contraseña + "</div>");
                     emailService.enviarEmail();
                 }
-
+                emailService.armarCorreo(usuario.Mail, "Compra", "Gracias por su compra, le estaremos informando el estado de la misma.");
+                emailService.enviarEmail();
                 Response.Redirect("~/ConfirmacionCompra.aspx", false);
             }
             catch (Exception ex)
