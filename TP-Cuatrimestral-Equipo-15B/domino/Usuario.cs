@@ -12,11 +12,7 @@ namespace dominio
         ADMIN = 1
     }
     public class Usuario
-    {
-        public Usuario()
-        {
-            modificar = false;
-        }
+    {    
         public int IdUsuario { get; set; }
         public int? IdDatosPersonales { get; set; }
 
@@ -29,8 +25,7 @@ namespace dominio
         public string Contraseña { get; set; }
         public tipoUsuario tipoUsuario{ get; set; }
         public Direccion Direccion { get; set; }
-        public string Foto {  get; set; }       
-        public bool modificar {  get; set; }
+        public string Foto {  get; set; }    
         public bool Estado { get; set; }
         public bool esAdministrador()
         {

@@ -17,6 +17,7 @@ namespace Presentacion
             if (!Seguridad.sesionActiva(Session["usuario"])) 
             {
                 Inicio = "Iniciar Sesión";
+                ImagenPerfil.ImageUrl = "Recursos/usuario.png";
             }
             else
             {
@@ -30,6 +31,17 @@ namespace Presentacion
                     string nombre = ((Usuario)Session["usuario"]).Mail.Substring(0,index);
                     Inicio = nombre;
                 }
+
+                if (((Usuario)Session["usuario"]).Foto != null)
+                {
+                    ImagenPerfil.ImageUrl = ((Usuario)Session["usuario"]).Foto;
+                }
+                else
+                {                    
+                    ImagenPerfil.ImageUrl = "Recursos/usuario.png";
+                    
+                }
+              
             }
             //si hay un usuario ingresado cambiar Inicio a nombre de usuario
 

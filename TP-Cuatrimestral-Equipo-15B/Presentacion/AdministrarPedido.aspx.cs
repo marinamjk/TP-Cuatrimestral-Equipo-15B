@@ -130,13 +130,60 @@ namespace Presentacion
             string idPedido = Request.QueryString["id"];
             Pedido pedActual = new Pedido();
             PedidoNegocio pn = new PedidoNegocio();
+            EmailService emailService = new EmailService();
+
+            Usuario usuario = new Usuario();
+            UsuarioManager um = new UsuarioManager();
+            
 
             if (idPedido != null)
             {
                 int id = int.Parse(idPedido);                
                 pedActual = pn.buscarPedidoPorID(id);
+
+                int idUser = pedActual.IdUsuario;
+                usuario = um.listarUsuarios().FirstOrDefault(u => u.IdUsuario == idUser);
+
                 pn.cambiarEstadoPedido(pedActual);
 
+                string mensaje="";
+                switch (pedActual.EstadoPedido)
+                {
+                    case 1:
+                        mensaje = "Hemos recibido su Pedido";
+                        break;
+                    case 2:
+                        mensaje = "Hemos recibido su Pago";
+                        break;
+                    case 3:
+                        mensaje = "Su Pedido está en preparación";
+                        break;
+                    case 4:
+                        if (pedActual.TipoEntrega == "Envio")
+                        {
+                            mensaje = "Su pedido está en camino";
+                        }
+                        else
+                        {
+                            mensaje = "Su pedido está Listo para Retirar";
+                        }
+                        break;
+                    case 5:
+                        if (pedActual.TipoEntrega == "Envio")
+                        {
+                            mensaje = "Su pedido ha sido entregado";
+                        }
+                        else
+                        {
+                            mensaje = "Su Pedido ha sido Retirado";
+                        }
+                        break;
+                    case 6:
+                        mensaje = "Su pedido ha sido Cancelado";
+                        break;                 
+                }
+                emailService.armarCorreo(usuario.Mail, "Estado de su Pedido", mensaje);
+                emailService.enviarEmail();
             }
         }
 

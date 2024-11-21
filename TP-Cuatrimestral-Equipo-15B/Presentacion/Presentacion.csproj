@@ -104,7 +104,7 @@
     <Content Include="ListaPedidos.aspx" />
     <Content Include="MetodosPago.aspx" />
     <Content Include="MiPerfil.aspx" />
-    <Content Include="Recursos\usuario.png.png" />
+    <Content Include="Recursos\usuario.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

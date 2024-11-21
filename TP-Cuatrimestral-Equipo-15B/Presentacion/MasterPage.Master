@@ -18,14 +18,14 @@
         <asp:ScriptManager runat="server" />
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid d-flex">
-                <a class="navbar-brand" href="Default.aspx">E-Commerce</a>
+                <a class="navbar-brand" href="Default.aspx">Home</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="Recursos/usuario.png" alt="Iniciar Sesión" width="30" height="30" class="d-inline-block" style="margin-right: 10px;">
+                            <asp:Image ID="ImagenPerfil" runat="server" alt="Iniciar Sesión" width="30" height="30" class="card-img-top rounded-circle" style="margin-right: 10px;"/>
                                 <%=Inicio%></a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <%if (!(Negocio.Seguridad.sesionActiva(Session["usuario"])))

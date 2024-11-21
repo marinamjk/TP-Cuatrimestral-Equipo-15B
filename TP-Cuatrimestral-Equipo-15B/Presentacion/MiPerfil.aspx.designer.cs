@@ -15,6 +15,15 @@ namespace Presentacion
     {
 
         /// <summary>
+        /// Control ImagePerfil.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image ImagePerfil;
+
+        /// <summary>
         /// Control TbNombre.
         /// </summary>
         /// <remarks>
@@ -51,13 +60,22 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.TextBox TbTelefono;
 
         /// <summary>
-        /// Control btnAgregarDireccion.
+        /// Control btnModificarDatos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarDireccion;
+        protected global::System.Web.UI.WebControls.Button btnModificarDatos;
+
+        /// <summary>
+        /// Control btnGuardarDatos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardarDatos;
 
         /// <summary>
         /// Control txtCalle.
@@ -114,30 +132,21 @@ namespace Presentacion
         protected global::System.Web.UI.WebControls.DropDownList DropDownListProvincia;
 
         /// <summary>
-        /// Control btnGuardar.
+        /// Control btnModificarDireccion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardar;
+        protected global::System.Web.UI.WebControls.Button btnModificarDireccion;
 
         /// <summary>
-        /// Control BtModificar.
+        /// Control btnGuardarDireccion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtModificar;
-
-        /// <summary>
-        /// Control BtAceptar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtAceptar;
+        protected global::System.Web.UI.WebControls.Button btnGuardarDireccion;
     }
 }
