@@ -72,8 +72,12 @@ namespace Presentacion
 
         public void cargarDescripcionEstado()
         {
+           
             Pedido pedActual = (Pedido)Session["Pedido"];
-            valorEstado = pedActual.EstadoPedido;         
+            if (pedActual != null)
+            {
+                valorEstado = pedActual.EstadoPedido;
+            }    
             switch (valorEstado)
             {
                 case 1:
