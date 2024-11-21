@@ -35,7 +35,12 @@ namespace Presentacion
                 if (((Usuario)Session["usuario"]).Foto != null)
                 {
                     ImagenPerfil.ImageUrl = ((Usuario)Session["usuario"]).Foto;
-                }     
+                }
+                else
+                {                    
+                    ImagenPerfil.ImageUrl = "Recursos/usuario.png";
+                    
+                }
               
             }
             //si hay un usuario ingresado cambiar Inicio a nombre de usuario
