@@ -91,17 +91,18 @@ namespace Presentacion
             cblEstadoPedido.DataValueField = "Value";
             cblEstadoPedido.DataBind();
             
-            for(int i=0; i<pedActual.EstadoPedido; i++)
+            for(int i=0; i<pedActual.EstadoPedido-1; i++)
             {
                 cblEstadoPedido.Items[i].Selected = true; // Para seleccionarlo
                 cblEstadoPedido.Items[i].Attributes["checked"] = "checked"; // Para marcarlo como "checked"
                 cblEstadoPedido.Items[i].Enabled = false;
             }
-           
-            // Deshabilitar los demás CheckBoxes
-            for (int i = pedActual.EstadoPedido+1; i < cblEstadoPedido.Items.Count; i++)
-            {
-                cblEstadoPedido.Items[i].Enabled = false;
+            if (pedActual.EstadoPedido + 1 < cblEstadoPedido.Items.Count)
+            {                // Deshabilitar los demás CheckBoxes
+                for (int i = pedActual.EstadoPedido + 1; i < cblEstadoPedido.Items.Count; i++)
+                {
+                    cblEstadoPedido.Items[i].Enabled = false;
+                }
             }
         }
         protected void cblEstadoPedido_SelectedIndexChanged(object sender, EventArgs e)
