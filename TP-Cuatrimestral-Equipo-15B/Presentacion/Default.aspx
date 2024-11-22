@@ -23,11 +23,11 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
-        <div class="col-6">
+<%--        <div class="col-6">
             <div class="m-6">
                 <asp:TextBox ID="txtBusqueda" CssClass="form-control me-2" runat="server" PlaceHolder="Búsqueda por nombre o descripción"></asp:TextBox>
             </div>
-        </div>
+        </div>--%>
         <div class="col-11">            <div class="m-3">
                 <asp:Label ID="lblCategorias" runat="server" Text="Categorias: "></asp:Label>
                 <asp:DropDownList ID="ddlCategoria" runat="server"></asp:DropDownList>
