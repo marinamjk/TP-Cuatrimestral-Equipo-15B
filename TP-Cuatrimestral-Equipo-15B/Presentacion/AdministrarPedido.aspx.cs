@@ -52,7 +52,11 @@ namespace Presentacion
                 }
 
                 ConfirmaCancelacion = false;
-                
+
+            }
+            else
+            {
+                cargarEstadoActual();
             }
 
         }
@@ -92,12 +96,33 @@ namespace Presentacion
             cblEstadoPedido.DataValueField = "Value";
             cblEstadoPedido.DataBind();
 
+            cargarEstadoActual();
+        }
+
+        public void cargarEstadoActual()
+        {
+            string idPedido = Request.QueryString["id"];
+            Pedido pedActual = new Pedido();
+            if (idPedido != null)
+            {
+                int id = int.Parse(idPedido);
+                PedidoNegocio pn = new PedidoNegocio();
+                pedActual = pn.buscarPedidoPorID(id);
+
+            }
             if (pedActual.EstadoPedido < cblEstadoPedido.Items.Count)
             {
                 for (int i = 0; i < pedActual.EstadoPedido; i++)
                 {
                     cblEstadoPedido.Items[i].Selected = true; // Para seleccionarlo
                     cblEstadoPedido.Items[i].Attributes["checked"] = "checked"; // Para marcarlo como "checked"
+                    cblEstadoPedido.Items[i].Enabled = false;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < cblEstadoPedido.Items.Count; i++)
+                {
                     cblEstadoPedido.Items[i].Enabled = false;
                 }
             }
