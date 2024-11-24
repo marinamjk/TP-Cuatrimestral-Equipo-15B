@@ -54,24 +54,35 @@ namespace Presentacion
                 UsuarioManager um = new UsuarioManager();
                 EmailService emailService = new EmailService();
                 usuario.Mail = txtEmail.Text;
+                string contrasenia= string.Empty;
+                
                 if (txtContraseña.Text == txtContraseña2.Text && txtContraseña.Text != string.Empty)
                 {
-                    usuario.Contraseña = txtContraseña.Text;
+                    contrasenia = txtContraseña.Text;
+                } else
+                {
+                    Session.Add("error", "Las contraseñas no coinciden o no son válidas, por favor, vuelva a intentarlo");
+                    Response.Redirect("Error.aspx", false);
+                    return;
                 }
+                usuario.Contraseña = contrasenia;
                 usuario.Estado = true;
-
+               
                 var usuarioExistente = um.listarUsuarios().FirstOrDefault(u => u.Mail == usuario.Mail && u.Estado == false);
 
                 if (usuarioExistente != null)
-                {
+                {              
                     um.ModificarEstadoUsuario(usuarioExistente.IdUsuario, true);
+                    um.modificarContrasenia(usuarioExistente, contrasenia);
+                    Session.Add("usuario", usuarioExistente);
                 }
                 else
                 {
                     usuario.IdUsuario = um.agregarUsuario(usuario);
+                    Session.Add("usuario", usuario);
                 }
                
-                Session.Add("usuario", usuario);
+                
                 emailService.armarCorreo(usuario.Mail, "Bienvenida", "Hola, Te has registrado exitosamente a nuestra pagina. <div>Su usuario es: "+ usuario.Mail+"</div><div>Su contraseña es: "+ usuario.Contraseña+"</div>");
                 emailService.enviarEmail();
 

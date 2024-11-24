@@ -178,6 +178,27 @@ namespace Negocio
             }
         }
 
+        public void modificarContrasenia(Usuario usuario, string contrasenia)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try 
+            {          
+                datos.setearConsulta("Update Usuarios set Contrasenia=@Contrasenia where IDUsuario=@IDUsuario");
+                datos.setearParametros("@Contrasenia", contrasenia);
+                datos.setearParametros("@IDUsuario", usuario.IdUsuario);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public bool buscarDatosPersonales(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
