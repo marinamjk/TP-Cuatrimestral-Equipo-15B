@@ -214,6 +214,9 @@ namespace Presentacion
         protected void BtnCancelar_Click(object sender, EventArgs e)
         {
             ModificarDatos = false;
+            ModificarDireccion = false;
+            string script = "document.getElementById('fieldsetDireccion').disabled = false;";
+            ScriptManager.RegisterStartupScript(this, GetType(), "DisableFieldset", script, true);
             Response.Redirect("MiPerfil.aspx", false);
         }
     }

@@ -133,23 +133,44 @@ namespace Presentacion
                     
                 }
 
-                if (!um.verificarDatosPersonales(usuario.IdUsuario))
+                //verificar si el usuario con cuenta activa o inactiva tiene datos
+                
+                //si es usuario activo y no tiene datos, agregar, sino no se hace nada, porque desde aca no se pueden modificar
+                if (!um.verificarDatosPersonales(usuario.IdUsuario) && (um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
                 {                    
                     um.agregarDatosPersonales(usuario);
+                }            
+                
+                if(um.verificarDireccion(usuario.IdUsuario) && (um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
+                {
+                    um.ModificarDatosPersonales(usuario);
+                    
                 }
-                else if(!(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
+
+                //Si es un usuario inactivo, los datos no se precargan, por eso si se agregar o modificar los de la base
+
+                if (!um.verificarDatosPersonales(usuario.IdUsuario) && (um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == false)))
+                {
+                    um.agregarDatosPersonales(usuario);
+
+                } else if(um.verificarDatosPersonales(usuario.IdUsuario) && (um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == false)))
                 {
                     um.ModificarDatosPersonales(usuario);
                 }
 
-                if (!um.verificarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio")
-                {                   
-                    um.agregarDireccion(direccion, usuario.IdUsuario);
-                }
-                else if(um.verificarDireccion(usuario.IdUsuario) && tipoEntrega == "Envio" && !(um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == true)))
+                if(tipoEntrega== "Envio")
                 {
-                    um.ModificarDireccion(direccion, usuario.IdUsuario);
+                    if (!um.verificarDireccion(usuario.IdUsuario) && (um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == false)))
+                    {
+                        um.agregarDireccion(direccion, usuario.IdUsuario);
+                    }
+                    else if (um.verificarDireccion(usuario.IdUsuario) && (um.listarUsuarios().Any(c => c.Mail == usuario.Mail && c.Estado == false)))
+                    {
+                        um.ModificarDireccion(direccion, usuario.IdUsuario);
+                    }
                 }
+         
+               
 
                 // Crear objeto Pedido con los datos del cliente
                 var pedido = new Pedido

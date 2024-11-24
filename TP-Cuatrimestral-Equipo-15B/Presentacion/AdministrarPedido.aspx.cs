@@ -46,7 +46,8 @@ namespace Presentacion
                     lblTotalCompra.Text = "Total: $" + pedActual.Total;
                     lblNombre.Text = "Nombre y Apellido: "+ usuario.Nombre +  ", "+ usuario.Apellido;
                     lblTelefono.Text = "Teléfono: "+usuario.telefono;
-                    lblDireccion.Text= usuario.Direccion.Calle + " "+ usuario.Direccion.Numero.ToString() + " CP: " +usuario.Direccion.Localidad.CodigoPostal.ToString() + " Pcia: " + usuario.Direccion.Provincia.Nombre.ToString();
+                    if(um.verificarDireccion(usuario.IdUsuario))
+                        lblDireccion.Text= usuario.Direccion.Calle + " "+ usuario.Direccion.Numero.ToString() + " CP: " +usuario.Direccion.Localidad.CodigoPostal.ToString() + " Pcia: " + usuario.Direccion.Provincia.Nombre.ToString();
 
                 }
 
