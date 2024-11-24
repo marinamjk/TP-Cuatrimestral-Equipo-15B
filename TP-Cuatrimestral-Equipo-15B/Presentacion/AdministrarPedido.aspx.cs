@@ -92,7 +92,7 @@ namespace Presentacion
             cblEstadoPedido.DataValueField = "Value";
             cblEstadoPedido.DataBind();
             
-            for(int i=0; i<pedActual.EstadoPedido-1; i++)
+            for(int i=0; i<pedActual.EstadoPedido; i++)
             {
                 cblEstadoPedido.Items[i].Selected = true; // Para seleccionarlo
                 cblEstadoPedido.Items[i].Attributes["checked"] = "checked"; // Para marcarlo como "checked"
