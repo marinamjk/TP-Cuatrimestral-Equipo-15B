@@ -143,9 +143,16 @@
                             <strong>Total</strong>
                             <asp:Label ID="lblTotal" runat="server"></asp:Label> 
                         </div>
-
-                       
-                        <a href="#" class="btn btn-primary mt-3 w-100">Agregar cupón de descuento</a>
+                            <%if (!agregarCupon)
+                              {%>
+                                    <asp:Button ID="BtDescuento" runat="server" Text="Agregar cupón de descuento" CssClass="btn btn-primary btn-lg px-4 py-2" OnClick="BtDescuento_Click" />
+                              <%}
+                              else
+                              {%>
+                                    <asp:TextBox ID="TbCupon" runat="server" CssClass="form-control form-control-lg row"></asp:TextBox>
+                                    <asp:Button ID="BtAceptar" runat="server" Text="Aceptar" CssClass="btn btn-primary"/>
+                                    <asp:Button ID="BtCancelar" runat="server" Text="Cancelar" CssClass="btn btn-primary"/>
+                              <%} %>
                     </div>
                 </div>
             </div>

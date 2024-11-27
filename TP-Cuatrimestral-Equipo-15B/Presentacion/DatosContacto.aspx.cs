@@ -13,6 +13,7 @@ namespace Presentacion
     {
         private CarritoNegocio carritoNegocio;
         private ProvinciaNegocio provinciaNegocio;
+        public bool agregarCupon;
         protected void Page_Load(object sender, EventArgs e)
         {
             carritoNegocio = new CarritoNegocio();
@@ -30,6 +31,7 @@ namespace Presentacion
                     TextEmail.Enabled = false;
                 }
             }
+            agregarCupon = false;
         }
 
         private void CargarResumenCompra()
@@ -281,5 +283,9 @@ namespace Presentacion
             return new string(contraseña);
         }
 
+        protected void BtDescuento_Click(object sender, EventArgs e)
+        {
+            agregarCupon = true;
+        }
     }
 }
