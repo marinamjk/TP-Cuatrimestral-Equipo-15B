@@ -75,6 +75,7 @@
     <Content Include="AdministrarCategoria.aspx" />
     <Content Include="AdministrarColeccion.aspx" />
     <Content Include="AdministrarPedido.aspx" />
+    <Content Include="AgregarCupon.aspx" />
     <Content Include="AltaModArticulo.aspx" />
     <Content Include="Carrito.aspx" />
     <Content Include="ConfirmacionCompra.aspx" />
@@ -145,6 +146,13 @@
     </Compile>
     <Compile Include="AdministrarPedido.aspx.designer.cs">
       <DependentUpon>AdministrarPedido.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AgregarCupon.aspx.cs">
+      <DependentUpon>AgregarCupon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgregarCupon.aspx.designer.cs">
+      <DependentUpon>AgregarCupon.aspx</DependentUpon>
     </Compile>
     <Compile Include="AltaModArticulo.aspx.cs">
       <DependentUpon>AltaModArticulo.aspx</DependentUpon>

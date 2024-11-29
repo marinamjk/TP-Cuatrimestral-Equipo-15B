@@ -32,6 +32,12 @@ go
 --go
 
 
+CREATE TABLE Descuento(
+	IdDescuento int primary key NOT NULL identity(1,1),
+	CodigoDesc varchar(50) unique NOT null,
+	PorcentajeDescuento int not null
+);
+
 CREATE TABLE Provincia (
     Id TINYINT NOT NULL primary key IDENTITY(1,1),  
     Nombre NVARCHAR(50) NOT NULL,

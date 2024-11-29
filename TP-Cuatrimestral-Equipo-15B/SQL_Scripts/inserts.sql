@@ -36,6 +36,7 @@ Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
 ('Ensaladera', 5, 1)
 Go
 
+insert into Descuento (CodigoDesc,PorcentajeDescuento)
 
 Insert Into Articulos(Nombre, Descripcion, IDColeccion, IDCategoria, Precio, Stock, Puntaje, Estado) values
 ('PLATO LARGE BLANCO CREMA', 'Medidas: 26cms de diámetro. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 7, 38400.00, 5, 0, 1),

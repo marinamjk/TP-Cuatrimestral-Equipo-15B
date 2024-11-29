@@ -81,6 +81,7 @@
                                 <li><a class="dropdown-item" href="AdministrarArticulos.aspx">Administrar Articulos</a></li>
                                 <li><a class="dropdown-item" href="AdministrarCategoria.aspx">Administrar Categorias</a></li>
                                 <li><a class="dropdown-item" href="AdministrarColeccion.aspx">Administrar Colecciones</a></li>
+                                <li><a class="dropdown-item" href="AgregarCupon.aspx">Agregar Cupon</a></li>
                             </ul>
                         </li>
                         <%} %>
