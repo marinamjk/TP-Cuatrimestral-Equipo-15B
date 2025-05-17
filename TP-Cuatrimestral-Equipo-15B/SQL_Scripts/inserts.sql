@@ -36,8 +36,6 @@ Insert into Categorias (Nombre, IDCategoriaPadre, Estado) values
 ('Ensaladera', 5, 1)
 Go
 
-insert into Descuento (CodigoDesc,PorcentajeDescuento)
-
 Insert Into Articulos(Nombre, Descripcion, IDColeccion, IDCategoria, Precio, Stock, Puntaje, Estado) values
 ('PLATO LARGE BLANCO CREMA', 'Medidas: 26cms de diámetro. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 7, 38400.00, 5, 0, 1),
 ('JARRA BLANCO CREMA ', 'Medidas: 17 cms de  diámetro x 13 cms de alto. Capacidad: 1 litro. Toda nuestra vajilla de Gres es apta microondas y lavavajillas.', 1, 4, 55200.00, 4, 0, 1),
@@ -23108,7 +23106,7 @@ Insert into MetodoPago(Nombre, Descripcion) values
 ('MercadoPago', 'Pago a través de MercadoPago');
 GO
 
-exec sp_AgregarUsuario 'normal@gmail.com', '123', 1
+exec sp_AgregarUsuario 'admin@gmail.com', '123', 1
 
 exec sp_AgregarDatosPersonales '1', 'Marina', 'Mojica', '12345678', '1164272269', null
 
